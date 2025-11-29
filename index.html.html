@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技英文教學 | Tech English Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            color: #667eea;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .course-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .vocab-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .vocab-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .vocab-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .vocab-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🚀 Tech English</div>
+            <ul class="nav-links">
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#courses">課程</a></li>
+                <li><a href="#vocab">單字庫</a></li>
+                <li><a href="#about">關於</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <h1>掌握科技英文，開啟國際視野</h1>
+        <p>專為工程師、研發人員、科技從業人員設計的英文學習平台</p>
+        <button class="cta-button" onclick="document.getElementById('courses').scrollIntoView({behavior: 'smooth'})">開始學習</button>
+    </section>
+
+    <section class="container" id="courses">
+        <h2 class="section-title">📚 課程內容</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-icon">💻</div>
+                <h3>程式設計英文</h3>
+                <p>學習程式碼撰寫、變數命名、函數註解等常用英文術語，提升 Code Review 和技術文件閱讀能力。</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                    <li>變數與函數命名規則</li>
+                    <li>註解撰寫技巧</li>
+                    <li>錯誤訊息理解</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">📊</div>
+                <h3>技術文件閱讀</h3>
+                <p>快速理解 API 文件、技術規格書、開發者指南，掌握技術文件的閱讀技巧與常見句型。</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                    <li>API 文件結構</li>
+                    <li>技術規格解讀</li>
+                    <li>範例程式理解</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">🗣️</div>
+                <h3>會議與簡報</h3>
+                <p>學習技術會議、產品展示、專案報告的實用英文，增強口語表達與簡報能力。</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                    <li>會議常用語</li>
+                    <li>簡報架構</li>
+                    <li>Q&A 應對技巧</li>
+                </ul>
+            </div>
+
+            <div class="course-card">
+                <div class="course-icon">✉️</div>
+                <h3>商務郵件寫作</h3>
+                <p>撰寫專業的技術郵件、需求確認、進度回報，掌握商務溝通的正式用語與格式。</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                    <li>郵件格式與禮儀</li>
+                    <li>需求溝通模板</li>
+                    <li>進度報告撰寫</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">✨ 學習特色</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <h3>情境式學習</h3>
+                <p>以真實工作情境為基礎，學習最實用的科技英文</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <h3>隨時隨地學習</h3>
+                <p>支援手機、平板、電腦，利用零碎時間提升英文力</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💡</div>
+                <h3>實戰演練</h3>
+                <p>提供大量練習題與案例分析，學以致用</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🏆</div>
+                <h3>進度追蹤</h3>
+                <p>完整的學習歷程記錄，掌握自己的進步軌跡</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="vocab">
+        <h2 class="section-title">📖 常用科技英文單字</h2>
+        
+        <div class="vocab-section">
+            <h3>程式開發</h3>
+            <div class="vocab-list">
+                <div class="vocab-item">
+                    <strong>Algorithm</strong>
+                    演算法
+                </div>
+                <div class="vocab-item">
+                    <strong>Debug</strong>
+                    除錯
+                </div>
+                <div class="vocab-item">
+                    <strong>Deploy</strong>
+                    部署
+                </div>
+                <div class="vocab-item">
+                    <strong>Repository</strong>
+                    儲存庫
+                </div>
+                <div class="vocab-item">
+                    <strong>Framework</strong>
+                    框架
+                </div>
+                <div class="vocab-item">
+                    <strong>Integrate</strong>
+                    整合
+                </div>
+            </div>
+        </div>
+
+        <div class="vocab-section">
+            <h3>系統架構</h3>
+            <div class="vocab-list">
+                <div class="vocab-item">
+                    <strong>Architecture</strong>
+                    架構
+                </div>
+                <div class="vocab-item">
+                    <strong>Scalability</strong>
+                    可擴展性
+                </div>
+                <div class="vocab-item">
+                    <strong>Infrastructure</strong>
+                    基礎設施
+                </div>
+                <div class="vocab-item">
+                    <strong>Performance</strong>
+                    效能
+                </div>
+                <div class="vocab-item">
+                    <strong>Optimize</strong>
+                    最佳化
+                </div>
+                <div class="vocab-item">
+                    <strong>Migrate</strong>
+                    遷移
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="about">
+        <h2 class="section-title">👨‍🏫 關於課程</h2>
+        <div class="course-card" style="max-width: 800px; margin: 0 auto;">
+            <p style="margin-bottom: 1rem;">本課程由具有多年科技業經驗的英文講師設計，結合實際工作場景，提供最貼近業界需求的英文學習內容。</p>
+            <p style="margin-bottom: 1rem;">無論你是軟體工程師、產品經理、研發人員，或是任何需要使用英文的科技從業人員，都能在這裡找到適合的學習資源。</p>
+            <p><strong>讓我們一起用英文連接世界科技！</strong></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 科技英文教學平台 | Tech English Learning Platform</p>
+        <p style="margin-top: 0.5rem;">📧 contact@techenglish.com | 🌐 www.techenglish.com</p>
+    </footer>
+
+    <script>
+        // 平滑滾動效果
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 滾動動畫效果
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.course-card, .feature-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s, transform 0.6s';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
