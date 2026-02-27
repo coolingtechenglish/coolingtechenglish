@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechPulse | Tech English News & 21-Day Challenge</title>
+<meta name="description" content="Daily AI-curated tech news in English & Chinese. Join the 21-Day Tech English Challenge. Follow us on Instagram @CoolingTechEnglish">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --cream2: #ede8da;
+    --black: #111111;
+    --ink: #1a1a1a;
+    --red: #d63a2f;
+    --yellow: #f5c842;
+    --muted: #6b6456;
+    --border: #111111;
+    --green: #2d8a4e;
+    --ig-pink: #E1306C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Open Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Checkerboard top border */
+  body::before {
+    content: '';
+    display: block;
+    height: 18px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--black) 0px, var(--black) 18px,
+      var(--cream) 18px, var(--cream) 36px
+    );
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+  }
+
+  /* Checkerboard bottom border */
+  body::after {
+    content: '';
+    display: block;
+    height: 18px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--cream) 0px, var(--cream) 18px,
+      var(--black) 18px, var(--black) 36px
+    );
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+  }
+
+  header {
+    position: sticky;
+    top: 18px;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 3px solid var(--black);
+    padding: 0.75rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 5px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .logo span { color: var(--red); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Nav links */
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .nav-links a:hover {
+    border-color: var(--black);
+    background: var(--yellow);
+  }
+
+  .nav-links a.nav-ig {
+    background: var(--black);
+    color: var(--cream);
+    border-color: var(--black);
+  }
+
+  .nav-links a.nav-ig:hover {
+    background: var(--ig-pink);
+    border-color: var(--ig-pink);
+  }
+
+  .lang-toggle { display: flex; gap: 0.5rem; align-items: center; }
+
+  .lang-btn {
+    background: var(--cream);
+    border: 2px solid var(--black);
+    color: var(--black);
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+
+  .lang-btn.active { background: var(--black); color: var(--cream); }
+  .lang-btn:hover:not(.active) { background: var(--yellow); }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: 2px solid var(--black);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+  }
+
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 2.5rem 4rem;
+  }
+
+  /* HERO */
+  .hero {
+    border: 3px solid var(--black);
+    padding: 2.5rem 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    background: var(--cream);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.88;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title em { font-style: italic; color: var(--red); }
+
+  .hero-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .doodle-cup {
+    font-size: 5rem;
+    line-height: 1;
+    opacity: 0.12;
+    position: absolute;
+    bottom: 1rem; right: 6rem;
+    transform: rotate(-10deg);
+  }
+
+  .stamp-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px; height: 74px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    background: var(--yellow);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+    transform: rotate(-12deg);
+    flex-shrink: 0;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 5px;
+    color: var(--black);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-top: 3px solid var(--black);
+    padding-top: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--black) 0, var(--black) 6px, transparent 6px, transparent 12px);
+  }
+
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 3px solid var(--black);
+  }
+
+  .news-card {
+    background: var(--cream);
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .news-card:hover { background: var(--yellow); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.2rem 0.6rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cefr-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 22px;
+    padding: 0 6px;
+    border: 2px solid currentColor;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .cefr-A1 { background: #d4edda; color: #155724; }
+  .cefr-A2 { background: #c3e6cb; color: #1a6930; }
+  .cefr-B1 { background: #fff3cd; color: #856404; }
+  .cefr-B2 { background: #ffe8a1; color: #6d4c00; }
+  .cefr-C1 { background: #f8d7da; color: #721c24; }
+  .cefr-C2 { background: #f0b8be; color: #491217; }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    color: var(--black);
+    letter-spacing: 1px;
+  }
+
+  .card-title-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+    display: none;
+  }
+
+  .card-summary {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .card-summary-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+    display: none;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #bbb;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* VOCAB */
+  .vocab-section {
+    border: 3px solid var(--black);
+    background: var(--cream);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .vocab-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vocab-header-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+
+  .vocab-card {
+    padding: 1.2rem 1.4rem;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    transition: background 0.15s;
+    animation: fadeUp 0.4s ease both;
+    position: relative;
+  }
+
+  .vocab-card:hover { background: var(--yellow); }
+
+  .vocab-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: rgba(0,0,0,0.07);
+    line-height: 1;
+    position: absolute;
+    top: 0.5rem; right: 0.8rem;
+  }
+
+  .vocab-word-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.15rem;
+    flex-wrap: wrap;
+  }
+
+  .vocab-word {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .vocab-cefr {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    height: 18px;
+    border: 1.5px solid currentColor;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+  }
+
+  .vocab-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+  }
+
+  .vocab-def {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .vocab-example {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #bbb;
+    line-height: 1.5;
+  }
+
+  /* LOADING */
+  .loading-overlay {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading-overlay.visible { display: flex; }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #ccc;
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  .loading-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    border: 3px solid var(--black);
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.25; }
+
+  .empty-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+    color: var(--black);
+    opacity: 0.35;
+  }
+
+  .empty-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+
+  .error-msg {
+    background: #fdf0ef;
+    border: 3px solid var(--red);
+    color: var(--red);
+    padding: 1rem 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* CEFR Legend */
+  .cefr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+  }
+
+  .cefr-legend-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 0.5rem;
+  }
+
+  .cefr-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  /* ============================================
+     21-DAY CHALLENGE SECTION
+     ============================================ */
+
+  .challenge-banner {
+    border: 3px solid var(--black);
+    background: var(--black);
+    color: var(--cream);
+    padding: 2.5rem 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .challenge-banner::before {
+    content: '21';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16rem;
+    opacity: 0.06;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .challenge-banner-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .challenge-banner .hero-eyebrow {
+    color: var(--yellow);
+  }
+
+  .challenge-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .challenge-banner-title em { color: var(--yellow); font-style: italic; }
+
+  .challenge-banner-sub {
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.7);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .challenge-stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px; height: 90px;
+    border: 3px solid var(--cream);
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--cream);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.1;
+    transform: rotate(-12deg);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Week cards */
+  .challenge-weeks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+  }
+
+  .week-card {
+    padding: 0;
+    border-right: 2px solid var(--black);
+    background: var(--cream);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .week-card:last-child { border-right: none; }
+
+  .week-card-header {
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .week-1 .week-card-header { background: var(--black); color: var(--cream); }
+  .week-2 .week-card-header { background: var(--red); color: var(--cream); }
+  .week-3 .week-card-header { background: var(--yellow); color: var(--black); }
+
+  .week-card-header small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+
+  .week-card-body {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .week-card-body h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+    color: var(--black);
+  }
+
+  .day-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 0.82rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .day-item:last-child { border-bottom: none; }
+
+  .day-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    border: 2px solid var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    background: var(--cream);
+    color: var(--black);
+  }
+
+  .week-1 .day-num { background: var(--black); color: var(--cream); }
+  .week-2 .day-num { background: var(--red); color: var(--cream); border-color: var(--red); }
+  .week-3 .day-num { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+  .day-item-zh {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* Challenge CTA */
+  .challenge-cta-box {
+    border: 3px solid var(--black);
+    display: flex;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .challenge-cta-left {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    background: var(--cream);
+  }
+
+  .challenge-cta-left h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-cta-left p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .challenge-cta-left p strong { color: var(--black); }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--black);
+    color: var(--cream);
+    border: 3px solid var(--black);
+    padding: 0.7rem 1.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .cta-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  .cta-btn:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+  }
+
+  .cta-btn.ig-btn {
+    background: var(--ig-pink);
+    border-color: var(--ig-pink);
+  }
+
+  .cta-btn.ig-btn:hover {
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  .challenge-cta-right {
+    width: 200px;
+    background: var(--yellow);
+    border-left: 3px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .challenge-cta-right .big-hashtag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-cta-right .big-hashtag-sub {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  /* ============================================
+     PROGRESS TRACKER
+     ============================================ */
+
+  .tracker-box {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .tracker-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tracker-header small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .tracker-body {
+    padding: 1.5rem;
+  }
+
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tracker-day {
+    aspect-ratio: 1;
+    border: 2px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .tracker-day:hover {
+    background: var(--yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  .tracker-day.completed {
+    background: var(--black);
+    color: var(--cream);
+  }
+
+  .tracker-day.completed .tracker-day-num { color: var(--cream); }
+  .tracker-day.completed .tracker-day-label { color: rgba(245,240,232,0.5); }
+
+  .tracker-day.completed::after {
+    content: '\2713';
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 0.65rem;
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .tracker-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .tracker-day-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progress-bar-track {
+    flex: 1;
+    height: 14px;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--black) 0px, var(--black) 6px,
+      var(--yellow) 6px, var(--yellow) 12px
+    );
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--black);
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: right;
+  }
+
+  .progress-text span { color: var(--red); }
+
+  /* ============================================
+     INSTAGRAM SECTION
+     ============================================ */
+
+  .ig-section {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .ig-section-header {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ig-section-header h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+  }
+
+  .ig-section-header a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 0.4rem 1rem;
+    transition: all 0.15s;
+  }
+
+  .ig-section-header a:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: white;
+  }
+
+  .ig-feature-card {
+    padding: 1.5rem;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    text-align: center;
+    transition: background 0.15s;
+  }
+
+  .ig-feature-card:last-child { border-right: none; }
+  .ig-feature-card:hover { background: var(--yellow); }
+
+  .ig-feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.7;
+  }
+
+  .ig-feature-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.4rem;
+  }
+
+  .ig-feature-card p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+
+  .site-footer {
+    border-top: 3px solid var(--black);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .footer-left strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--black);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+
+  /* Lang visibility */
+  body.lang-zh .card-title { display: none; }
+  body.lang-zh .card-title-zh { display: block; }
+  body.lang-zh .card-summary { display: none; }
+  body.lang-zh .card-summary-zh { display: block; }
+  body.lang-zh .section-label .en-text { display: none; }
+  body.lang-zh .section-label .zh-text { display: inline; }
+  body.lang-en .section-label .zh-text { display: none; }
+  body.lang-zh .day-item-zh { display: block; }
+  body.lang-zh .en-only { display: none; }
+  body.lang-zh .zh-only { display: inline; }
+  body.lang-en .zh-only { display: none; }
+
+  @media (max-width: 900px) {
+    .challenge-weeks { grid-template-columns: 1fr; }
+    .week-card { border-right: none; border-bottom: 2px solid var(--black); }
+    .week-card:last-child { border-bottom: none; }
+    .ig-section { grid-template-columns: 1fr; }
+    .ig-feature-card { border-right: none; }
+    .challenge-cta-box { flex-direction: column; }
+    .challenge-cta-right { width: 100%; border-left: none; border-top: 3px solid var(--black); padding: 1.2rem; }
+  }
+
+  @media (max-width: 640px) {
+    .news-grid { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    header { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .header-right { gap: 0.5rem; }
+    .nav-links { display: none; }
+    .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); border-bottom: 3px solid var(--black); padding: 1rem; z-index: 99; }
+    .nav-links.active a { padding: 0.6rem 1rem; display: block; text-align: center; }
+    .mobile-menu-btn { display: block; }
+    .main { padding: 1.5rem 1rem 4rem; }
+    .hero { padding: 1.5rem; flex-direction: column; }
+    .hero-title { font-size: 4rem; }
+    .challenge-banner { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+    .challenge-banner-title { font-size: 2.5rem; }
+    .tracker-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .tracker-day-label { font-size: 0.4rem; }
+    .cefr-legend { gap: 0.35rem; }
+    .site-footer { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<header>
+  <div>
+    <div class="logo">Tech<span>Pulse</span></div>
+    <div class="logo-sub">News &middot; Learn &middot; Challenge</div>
+  </div>
+  <div class="header-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#news">News</a></li>
+      <li><a href="#challenge">21-Day</a></li>
+      <li><a href="#tracker">Progress</a></li>
+      <li><a href="#instagram" class="nav-ig">Instagram</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">&#32321;&#20013;</button>
+    </div>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="en-only">Today's Edition &middot; AI-Curated</span>
+        <span class="zh-only">&#20170;&#26085;&#29256; &middot; AI &#31574;&#23637;</span>
+      </div>
+      <div class="hero-title">TECH<br><em>NEWS.</em></div>
+      <p class="hero-sub">
+        <span class="en-only">Served bright. Morning, reimagined.<br>Bilingual headlines + vocabulary + 21-day challenge.</span>
+        <span class="zh-only">&#38617;&#35486;&#31185;&#25216;&#26032;&#32862; + &#21934;&#23383;&#23416;&#32722; + 21&#22825;&#25361;&#25136;&#35336;&#30059;</span>
+      </p>
+    </div>
+    <div class="stamp-badge">NEW<br>TODAY<br>&#9733;</div>
+    <div class="doodle-cup">&#9749;</div>
+  </div>
+
+  <!-- Last updated -->
+  <div style="font-family:'Open Sans',sans-serif; font-size:0.75rem; color:var(--muted); font-style:italic; margin-bottom:1.5rem;">
+    &#128336; Last updated: <!-- UPDATED_TIME -->Never &mdash; run the GitHub Action to populate news<!-- /UPDATED_TIME -->
+  </div>
+
+  <!-- CEFR Legend -->
+  <div class="cefr-legend">
+    <span class="cefr-legend-label">CEFR Level:</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-A1">A1</span> Beginner</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-A2">A2</span> Elementary</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-B1">B1</span> Intermediate</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-B2">B2</span> Upper-Int.</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-C1">C1</span> Advanced</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-C2">C2</span> Mastery</span>
+  </div>
+
+  <!-- NEWS SECTION -->
+  <div id="news">
+    <div class="section-label">
+      <span class="en-text">Top Stories</span>
+      <span class="zh-text">&#38957;&#26781;&#26032;&#32862;</span>
+    </div>
+    <div class="news-grid">
+      <!-- NEWS_CARDS_START -->
+      <div style="grid-column:1/-1; padding:3rem; text-align:center; font-family:'Open Sans',sans-serif; color:var(--muted); font-style:italic; font-size:0.9rem;">
+        News not yet loaded &mdash; the GitHub Action will populate this automatically every 6 hours.
+      </div>
+      <!-- NEWS_CARDS_END -->
+    </div>
+
+    <div class="section-label" style="margin-top:2rem;">
+      <span class="en-text">Vocabulary &amp; Phrases</span>
+      <span class="zh-text">&#35422;&#24409;&#33287;&#29255;&#35486;</span>
+    </div>
+    <div class="vocab-section">
+      <div class="vocab-header">
+        <span>Words to Know</span>
+        <span class="vocab-header-sub">Rated by CEFR difficulty</span>
+      </div>
+      <div class="vocab-grid">
+        <!-- VOCAB_CARDS_START -->
+        <!-- VOCAB_CARDS_END -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       21-DAY CHALLENGE SECTION
+       ============================================ -->
+  <div id="challenge">
+    <div class="section-label">
+      <span class="en-text">21-Day Tech English Challenge</span>
+      <span class="zh-text">21&#22825;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;</span>
+    </div>
+
+    <!-- Challenge Banner -->
+    <div class="challenge-banner">
+      <div class="challenge-banner-text">
+        <div class="hero-eyebrow" style="color:var(--yellow);">
+          <span class="en-only">Free Challenge &middot; Follow on Instagram</span>
+          <span class="zh-only">&#20813;&#36027;&#25361;&#25136; &middot; &#36861;&#36452; Instagram</span>
+        </div>
+        <div class="challenge-banner-title">
+          <span class="en-only">21 DAYS.<br><em>LEVEL UP.</em></span>
+          <span class="zh-only">21&#22825;.<br><em>&#21319;&#32026;.</em></span>
+        </div>
+        <p class="challenge-banner-sub">
+          <span class="en-only">Three weeks of daily tech English challenges. From vocabulary to presentations. Follow us on Instagram for daily posts, tips, and community support.</span>
+          <span class="zh-only">&#19977;&#36913;&#27599;&#26085;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;&#12290;&#24478;&#21934;&#23383;&#21040;&#31777;&#22577;&#12290;&#36861;&#36452;&#25105;&#20497;&#30340; Instagram &#29554;&#21462;&#27599;&#26085;&#36028;&#25991;&#12289;&#25216;&#24039;&#21644;&#31038;&#32676;&#25903;&#25345;&#12290;</span>
+        </p>
+      </div>
+      <div class="challenge-stamp">21<br>DAYS</div>
+    </div>
+
+    <!-- Week Cards -->
+    <div class="challenge-weeks">
+      <!-- WEEK 1 -->
+      <div class="week-card week-1" style="animation-delay:0s">
+        <div class="week-card-header">
+          <span>Week 1</span>
+          <small>Foundation</small>
+        </div>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Core Tech Vocabulary</span>
+            <span class="zh-only">&#26680;&#24515;&#31185;&#25216;&#35422;&#24409;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">01</span>
+            <div>
+              <span class="en-only">Dev environment terms (IDE, compiler, runtime)</span>
+              <span class="zh-only">&#38283;&#30332;&#29872;&#22659;&#34899;&#35486;&#65288;IDE&#12289;&#32232;&#35695;&#22120;&#12289;&#22519;&#34892;&#29872;&#22659;&#65289;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">02</span>
+            <div>
+              <span class="en-only">Git &amp; version control vocabulary</span>
+              <span class="zh-only">Git &#33287;&#29256;&#26412;&#25511;&#21046;&#35422;&#24409;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">03</span>
+            <div>
+              <span class="en-only">Data types &amp; variables in English</span>
+              <span class="zh-only">&#33521;&#25991;&#20013;&#30340;&#36039;&#26009;&#22411;&#24907;&#33287;&#35722;&#25976;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">04</span>
+            <div>
+              <span class="en-only">Describing bugs &amp; errors like a pro</span>
+              <span class="zh-only">&#23560;&#26989;&#22320;&#25551;&#36848;&#37679;&#35492;&#33287;&#33256;&#34802;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">05</span>
+            <div>
+              <span class="en-only">Reading stack traces &amp; logs</span>
+              <span class="zh-only">&#38321;&#35712;&#22534;&#30090;&#36861;&#36452;&#33287;&#26085;&#35468;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">06</span>
+            <div>
+              <span class="en-only">API terminology essentials</span>
+              <span class="zh-only">API &#34899;&#35486;&#22522;&#30990;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">07</span>
+            <div>
+              <span class="en-only">Week 1 review &amp; mini quiz</span>
+              <span class="zh-only">&#31532;&#19968;&#36913;&#35079;&#32722;&#33287;&#23567;&#28204;&#39511;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEEK 2 -->
+      <div class="week-card week-2" style="animation-delay:0.1s">
+        <div class="week-card-header">
+          <span>Week 2</span>
+          <small>Communication</small>
+        </div>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Writing &amp; Reading</span>
+            <span class="zh-only">&#23531;&#20316;&#33287;&#38321;&#35712;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">08</span>
+            <div>
+              <span class="en-only">Writing clear commit messages</span>
+              <span class="zh-only">&#25776;&#23531;&#28165;&#26224;&#30340; commit &#35338;&#24687;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">09</span>
+            <div>
+              <span class="en-only">Pull request descriptions &amp; reviews</span>
+              <span class="zh-only">PR &#25551;&#36848;&#33287;&#23529;&#26597;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">10</span>
+            <div>
+              <span class="en-only">Reading technical documentation</span>
+              <span class="zh-only">&#38321;&#35712;&#25216;&#34899;&#25991;&#20214;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">11</span>
+            <div>
+              <span class="en-only">Writing bug reports in English</span>
+              <span class="zh-only">&#29992;&#33521;&#25991;&#25776;&#23531; Bug &#22577;&#21578;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">12</span>
+            <div>
+              <span class="en-only">Email templates for tech teams</span>
+              <span class="zh-only">&#31185;&#25216;&#22296;&#38538;&#37109;&#20214;&#27169;&#26495;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">13</span>
+            <div>
+              <span class="en-only">Slack &amp; async communication tips</span>
+              <span class="zh-only">Slack &#33287;&#38750;&#21516;&#27493;&#28317;&#36890;&#25216;&#24039;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">14</span>
+            <div>
+              <span class="en-only">Week 2 review &amp; writing challenge</span>
+              <span class="zh-only">&#31532;&#20108;&#36913;&#35079;&#32722;&#33287;&#23531;&#20316;&#25361;&#25136;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEEK 3 -->
+      <div class="week-card week-3" style="animation-delay:0.2s">
+        <div class="week-card-header">
+          <span>Week 3</span>
+          <small>Confidence</small>
+        </div>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Speaking &amp; Presenting</span>
+            <span class="zh-only">&#21475;&#35498;&#33287;&#31777;&#22577;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">15</span>
+            <div>
+              <span class="en-only">Daily standup meeting phrases</span>
+              <span class="zh-only">&#27599;&#26085;&#31449;&#26371;&#29992;&#35486;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">16</span>
+            <div>
+              <span class="en-only">Explaining your code in English</span>
+              <span class="zh-only">&#29992;&#33521;&#25991;&#35299;&#37323;&#20320;&#30340;&#31243;&#24335;&#30908;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">17</span>
+            <div>
+              <span class="en-only">Technical interview vocabulary</span>
+              <span class="zh-only">&#25216;&#34899;&#38754;&#35430;&#35422;&#24409;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">18</span>
+            <div>
+              <span class="en-only">Presenting a demo or feature</span>
+              <span class="zh-only">&#23637;&#31034; Demo &#25110;&#21151;&#33021;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">19</span>
+            <div>
+              <span class="en-only">Discussing architecture decisions</span>
+              <span class="zh-only">&#35342;&#35542;&#26550;&#27083;&#27770;&#31574;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">20</span>
+            <div>
+              <span class="en-only">Handling Q&amp;A in meetings</span>
+              <span class="zh-only">&#34389;&#29702;&#26371;&#35696;&#20013;&#30340;&#21839;&#31572;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">21</span>
+            <div>
+              <span class="en-only">Final challenge &amp; celebration!</span>
+              <span class="zh-only">&#26368;&#32066;&#25361;&#25136;&#33287;&#24950;&#31069;&#65281;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Challenge CTA -->
+    <div class="challenge-cta-box">
+      <div class="challenge-cta-left">
+        <h3>
+          <span class="en-only">READY TO START?</span>
+          <span class="zh-only">&#28310;&#20633;&#22909;&#20102;&#21966;&#65311;</span>
+        </h3>
+        <p>
+          <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram to get daily challenge posts, vocabulary cards, and connect with fellow tech professionals leveling up their English.</span>
+          <span class="zh-only">&#22312; Instagram &#19978;&#36861;&#36452; <strong>@CoolingTechEnglish</strong>&#65292;&#29554;&#21462;&#27599;&#26085;&#25361;&#25136;&#36028;&#25991;&#12289;&#21934;&#23383;&#21345;&#65292;&#20006;&#33287;&#20854;&#20182;&#25552;&#21319;&#33521;&#25991;&#30340;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#20132;&#27969;&#12290;</span>
+        </p>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
+          &#128247; Follow on Instagram
+        </a>
+      </div>
+      <div class="challenge-cta-right">
+        <div class="big-hashtag">#TechEnglish21</div>
+        <div class="big-hashtag-sub">
+          <span class="en-only">Share your progress</span>
+          <span class="zh-only">&#20998;&#20139;&#20320;&#30340;&#36914;&#24230;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       PROGRESS TRACKER
+       ============================================ -->
+  <div id="tracker">
+    <div class="section-label">
+      <span class="en-text">My Progress</span>
+      <span class="zh-text">&#25105;&#30340;&#36914;&#24230;</span>
+    </div>
+
+    <div class="tracker-box">
+      <div class="tracker-header">
+        <span>21-Day Tracker</span>
+        <small>
+          <span class="en-only">Click to mark days complete</span>
+          <span class="zh-only">&#40670;&#25802;&#27161;&#35352;&#23436;&#25104;</span>
+        </small>
+      </div>
+      <div class="tracker-body">
+        <div class="tracker-grid" id="trackerGrid"></div>
+        <div class="progress-row">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">
+            <span id="completedCount">0</span>/21 &mdash; <span id="progressPercent">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       INSTAGRAM SECTION
+       ============================================ -->
+  <div id="instagram">
+    <div class="section-label">
+      <span class="en-text">Follow Us</span>
+      <span class="zh-text">&#36861;&#36452;&#25105;&#20497;</span>
+    </div>
+
+    <div class="ig-section">
+      <div class="ig-section-header">
+        <h3>
+          <span class="en-only">&#128247; @CoolingTechEnglish</span>
+          <span class="zh-only">&#128247; @CoolingTechEnglish</span>
+        </h3>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Follow</a>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#128218;</div>
+        <h4>
+          <span class="en-only">Daily Posts</span>
+          <span class="zh-only">&#27599;&#26085;&#36028;&#25991;</span>
+        </h4>
+        <p>
+          <span class="en-only">New vocabulary, phrases, and tech English tips every day</span>
+          <span class="zh-only">&#27599;&#22825;&#26032;&#21934;&#23383;&#12289;&#29255;&#35486;&#21644;&#31185;&#25216;&#33521;&#25991;&#25216;&#24039;</span>
+        </p>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#127916;</div>
+        <h4>
+          <span class="en-only">Reels &amp; Stories</span>
+          <span class="zh-only">&#30701;&#24433; &amp; &#21205;&#24907;</span>
+        </h4>
+        <p>
+          <span class="en-only">Pronunciation guides and real-world usage examples</span>
+          <span class="zh-only">&#30332;&#38899;&#25351;&#21335;&#21644;&#23526;&#38555;&#29992;&#27861;&#31684;&#20363;</span>
+        </p>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#128172;</div>
+        <h4>
+          <span class="en-only">Community</span>
+          <span class="zh-only">&#31038;&#32676;</span>
+        </h4>
+        <p>
+          <span class="en-only">Practice with fellow tech professionals worldwide</span>
+          <span class="zh-only">&#33287;&#20840;&#29699;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#19968;&#36215;&#32244;&#32722;</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="site-footer">
+  <div class="footer-left">
+    <strong>Tech<span style="color:var(--red); font-style:italic;">Pulse</span></strong>
+    &copy; 2026 CoolingTech English. All rights reserved.
+  </div>
+  <ul class="footer-links">
+    <li><a href="#news">News</a></li>
+    <li><a href="#challenge">Challenge</a></li>
+    <li><a href="#tracker">Progress</a></li>
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+</div>
+
+<script>
+// Language switcher
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
+
+// Mobile menu
+document.getElementById('menuBtn').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('active');
+});
+
+document.querySelectorAll('.nav-links a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('active');
+  });
+});
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      var headerHeight = document.querySelector('header').offsetHeight + 18;
+      var pos = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
+    }
+  });
+});
+
+// ============================================
+// 21-Day Progress Tracker
+// ============================================
+var STORAGE_KEY = 'techPulse21Progress';
+
+var dayLabels = [
+  'IDE', 'Git', 'Data', 'Bugs', 'Logs', 'API', 'Quiz',
+  'Commit', 'PR', 'Docs', 'Report', 'Email', 'Slack', 'Review',
+  'Standup', 'Code', 'Interview', 'Demo', 'Arch', 'Q&A', 'Final'
+];
+
+function getProgress() {
+  try {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : {};
+  } catch (e) { return {}; }
+}
+
+function saveProgress(progress) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+  catch (e) {}
+}
+
+function renderTracker() {
+  var grid = document.getElementById('trackerGrid');
+  var progress = getProgress();
+  grid.innerHTML = '';
+
+  for (var i = 1; i <= 21; i++) {
+    var day = document.createElement('div');
+    day.className = 'tracker-day';
+    if (progress[i]) day.classList.add('completed');
+    day.innerHTML = '<div class="tracker-day-num">' + (i < 10 ? '0' : '') + i + '</div>' +
+                    '<div class="tracker-day-label">' + dayLabels[i - 1] + '</div>';
+    day.setAttribute('data-day', i);
+    day.setAttribute('title', 'Day ' + i + ': ' + dayLabels[i - 1]);
+
+    day.addEventListener('click', function() {
+      var num = parseInt(this.getAttribute('data-day'));
+      var prog = getProgress();
+      if (prog[num]) {
+        delete prog[num];
+        this.classList.remove('completed');
+      } else {
+        prog[num] = true;
+        this.classList.add('completed');
+      }
+      saveProgress(prog);
+      updateProgress();
+    });
+
+    grid.appendChild(day);
+  }
+
+  updateProgress();
+}
+
+function updateProgress() {
+  var progress = getProgress();
+  var completed = Object.keys(progress).length;
+  var percent = Math.round((completed / 21) * 100);
+  document.getElementById('completedCount').textContent = completed;
+  document.getElementById('progressPercent').textContent = percent + '%';
+  document.getElementById('progressFill').style.width = percent + '%';
+}
+
+renderTracker();
+</script>
+</body>
+</html>
