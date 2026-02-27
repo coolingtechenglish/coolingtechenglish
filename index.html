@@ -1,1618 +1,1697 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoolingTech English | 21-Day Tech English Challenge</title>
-    <meta name="description" content="Master tech English in 21 days. Daily challenges designed for engineers, developers, and tech professionals. Join our Instagram community!">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6C5CE7;
-            --primary-dark: #5A4BD1;
-            --secondary: #00CEC9;
-            --accent: #FD79A8;
-            --dark: #2D3436;
-            --light: #F8F9FA;
-            --gradient: linear-gradient(135deg, #6C5CE7 0%, #00CEC9 100%);
-            --gradient-warm: linear-gradient(135deg, #FD79A8 0%, #FDCB6E 100%);
-            --shadow: 0 4px 20px rgba(108, 92, 231, 0.15);
-            --shadow-lg: 0 10px 40px rgba(108, 92, 231, 0.2);
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background: var(--light);
-        }
-
-        /* Navigation */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
-            transition: box-shadow 0.3s;
-        }
-
-        header.scrolled {
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo span {
-            -webkit-text-fill-color: initial;
-            background: none;
-            font-size: 1.6rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gradient);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-cta {
-            background: var(--gradient) !important;
-            color: white !important;
-            padding: 0.6rem 1.4rem;
-            border-radius: 50px;
-            font-weight: 600 !important;
-            transition: transform 0.3s, box-shadow 0.3s !important;
-        }
-
-        .nav-cta::after {
-            display: none !important;
-        }
-
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-            color: white !important;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: var(--gradient);
-            color: white;
-            padding: 10rem 2rem 6rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: white;
-            transform: translateY(-3px);
-        }
-
-        .btn-gradient {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-gradient:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white;
-        }
-
-        .btn-instagram:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(220, 39, 67, 0.3);
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            background: white;
-            padding: 2rem 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-item p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        /* Section Styles */
-        .section {
-            padding: 5rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header .label {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
-            color: var(--primary);
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: #666;
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* 21-Day Challenge Section */
-        .challenge-section {
-            background: linear-gradient(180deg, #F8F9FA 0%, white 100%);
-        }
-
-        .challenge-intro {
-            max-width: 900px;
-            margin: 0 auto 3rem;
-            text-align: center;
-        }
-
-        .challenge-intro .big-number {
-            font-size: 6rem;
-            font-weight: 800;
-            background: var(--gradient-warm);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-        }
-
-        .challenge-timeline {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .challenge-timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient);
-            transform: translateX(-50%);
-            border-radius: 3px;
-        }
-
-        .week-block {
-            margin-bottom: 3rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-            position: relative;
-        }
-
-        .week-block::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 2rem;
-            width: 16px;
-            height: 16px;
-            background: var(--primary);
-            border-radius: 50%;
-            transform: translateX(-50%);
-            border: 3px solid white;
-            box-shadow: var(--shadow);
-            z-index: 1;
-        }
-
-        .week-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s;
-        }
-
-        .week-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .week-label {
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .week-1 .week-label { background: rgba(108, 92, 231, 0.1); color: var(--primary); }
-        .week-2 .week-label { background: rgba(0, 206, 201, 0.1); color: var(--secondary); }
-        .week-3 .week-label { background: rgba(253, 121, 168, 0.1); color: var(--accent); }
-
-        .week-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .week-card .day-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .week-card .day-list li {
-            padding: 0.6rem 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 0.95rem;
-        }
-
-        .week-card .day-list li:last-child {
-            border-bottom: none;
-        }
-
-        .day-num {
-            background: var(--gradient);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .week-info {
-            padding-top: 2rem;
-        }
-
-        .week-info p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.8;
-        }
-
-        /* Challenge CTA */
-        .challenge-cta {
-            background: var(--gradient);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            color: white;
-            max-width: 800px;
-            margin: 3rem auto 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .challenge-cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-        }
-
-        .challenge-cta h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .challenge-cta p {
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            font-size: 1.1rem;
-            position: relative;
-        }
-
-        .challenge-cta .btn {
-            position: relative;
-        }
-
-        /* Courses Section */
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .course-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .course-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .course-card:nth-child(1) .course-icon { background: rgba(108, 92, 231, 0.1); }
-        .course-card:nth-child(2) .course-icon { background: rgba(0, 206, 201, 0.1); }
-        .course-card:nth-child(3) .course-icon { background: rgba(253, 121, 168, 0.1); }
-        .course-card:nth-child(4) .course-icon { background: rgba(253, 203, 110, 0.1); }
-
-        .course-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-
-        .course-card p {
-            color: #666;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        .course-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .course-tags span {
-            background: var(--light);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* Vocabulary Section */
-        .vocab-section {
-            background: white;
-        }
-
-        .vocab-categories {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
-        .vocab-category {
-            background: var(--light);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: transform 0.3s;
-        }
-
-        .vocab-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .vocab-category h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-        }
-
-        .vocab-item {
-            background: white;
-            padding: 0.8rem 1rem;
-            border-radius: 10px;
-            border-left: 3px solid var(--primary);
-            transition: transform 0.2s;
-        }
-
-        .vocab-item:hover {
-            transform: translateX(5px);
-        }
-
-        .vocab-item strong {
-            color: var(--primary);
-            display: block;
-            font-size: 0.9rem;
-        }
-
-        .vocab-item small {
-            color: #888;
-            font-size: 0.8rem;
-        }
-
-        /* Instagram Section */
-        .instagram-section {
-            background: var(--dark);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .instagram-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(240, 148, 51, 0.1), rgba(220, 39, 67, 0.1), rgba(188, 24, 136, 0.1));
-        }
-
-        .instagram-content {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-        }
-
-        .instagram-content .section-header h2 {
-            color: white;
-        }
-
-        .instagram-content .section-header p {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .ig-features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .ig-feature {
-            padding: 1.5rem;
-        }
-
-        .ig-feature .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .ig-feature h4 {
-            margin-bottom: 0.5rem;
-            font-size: 1.05rem;
-        }
-
-        .ig-feature p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* Daily Tracker */
-        .tracker-section {
-            background: white;
-        }
-
-        .tracker-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--light);
-            border-radius: 20px;
-            padding: 3rem;
-        }
-
-        .tracker-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.8rem;
-            margin-bottom: 2rem;
-        }
-
-        .tracker-day {
-            aspect-ratio: 1;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            color: var(--dark);
-            border: 2px solid transparent;
-            position: relative;
-        }
-
-        .tracker-day:hover {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .tracker-day.completed {
-            background: var(--gradient);
-            color: white;
-            border: none;
-        }
-
-        .tracker-day.completed::after {
-            content: '';
-            position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 12px;
-            height: 12px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tracker-day.today {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(253, 121, 168, 0.2);
-        }
-
-        .tracker-day small {
-            font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.6;
-            margin-top: 2px;
-        }
-
-        .tracker-progress {
-            text-align: center;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient);
-            border-radius: 6px;
-            transition: width 0.5s ease;
-            width: 0%;
-        }
-
-        .progress-text {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .progress-text strong {
-            color: var(--primary);
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background: var(--light);
-        }
-
-        .testimonials-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .testimonial-card .stars {
-            color: #FDCB6E;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-card p {
-            color: #555;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .testimonial-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .testimonial-info strong {
-            display: block;
-            font-size: 0.95rem;
-        }
-
-        .testimonial-info span {
-            color: #888;
-            font-size: 0.85rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-brand h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .footer-brand p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        .footer-col h4 {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-col ul li a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .footer-col ul li a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.85rem;
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 968px) {
-            .challenge-timeline::before {
-                left: 20px;
-            }
-
-            .week-block {
-                grid-template-columns: 1fr;
-                padding-left: 50px;
-            }
-
-            .week-block::before {
-                left: 20px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 2rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                gap: 1rem;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero {
-                padding: 8rem 1.5rem 4rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero p {
-                font-size: 1.05rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .section-header h2 {
-                font-size: 1.8rem;
-            }
-
-            .ig-features {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .tracker-grid {
-                gap: 0.5rem;
-            }
-
-            .tracker-container {
-                padding: 1.5rem;
-            }
-
-            .vocab-categories {
-                grid-template-columns: 1fr;
-            }
-
-            .vocab-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .challenge-cta {
-                padding: 2rem 1.5rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechPulse | Tech English News & 21-Day Challenge</title>
+<meta name="description" content="Daily AI-curated tech news in English & Chinese. Join the 21-Day Tech English Challenge. Follow us on Instagram @CoolingTechEnglish">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --cream2: #ede8da;
+    --black: #111111;
+    --ink: #1a1a1a;
+    --red: #d63a2f;
+    --yellow: #f5c842;
+    --muted: #6b6456;
+    --border: #111111;
+    --green: #2d8a4e;
+    --ig-pink: #E1306C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Open Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Checkerboard top border */
+  body::before {
+    content: '';
+    display: block;
+    height: 18px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--black) 0px, var(--black) 18px,
+      var(--cream) 18px, var(--cream) 36px
+    );
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+  }
+
+  /* Checkerboard bottom border */
+  body::after {
+    content: '';
+    display: block;
+    height: 18px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--cream) 0px, var(--cream) 18px,
+      var(--black) 18px, var(--black) 36px
+    );
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
+  }
+
+  header {
+    position: sticky;
+    top: 18px;
+    z-index: 100;
+    background: var(--cream);
+    border-bottom: 3px solid var(--black);
+    padding: 0.75rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 5px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .logo span { color: var(--red); font-style: italic; }
+
+  .logo-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Nav links */
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+
+  .nav-links a:hover {
+    border-color: var(--black);
+    background: var(--yellow);
+  }
+
+  .nav-links a.nav-ig {
+    background: var(--black);
+    color: var(--cream);
+    border-color: var(--black);
+  }
+
+  .nav-links a.nav-ig:hover {
+    background: var(--ig-pink);
+    border-color: var(--ig-pink);
+  }
+
+  .lang-toggle { display: flex; gap: 0.5rem; align-items: center; }
+
+  .lang-btn {
+    background: var(--cream);
+    border: 2px solid var(--black);
+    color: var(--black);
+    padding: 0.35rem 1rem;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+
+  .lang-btn.active { background: var(--black); color: var(--cream); }
+  .lang-btn:hover:not(.active) { background: var(--yellow); }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: 2px solid var(--black);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+  }
+
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 2.5rem 4rem;
+  }
+
+  /* HERO */
+  .hero {
+    border: 3px solid var(--black);
+    padding: 2.5rem 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    background: var(--cream);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.88;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title em { font-style: italic; color: var(--red); }
+
+  .hero-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .doodle-cup {
+    font-size: 5rem;
+    line-height: 1;
+    opacity: 0.12;
+    position: absolute;
+    bottom: 1rem; right: 6rem;
+    transform: rotate(-10deg);
+  }
+
+  .stamp-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px; height: 74px;
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    background: var(--yellow);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.4;
+    transform: rotate(-12deg);
+    flex-shrink: 0;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 5px;
+    color: var(--black);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-top: 3px solid var(--black);
+    padding-top: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--black) 0, var(--black) 6px, transparent 6px, transparent 12px);
+  }
+
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 3px solid var(--black);
+  }
+
+  .news-card {
+    background: var(--cream);
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .news-card:hover { background: var(--yellow); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-tag {
+    display: inline-block;
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.2rem 0.6rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cefr-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 22px;
+    padding: 0 6px;
+    border: 2px solid currentColor;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .cefr-A1 { background: #d4edda; color: #155724; }
+  .cefr-A2 { background: #c3e6cb; color: #1a6930; }
+  .cefr-B1 { background: #fff3cd; color: #856404; }
+  .cefr-B2 { background: #ffe8a1; color: #6d4c00; }
+  .cefr-C1 { background: #f8d7da; color: #721c24; }
+  .cefr-C2 { background: #f0b8be; color: #491217; }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    color: var(--black);
+    letter-spacing: 1px;
+  }
+
+  .card-title-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1.4;
+    margin-bottom: 0.6rem;
+    display: none;
+  }
+
+  .card-summary {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .card-summary-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.65;
+    display: none;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #bbb;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* VOCAB */
+  .vocab-section {
+    border: 3px solid var(--black);
+    background: var(--cream);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .vocab-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .vocab-header-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+
+  .vocab-card {
+    padding: 1.2rem 1.4rem;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    transition: background 0.15s;
+    animation: fadeUp 0.4s ease both;
+    position: relative;
+  }
+
+  .vocab-card:hover { background: var(--yellow); }
+
+  .vocab-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: rgba(0,0,0,0.07);
+    line-height: 1;
+    position: absolute;
+    top: 0.5rem; right: 0.8rem;
+  }
+
+  .vocab-word-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.15rem;
+    flex-wrap: wrap;
+  }
+
+  .vocab-word {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--red);
+    letter-spacing: 0.5px;
+  }
+
+  .vocab-cefr {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    height: 18px;
+    border: 1.5px solid currentColor;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+  }
+
+  .vocab-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+  }
+
+  .vocab-def {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .vocab-example {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #bbb;
+    line-height: 1.5;
+  }
+
+  /* LOADING */
+  .loading-overlay {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading-overlay.visible { display: flex; }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid #ccc;
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  .loading-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    border: 3px solid var(--black);
+    color: var(--muted);
+  }
+
+  .empty-icon { font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.25; }
+
+  .empty-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.5rem;
+    color: var(--black);
+    opacity: 0.35;
+  }
+
+  .empty-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+
+  .error-msg {
+    background: #fdf0ef;
+    border: 3px solid var(--red);
+    color: var(--red);
+    padding: 1rem 1.5rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  /* CEFR Legend */
+  .cefr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+  }
+
+  .cefr-legend-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 0.5rem;
+  }
+
+  .cefr-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  /* ============================================
+     21-DAY CHALLENGE SECTION
+     ============================================ */
+
+  .challenge-banner {
+    border: 3px solid var(--black);
+    background: var(--black);
+    color: var(--cream);
+    padding: 2.5rem 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .challenge-banner::before {
+    content: '21';
+    position: absolute;
+    right: -20px;
+    top: -30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16rem;
+    opacity: 0.06;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .challenge-banner-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .challenge-banner .hero-eyebrow {
+    color: var(--yellow);
+  }
+
+  .challenge-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 0.92;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+  }
+
+  .challenge-banner-title em { color: var(--yellow); font-style: italic; }
+
+  .challenge-banner-sub {
+    font-size: 0.9rem;
+    color: rgba(245, 240, 232, 0.7);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .challenge-stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px; height: 90px;
+    border: 3px solid var(--cream);
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--cream);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.1;
+    transform: rotate(-12deg);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Week cards */
+  .challenge-weeks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+  }
+
+  .week-card {
+    padding: 0;
+    border-right: 2px solid var(--black);
+    background: var(--cream);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .week-card:last-child { border-right: none; }
+
+  .week-card-header {
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .week-1 .week-card-header { background: var(--black); color: var(--cream); }
+  .week-2 .week-card-header { background: var(--red); color: var(--cream); }
+  .week-3 .week-card-header { background: var(--yellow); color: var(--black); }
+
+  .week-card-header small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    opacity: 0.7;
+  }
+
+  .week-card-body {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .week-card-body h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.8rem;
+    color: var(--black);
+  }
+
+  .day-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed #ccc;
+    font-size: 0.82rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .day-item:last-child { border-bottom: none; }
+
+  .day-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    border: 2px solid var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    background: var(--cream);
+    color: var(--black);
+  }
+
+  .week-1 .day-num { background: var(--black); color: var(--cream); }
+  .week-2 .day-num { background: var(--red); color: var(--cream); border-color: var(--red); }
+  .week-3 .day-num { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
+
+  .day-item-zh {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* Challenge CTA */
+  .challenge-cta-box {
+    border: 3px solid var(--black);
+    display: flex;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .challenge-cta-left {
+    flex: 1;
+    padding: 2rem 2.5rem;
+    background: var(--cream);
+  }
+
+  .challenge-cta-left h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-cta-left p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .challenge-cta-left p strong { color: var(--black); }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--black);
+    color: var(--cream);
+    border: 3px solid var(--black);
+    padding: 0.7rem 1.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+  }
+
+  .cta-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  .cta-btn:active {
+    transform: translate(0, 0);
+    box-shadow: none;
+  }
+
+  .cta-btn.ig-btn {
+    background: var(--ig-pink);
+    border-color: var(--ig-pink);
+  }
+
+  .cta-btn.ig-btn:hover {
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  .challenge-cta-right {
+    width: 200px;
+    background: var(--yellow);
+    border-left: 3px solid var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .challenge-cta-right .big-hashtag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+  }
+
+  .challenge-cta-right .big-hashtag-sub {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  /* ============================================
+     PROGRESS TRACKER
+     ============================================ */
+
+  .tracker-box {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .tracker-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tracker-header small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .tracker-body {
+    padding: 1.5rem;
+  }
+
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .tracker-day {
+    aspect-ratio: 1;
+    border: 2px solid var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .tracker-day:hover {
+    background: var(--yellow);
+    transform: translate(-1px, -1px);
+    box-shadow: 2px 2px 0 var(--black);
+  }
+
+  .tracker-day.completed {
+    background: var(--black);
+    color: var(--cream);
+  }
+
+  .tracker-day.completed .tracker-day-num { color: var(--cream); }
+  .tracker-day.completed .tracker-day-label { color: rgba(245,240,232,0.5); }
+
+  .tracker-day.completed::after {
+    content: '\2713';
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    font-size: 0.65rem;
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .tracker-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .tracker-day-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .progress-bar-track {
+    flex: 1;
+    height: 14px;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--black) 0px, var(--black) 6px,
+      var(--yellow) 6px, var(--yellow) 12px
+    );
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .progress-text {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--black);
+    white-space: nowrap;
+    min-width: 100px;
+    text-align: right;
+  }
+
+  .progress-text span { color: var(--red); }
+
+  /* ============================================
+     INSTAGRAM SECTION
+     ============================================ */
+
+  .ig-section {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .ig-section-header {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+    color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ig-section-header h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+  }
+
+  .ig-section-header a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 2px solid rgba(255,255,255,0.5);
+    padding: 0.4rem 1rem;
+    transition: all 0.15s;
+  }
+
+  .ig-section-header a:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: white;
+  }
+
+  .ig-feature-card {
+    padding: 1.5rem;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    text-align: center;
+    transition: background 0.15s;
+  }
+
+  .ig-feature-card:last-child { border-right: none; }
+  .ig-feature-card:hover { background: var(--yellow); }
+
+  .ig-feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.7;
+  }
+
+  .ig-feature-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.4rem;
+  }
+
+  .ig-feature-card p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+
+  .site-footer {
+    border-top: 3px solid var(--black);
+    padding: 2rem 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .footer-left strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--black);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+
+  /* Lang visibility */
+  body.lang-zh .card-title { display: none; }
+  body.lang-zh .card-title-zh { display: block; }
+  body.lang-zh .card-summary { display: none; }
+  body.lang-zh .card-summary-zh { display: block; }
+  body.lang-zh .section-label .en-text { display: none; }
+  body.lang-zh .section-label .zh-text { display: inline; }
+  body.lang-en .section-label .zh-text { display: none; }
+  body.lang-zh .day-item-zh { display: block; }
+  body.lang-zh .en-only { display: none; }
+  body.lang-zh .zh-only { display: inline; }
+  body.lang-en .zh-only { display: none; }
+
+  @media (max-width: 900px) {
+    .challenge-weeks { grid-template-columns: 1fr; }
+    .week-card { border-right: none; border-bottom: 2px solid var(--black); }
+    .week-card:last-child { border-bottom: none; }
+    .ig-section { grid-template-columns: 1fr; }
+    .ig-feature-card { border-right: none; }
+    .challenge-cta-box { flex-direction: column; }
+    .challenge-cta-right { width: 100%; border-left: none; border-top: 3px solid var(--black); padding: 1.2rem; }
+  }
+
+  @media (max-width: 640px) {
+    .news-grid { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    header { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+    .header-right { gap: 0.5rem; }
+    .nav-links { display: none; }
+    .nav-links.active { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); border-bottom: 3px solid var(--black); padding: 1rem; z-index: 99; }
+    .nav-links.active a { padding: 0.6rem 1rem; display: block; text-align: center; }
+    .mobile-menu-btn { display: block; }
+    .main { padding: 1.5rem 1rem 4rem; }
+    .hero { padding: 1.5rem; flex-direction: column; }
+    .hero-title { font-size: 4rem; }
+    .challenge-banner { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
+    .challenge-banner-title { font-size: 2.5rem; }
+    .tracker-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .tracker-day-label { font-size: 0.4rem; }
+    .cefr-legend { gap: 0.35rem; }
+    .site-footer { flex-direction: column; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
 </head>
-<body>
-    <!-- Navigation -->
-    <header id="header">
-        <nav>
-            <div class="logo">
-                <span>&#x1F680;</span> CoolingTech English
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#challenge">21-Day Challenge</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#vocab">Vocabulary</a></li>
-                <li><a href="#tracker">My Progress</a></li>
-                <li><a href="#instagram" class="nav-cta">Follow on IG</a></li>
-            </ul>
-            <button class="mobile-menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
-        </nav>
-    </header>
+<body class="lang-en">
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-badge">&#127942; 21-Day Challenge Now Open</div>
-            <h1>Master Tech English in 21 Days</h1>
-            <p>Daily bite-sized challenges designed for engineers, developers, and tech professionals. Build real-world English skills one day at a time.</p>
-            <div class="hero-buttons">
-                <a href="#challenge" class="btn btn-primary">Start the Challenge</a>
-                <a href="#instagram" class="btn btn-outline">&#128247; Follow on Instagram</a>
-            </div>
-        </div>
-    </section>
+<header>
+  <div>
+    <div class="logo">Tech<span>Pulse</span></div>
+    <div class="logo-sub">News &middot; Learn &middot; Challenge</div>
+  </div>
+  <div class="header-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#news">News</a></li>
+      <li><a href="#challenge">21-Day</a></li>
+      <li><a href="#tracker">Progress</a></li>
+      <li><a href="#instagram" class="nav-ig">Instagram</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('zh')">&#32321;&#20013;</button>
+    </div>
+    <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
 
-    <!-- Stats Bar -->
-    <div class="stats-bar">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3>21</h3>
-                <p>Days of Challenges</p>
-            </div>
-            <div class="stat-item">
-                <h3>150+</h3>
-                <p>Tech Vocabulary Words</p>
-            </div>
-            <div class="stat-item">
-                <h3>3</h3>
-                <p>Skill Levels</p>
-            </div>
-            <div class="stat-item">
-                <h3>Free</h3>
-                <p>100% Free to Join</p>
-            </div>
-        </div>
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="en-only">Today's Edition &middot; AI-Curated</span>
+        <span class="zh-only">&#20170;&#26085;&#29256; &middot; AI &#31574;&#23637;</span>
+      </div>
+      <div class="hero-title">TECH<br><em>NEWS.</em></div>
+      <p class="hero-sub">
+        <span class="en-only">Served bright. Morning, reimagined.<br>Bilingual headlines + vocabulary + 21-day challenge.</span>
+        <span class="zh-only">&#38617;&#35486;&#31185;&#25216;&#26032;&#32862; + &#21934;&#23383;&#23416;&#32722; + 21&#22825;&#25361;&#25136;&#35336;&#30059;</span>
+      </p>
+    </div>
+    <div class="stamp-badge">NEW<br>TODAY<br>&#9733;</div>
+    <div class="doodle-cup">&#9749;</div>
+  </div>
+
+  <!-- Last updated -->
+  <div style="font-family:'Open Sans',sans-serif; font-size:0.75rem; color:var(--muted); font-style:italic; margin-bottom:1.5rem;">
+    &#128336; Last updated: <!-- UPDATED_TIME -->Never &mdash; run the GitHub Action to populate news<!-- /UPDATED_TIME -->
+  </div>
+
+  <!-- CEFR Legend -->
+  <div class="cefr-legend">
+    <span class="cefr-legend-label">CEFR Level:</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-A1">A1</span> Beginner</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-A2">A2</span> Elementary</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-B1">B1</span> Intermediate</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-B2">B2</span> Upper-Int.</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-C1">C1</span> Advanced</span>
+    <span class="cefr-legend-item"><span class="cefr-badge cefr-C2">C2</span> Mastery</span>
+  </div>
+
+  <!-- NEWS SECTION -->
+  <div id="news">
+    <div class="section-label">
+      <span class="en-text">Top Stories</span>
+      <span class="zh-text">&#38957;&#26781;&#26032;&#32862;</span>
+    </div>
+    <div class="news-grid">
+      <!-- NEWS_CARDS_START -->
+      <div style="grid-column:1/-1; padding:3rem; text-align:center; font-family:'Open Sans',sans-serif; color:var(--muted); font-style:italic; font-size:0.9rem;">
+        News not yet loaded &mdash; the GitHub Action will populate this automatically every 6 hours.
+      </div>
+      <!-- NEWS_CARDS_END -->
     </div>
 
-    <!-- 21-Day Challenge Section -->
-    <section class="section challenge-section" id="challenge">
-        <div class="section-header fade-in">
-            <span class="label">The Challenge</span>
-            <h2>21-Day Tech English Challenge</h2>
-            <p>Three weeks. Three levels. Transform your tech English skills with daily Instagram challenges.</p>
+    <div class="section-label" style="margin-top:2rem;">
+      <span class="en-text">Vocabulary &amp; Phrases</span>
+      <span class="zh-text">&#35422;&#24409;&#33287;&#29255;&#35486;</span>
+    </div>
+    <div class="vocab-section">
+      <div class="vocab-header">
+        <span>Words to Know</span>
+        <span class="vocab-header-sub">Rated by CEFR difficulty</span>
+      </div>
+      <div class="vocab-grid">
+        <!-- VOCAB_CARDS_START -->
+        <!-- VOCAB_CARDS_END -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       21-DAY CHALLENGE SECTION
+       ============================================ -->
+  <div id="challenge">
+    <div class="section-label">
+      <span class="en-text">21-Day Tech English Challenge</span>
+      <span class="zh-text">21&#22825;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;</span>
+    </div>
+
+    <!-- Challenge Banner -->
+    <div class="challenge-banner">
+      <div class="challenge-banner-text">
+        <div class="hero-eyebrow" style="color:var(--yellow);">
+          <span class="en-only">Free Challenge &middot; Follow on Instagram</span>
+          <span class="zh-only">&#20813;&#36027;&#25361;&#25136; &middot; &#36861;&#36452; Instagram</span>
         </div>
-
-        <div class="challenge-timeline">
-            <!-- Week 1 -->
-            <div class="week-block">
-                <div class="week-card week-1 fade-in">
-                    <span class="week-label">Week 1</span>
-                    <h3>Foundation &mdash; Core Tech Vocabulary</h3>
-                    <ul class="day-list">
-                        <li><span class="day-num">1</span> Dev environment terms (IDE, compiler, runtime)</li>
-                        <li><span class="day-num">2</span> Git &amp; version control vocabulary</li>
-                        <li><span class="day-num">3</span> Data types &amp; variables in English</li>
-                        <li><span class="day-num">4</span> Describing bugs &amp; errors like a pro</li>
-                        <li><span class="day-num">5</span> Reading stack traces &amp; logs in English</li>
-                        <li><span class="day-num">6</span> API terminology essentials</li>
-                        <li><span class="day-num">7</span> Week 1 review &amp; mini quiz</li>
-                    </ul>
-                </div>
-                <div class="week-info fade-in">
-                    <p><strong>Goal:</strong> Build your core tech vocabulary foundation. By the end of Week 1, you'll confidently use 50+ essential tech terms in context.</p>
-                    <p style="margin-top: 1rem;">Share your daily progress on Instagram with <strong>#TechEnglish21</strong> and tag us!</p>
-                </div>
-            </div>
-
-            <!-- Week 2 -->
-            <div class="week-block">
-                <div class="week-info fade-in">
-                    <p><strong>Goal:</strong> Move beyond vocabulary into real communication. Practice writing technical descriptions, pull request comments, and code reviews in English.</p>
-                    <p style="margin-top: 1rem;">Post your writing practice on IG Stories for feedback from our community!</p>
-                </div>
-                <div class="week-card week-2 fade-in">
-                    <span class="week-label">Week 2</span>
-                    <h3>Communication &mdash; Writing &amp; Reading</h3>
-                    <ul class="day-list">
-                        <li><span class="day-num">8</span> Writing clear commit messages</li>
-                        <li><span class="day-num">9</span> Pull request descriptions &amp; reviews</li>
-                        <li><span class="day-num">10</span> Reading technical documentation</li>
-                        <li><span class="day-num">11</span> Writing bug reports in English</li>
-                        <li><span class="day-num">12</span> Email templates for tech teams</li>
-                        <li><span class="day-num">13</span> Slack &amp; async communication tips</li>
-                        <li><span class="day-num">14</span> Week 2 review &amp; writing challenge</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Week 3 -->
-            <div class="week-block">
-                <div class="week-card week-3 fade-in">
-                    <span class="week-label">Week 3</span>
-                    <h3>Confidence &mdash; Speaking &amp; Presenting</h3>
-                    <ul class="day-list">
-                        <li><span class="day-num">15</span> Daily standup meeting phrases</li>
-                        <li><span class="day-num">16</span> Explaining code in English</li>
-                        <li><span class="day-num">17</span> Technical interview vocabulary</li>
-                        <li><span class="day-num">18</span> Presenting a demo or feature</li>
-                        <li><span class="day-num">19</span> Discussing architecture decisions</li>
-                        <li><span class="day-num">20</span> Handling Q&amp;A in meetings</li>
-                        <li><span class="day-num">21</span> Final challenge &amp; celebration!</li>
-                    </ul>
-                </div>
-                <div class="week-info fade-in">
-                    <p><strong>Goal:</strong> Gain confidence in spoken tech English. Practice presenting, discussing, and defending technical decisions in English.</p>
-                    <p style="margin-top: 1rem;">Record a 60-second IG Reel explaining a tech concept for your Day 21 challenge!</p>
-                </div>
-            </div>
+        <div class="challenge-banner-title">
+          <span class="en-only">21 DAYS.<br><em>LEVEL UP.</em></span>
+          <span class="zh-only">21&#22825;.<br><em>&#21319;&#32026;.</em></span>
         </div>
+        <p class="challenge-banner-sub">
+          <span class="en-only">Three weeks of daily tech English challenges. From vocabulary to presentations. Follow us on Instagram for daily posts, tips, and community support.</span>
+          <span class="zh-only">&#19977;&#36913;&#27599;&#26085;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;&#12290;&#24478;&#21934;&#23383;&#21040;&#31777;&#22577;&#12290;&#36861;&#36452;&#25105;&#20497;&#30340; Instagram &#29554;&#21462;&#27599;&#26085;&#36028;&#25991;&#12289;&#25216;&#24039;&#21644;&#31038;&#32676;&#25903;&#25345;&#12290;</span>
+        </p>
+      </div>
+      <div class="challenge-stamp">21<br>DAYS</div>
+    </div>
 
-        <!-- Challenge CTA -->
-        <div class="challenge-cta fade-in">
-            <h3>Ready to Transform Your Tech English?</h3>
-            <p>Follow us on Instagram to get daily challenge posts, tips, and connect with fellow learners!</p>
-            <a href="#instagram" class="btn btn-primary">Join the Challenge</a>
+    <!-- Week Cards -->
+    <div class="challenge-weeks">
+      <!-- WEEK 1 -->
+      <div class="week-card week-1" style="animation-delay:0s">
+        <div class="week-card-header">
+          <span>Week 1</span>
+          <small>Foundation</small>
         </div>
-    </section>
-
-    <!-- Courses Section -->
-    <section class="section" id="courses">
-        <div class="section-header fade-in">
-            <span class="label">What You'll Learn</span>
-            <h2>Course Topics</h2>
-            <p>Practical tech English skills organized into focused learning tracks</p>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Core Tech Vocabulary</span>
+            <span class="zh-only">&#26680;&#24515;&#31185;&#25216;&#35422;&#24409;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">01</span>
+            <div>
+              <span class="en-only">Dev environment terms (IDE, compiler, runtime)</span>
+              <span class="zh-only">&#38283;&#30332;&#29872;&#22659;&#34899;&#35486;&#65288;IDE&#12289;&#32232;&#35695;&#22120;&#12289;&#22519;&#34892;&#29872;&#22659;&#65289;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">02</span>
+            <div>
+              <span class="en-only">Git &amp; version control vocabulary</span>
+              <span class="zh-only">Git &#33287;&#29256;&#26412;&#25511;&#21046;&#35422;&#24409;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">03</span>
+            <div>
+              <span class="en-only">Data types &amp; variables in English</span>
+              <span class="zh-only">&#33521;&#25991;&#20013;&#30340;&#36039;&#26009;&#22411;&#24907;&#33287;&#35722;&#25976;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">04</span>
+            <div>
+              <span class="en-only">Describing bugs &amp; errors like a pro</span>
+              <span class="zh-only">&#23560;&#26989;&#22320;&#25551;&#36848;&#37679;&#35492;&#33287;&#33256;&#34802;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">05</span>
+            <div>
+              <span class="en-only">Reading stack traces &amp; logs</span>
+              <span class="zh-only">&#38321;&#35712;&#22534;&#30090;&#36861;&#36452;&#33287;&#26085;&#35468;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">06</span>
+            <div>
+              <span class="en-only">API terminology essentials</span>
+              <span class="zh-only">API &#34899;&#35486;&#22522;&#30990;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">07</span>
+            <div>
+              <span class="en-only">Week 1 review &amp; mini quiz</span>
+              <span class="zh-only">&#31532;&#19968;&#36913;&#35079;&#32722;&#33287;&#23567;&#28204;&#39511;</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="courses-grid">
-            <div class="course-card fade-in">
-                <div class="course-icon">&#128187;</div>
-                <h3>Programming English</h3>
-                <p>Master code-related vocabulary, naming conventions, code comments, and technical discussions about software development.</p>
-                <div class="course-tags">
-                    <span>Variables</span>
-                    <span>Functions</span>
-                    <span>Code Review</span>
-                    <span>Debugging</span>
-                </div>
-            </div>
-
-            <div class="course-card fade-in">
-                <div class="course-icon">&#128200;</div>
-                <h3>Technical Documentation</h3>
-                <p>Read and write API docs, technical specs, developer guides, and README files with confidence.</p>
-                <div class="course-tags">
-                    <span>API Docs</span>
-                    <span>Specs</span>
-                    <span>README</span>
-                    <span>Guides</span>
-                </div>
-            </div>
-
-            <div class="course-card fade-in">
-                <div class="course-icon">&#128483;&#65039;</div>
-                <h3>Meetings &amp; Presentations</h3>
-                <p>Speak confidently in standups, sprint reviews, tech demos, and architecture discussions.</p>
-                <div class="course-tags">
-                    <span>Standups</span>
-                    <span>Demos</span>
-                    <span>Sprint Review</span>
-                    <span>Q&amp;A</span>
-                </div>
-            </div>
-
-            <div class="course-card fade-in">
-                <div class="course-icon">&#9993;&#65039;</div>
-                <h3>Professional Writing</h3>
-                <p>Write effective emails, Slack messages, project proposals, and status reports in English.</p>
-                <div class="course-tags">
-                    <span>Emails</span>
-                    <span>Slack</span>
-                    <span>Reports</span>
-                    <span>Proposals</span>
-                </div>
-            </div>
+      <!-- WEEK 2 -->
+      <div class="week-card week-2" style="animation-delay:0.1s">
+        <div class="week-card-header">
+          <span>Week 2</span>
+          <small>Communication</small>
         </div>
-    </section>
-
-    <!-- Vocabulary Section -->
-    <section class="section vocab-section" id="vocab">
-        <div class="section-header fade-in">
-            <span class="label">Vocabulary</span>
-            <h2>Essential Tech English Words</h2>
-            <p>Key vocabulary organized by category to accelerate your learning</p>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Writing &amp; Reading</span>
+            <span class="zh-only">&#23531;&#20316;&#33287;&#38321;&#35712;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">08</span>
+            <div>
+              <span class="en-only">Writing clear commit messages</span>
+              <span class="zh-only">&#25776;&#23531;&#28165;&#26224;&#30340; commit &#35338;&#24687;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">09</span>
+            <div>
+              <span class="en-only">Pull request descriptions &amp; reviews</span>
+              <span class="zh-only">PR &#25551;&#36848;&#33287;&#23529;&#26597;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">10</span>
+            <div>
+              <span class="en-only">Reading technical documentation</span>
+              <span class="zh-only">&#38321;&#35712;&#25216;&#34899;&#25991;&#20214;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">11</span>
+            <div>
+              <span class="en-only">Writing bug reports in English</span>
+              <span class="zh-only">&#29992;&#33521;&#25991;&#25776;&#23531; Bug &#22577;&#21578;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">12</span>
+            <div>
+              <span class="en-only">Email templates for tech teams</span>
+              <span class="zh-only">&#31185;&#25216;&#22296;&#38538;&#37109;&#20214;&#27169;&#26495;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">13</span>
+            <div>
+              <span class="en-only">Slack &amp; async communication tips</span>
+              <span class="zh-only">Slack &#33287;&#38750;&#21516;&#27493;&#28317;&#36890;&#25216;&#24039;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">14</span>
+            <div>
+              <span class="en-only">Week 2 review &amp; writing challenge</span>
+              <span class="zh-only">&#31532;&#20108;&#36913;&#35079;&#32722;&#33287;&#23531;&#20316;&#25361;&#25136;</span>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="vocab-categories">
-            <div class="vocab-category fade-in">
-                <h3>&#128736;&#65039; Development</h3>
-                <div class="vocab-grid">
-                    <div class="vocab-item">
-                        <strong>Repository</strong>
-                        <small>A storage location for code</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Deploy</strong>
-                        <small>Release code to production</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Refactor</strong>
-                        <small>Restructure existing code</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Debug</strong>
-                        <small>Find and fix errors</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Iterate</strong>
-                        <small>Repeat a process to improve</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Compile</strong>
-                        <small>Convert code to machine language</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vocab-category fade-in">
-                <h3>&#9729;&#65039; Infrastructure</h3>
-                <div class="vocab-grid">
-                    <div class="vocab-item">
-                        <strong>Scalability</strong>
-                        <small>Ability to handle growth</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Latency</strong>
-                        <small>Delay in data transfer</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Throughput</strong>
-                        <small>Amount of data processed</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Redundancy</strong>
-                        <small>Backup for fault tolerance</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Provision</strong>
-                        <small>Set up resources for use</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Orchestrate</strong>
-                        <small>Coordinate multiple services</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="vocab-category fade-in">
-                <h3>&#128101; Collaboration</h3>
-                <div class="vocab-grid">
-                    <div class="vocab-item">
-                        <strong>Stakeholder</strong>
-                        <small>Person with project interest</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Blocker</strong>
-                        <small>Issue preventing progress</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Milestone</strong>
-                        <small>Significant project checkpoint</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Scope</strong>
-                        <small>Extent of project work</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Prioritize</strong>
-                        <small>Rank tasks by importance</small>
-                    </div>
-                    <div class="vocab-item">
-                        <strong>Delegate</strong>
-                        <small>Assign tasks to others</small>
-                    </div>
-                </div>
-            </div>
+      <!-- WEEK 3 -->
+      <div class="week-card week-3" style="animation-delay:0.2s">
+        <div class="week-card-header">
+          <span>Week 3</span>
+          <small>Confidence</small>
         </div>
-    </section>
-
-    <!-- Progress Tracker Section -->
-    <section class="section tracker-section" id="tracker">
-        <div class="section-header fade-in">
-            <span class="label">Track Progress</span>
-            <h2>My 21-Day Progress</h2>
-            <p>Click on each day to mark it as completed. Your progress is saved locally.</p>
+        <div class="week-card-body">
+          <h3>
+            <span class="en-only">Speaking &amp; Presenting</span>
+            <span class="zh-only">&#21475;&#35498;&#33287;&#31777;&#22577;</span>
+          </h3>
+          <div class="day-item">
+            <span class="day-num">15</span>
+            <div>
+              <span class="en-only">Daily standup meeting phrases</span>
+              <span class="zh-only">&#27599;&#26085;&#31449;&#26371;&#29992;&#35486;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">16</span>
+            <div>
+              <span class="en-only">Explaining your code in English</span>
+              <span class="zh-only">&#29992;&#33521;&#25991;&#35299;&#37323;&#20320;&#30340;&#31243;&#24335;&#30908;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">17</span>
+            <div>
+              <span class="en-only">Technical interview vocabulary</span>
+              <span class="zh-only">&#25216;&#34899;&#38754;&#35430;&#35422;&#24409;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">18</span>
+            <div>
+              <span class="en-only">Presenting a demo or feature</span>
+              <span class="zh-only">&#23637;&#31034; Demo &#25110;&#21151;&#33021;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">19</span>
+            <div>
+              <span class="en-only">Discussing architecture decisions</span>
+              <span class="zh-only">&#35342;&#35542;&#26550;&#27083;&#27770;&#31574;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">20</span>
+            <div>
+              <span class="en-only">Handling Q&amp;A in meetings</span>
+              <span class="zh-only">&#34389;&#29702;&#26371;&#35696;&#20013;&#30340;&#21839;&#31572;</span>
+            </div>
+          </div>
+          <div class="day-item">
+            <span class="day-num">21</span>
+            <div>
+              <span class="en-only">Final challenge &amp; celebration!</span>
+              <span class="zh-only">&#26368;&#32066;&#25361;&#25136;&#33287;&#24950;&#31069;&#65281;</span>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="tracker-container fade-in">
-            <div class="tracker-grid" id="trackerGrid">
-                <!-- Days generated by JavaScript -->
-            </div>
-            <div class="tracker-progress">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <p class="progress-text">
-                    <strong id="completedCount">0</strong> of 21 days completed &mdash;
-                    <strong id="progressPercent">0%</strong>
-                </p>
-            </div>
+    <!-- Challenge CTA -->
+    <div class="challenge-cta-box">
+      <div class="challenge-cta-left">
+        <h3>
+          <span class="en-only">READY TO START?</span>
+          <span class="zh-only">&#28310;&#20633;&#22909;&#20102;&#21966;&#65311;</span>
+        </h3>
+        <p>
+          <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram to get daily challenge posts, vocabulary cards, and connect with fellow tech professionals leveling up their English.</span>
+          <span class="zh-only">&#22312; Instagram &#19978;&#36861;&#36452; <strong>@CoolingTechEnglish</strong>&#65292;&#29554;&#21462;&#27599;&#26085;&#25361;&#25136;&#36028;&#25991;&#12289;&#21934;&#23383;&#21345;&#65292;&#20006;&#33287;&#20854;&#20182;&#25552;&#21319;&#33521;&#25991;&#30340;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#20132;&#27969;&#12290;</span>
+        </p>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
+          &#128247; Follow on Instagram
+        </a>
+      </div>
+      <div class="challenge-cta-right">
+        <div class="big-hashtag">#TechEnglish21</div>
+        <div class="big-hashtag-sub">
+          <span class="en-only">Share your progress</span>
+          <span class="zh-only">&#20998;&#20139;&#20320;&#30340;&#36914;&#24230;</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <!-- Testimonials Section -->
-    <section class="section testimonials">
-        <div class="section-header fade-in">
-            <span class="label">Community</span>
-            <h2>What Learners Say</h2>
-            <p>Join hundreds of tech professionals improving their English</p>
+  <!-- ============================================
+       PROGRESS TRACKER
+       ============================================ -->
+  <div id="tracker">
+    <div class="section-label">
+      <span class="en-text">My Progress</span>
+      <span class="zh-text">&#25105;&#30340;&#36914;&#24230;</span>
+    </div>
+
+    <div class="tracker-box">
+      <div class="tracker-header">
+        <span>21-Day Tracker</span>
+        <small>
+          <span class="en-only">Click to mark days complete</span>
+          <span class="zh-only">&#40670;&#25802;&#27161;&#35352;&#23436;&#25104;</span>
+        </small>
+      </div>
+      <div class="tracker-body">
+        <div class="tracker-grid" id="trackerGrid"></div>
+        <div class="progress-row">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">
+            <span id="completedCount">0</span>/21 &mdash; <span id="progressPercent">0%</span>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="testimonials-grid">
-            <div class="testimonial-card fade-in">
-                <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>"The 21-day challenge completely changed how I communicate with my international team. I went from dreading English standups to actually enjoying them."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">K</div>
-                    <div class="testimonial-info">
-                        <strong>Kevin L.</strong>
-                        <span>Backend Developer</span>
-                    </div>
-                </div>
-            </div>
+  <!-- ============================================
+       INSTAGRAM SECTION
+       ============================================ -->
+  <div id="instagram">
+    <div class="section-label">
+      <span class="en-text">Follow Us</span>
+      <span class="zh-text">&#36861;&#36452;&#25105;&#20497;</span>
+    </div>
 
-            <div class="testimonial-card fade-in">
-                <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>"The daily Instagram format is perfect. Short, focused lessons I can do on my commute. My code review comments are so much clearer now."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">S</div>
-                    <div class="testimonial-info">
-                        <strong>Sarah C.</strong>
-                        <span>Full-Stack Engineer</span>
-                    </div>
-                </div>
-            </div>
+    <div class="ig-section">
+      <div class="ig-section-header">
+        <h3>
+          <span class="en-only">&#128247; @CoolingTechEnglish</span>
+          <span class="zh-only">&#128247; @CoolingTechEnglish</span>
+        </h3>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Follow</a>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#128218;</div>
+        <h4>
+          <span class="en-only">Daily Posts</span>
+          <span class="zh-only">&#27599;&#26085;&#36028;&#25991;</span>
+        </h4>
+        <p>
+          <span class="en-only">New vocabulary, phrases, and tech English tips every day</span>
+          <span class="zh-only">&#27599;&#22825;&#26032;&#21934;&#23383;&#12289;&#29255;&#35486;&#21644;&#31185;&#25216;&#33521;&#25991;&#25216;&#24039;</span>
+        </p>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#127916;</div>
+        <h4>
+          <span class="en-only">Reels &amp; Stories</span>
+          <span class="zh-only">&#30701;&#24433; &amp; &#21205;&#24907;</span>
+        </h4>
+        <p>
+          <span class="en-only">Pronunciation guides and real-world usage examples</span>
+          <span class="zh-only">&#30332;&#38899;&#25351;&#21335;&#21644;&#23526;&#38555;&#29992;&#27861;&#31684;&#20363;</span>
+        </p>
+      </div>
+      <div class="ig-feature-card">
+        <div class="ig-feature-icon">&#128172;</div>
+        <h4>
+          <span class="en-only">Community</span>
+          <span class="zh-only">&#31038;&#32676;</span>
+        </h4>
+        <p>
+          <span class="en-only">Practice with fellow tech professionals worldwide</span>
+          <span class="zh-only">&#33287;&#20840;&#29699;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#19968;&#36215;&#32244;&#32722;</span>
+        </p>
+      </div>
+    </div>
+  </div>
 
-            <div class="testimonial-card fade-in">
-                <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>"I aced my English technical interview after completing the challenge. The vocabulary and speaking practice made all the difference."</p>
-                <div class="testimonial-author">
-                    <div class="testimonial-avatar">M</div>
-                    <div class="testimonial-info">
-                        <strong>Ming W.</strong>
-                        <span>DevOps Engineer</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+</div>
 
-    <!-- Instagram Section -->
-    <section class="section instagram-section" id="instagram">
-        <div class="instagram-content">
-            <div class="section-header fade-in">
-                <span class="label" style="background: rgba(255,255,255,0.1); color: white;">Instagram</span>
-                <h2>Join Us on Instagram</h2>
-                <p>Get daily tech English tips, challenge posts, and connect with our growing community of learners.</p>
-            </div>
+<!-- FOOTER -->
+<div class="site-footer">
+  <div class="footer-left">
+    <strong>Tech<span style="color:var(--red); font-style:italic;">Pulse</span></strong>
+    &copy; 2026 CoolingTech English. All rights reserved.
+  </div>
+  <ul class="footer-links">
+    <li><a href="#news">News</a></li>
+    <li><a href="#challenge">Challenge</a></li>
+    <li><a href="#tracker">Progress</a></li>
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+</div>
 
-            <div class="ig-features fade-in">
-                <div class="ig-feature">
-                    <div class="icon">&#128218;</div>
-                    <h4>Daily Posts</h4>
-                    <p>New vocabulary, phrases, and tips every single day</p>
-                </div>
-                <div class="ig-feature">
-                    <div class="icon">&#127916;</div>
-                    <h4>Reels &amp; Stories</h4>
-                    <p>Pronunciation guides and real-world usage examples</p>
-                </div>
-                <div class="ig-feature">
-                    <div class="icon">&#128172;</div>
-                    <h4>Community</h4>
-                    <p>Practice with fellow tech professionals worldwide</p>
-                </div>
-            </div>
+<script>
+// Language switcher
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
 
-            <div class="fade-in">
-                <a href="https://www.instagram.com/" class="btn btn-instagram" target="_blank" rel="noopener noreferrer">
-                    &#128247; Follow @CoolingTechEnglish
-                </a>
-                <p style="margin-top: 1.5rem; color: rgba(255,255,255,0.5); font-size: 0.9rem;">
-                    Use <strong style="color: rgba(255,255,255,0.8);">#TechEnglish21</strong> to share your challenge progress
-                </p>
-            </div>
-        </div>
-    </section>
+// Mobile menu
+document.getElementById('menuBtn').addEventListener('click', function() {
+  document.getElementById('navLinks').classList.toggle('active');
+});
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3>CoolingTech English</h3>
-                <p>Helping tech professionals communicate confidently in English. Join our 21-day challenge and transform your career.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Challenge</h4>
-                <ul>
-                    <li><a href="#challenge">21-Day Plan</a></li>
-                    <li><a href="#tracker">Track Progress</a></li>
-                    <li><a href="#courses">Course Topics</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#vocab">Vocabulary</a></li>
-                    <li><a href="#courses">Courses</a></li>
-                    <li><a href="#instagram">Instagram</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-                    <li><a href="mailto:contact@coolingtechenglish.com">Email Us</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 CoolingTech English. All rights reserved.</p>
-        </div>
-    </footer>
+document.querySelectorAll('.nav-links a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('navLinks').classList.remove('active');
+  });
+});
 
-    <script>
-        // Mobile menu toggle
-        document.getElementById('menuBtn').addEventListener('click', function() {
-            document.getElementById('navLinks').classList.toggle('active');
-        });
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      var headerHeight = document.querySelector('header').offsetHeight + 18;
+      var pos = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
+    }
+  });
+});
 
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                document.getElementById('navLinks').classList.remove('active');
-            });
-        });
+// ============================================
+// 21-Day Progress Tracker
+// ============================================
+var STORAGE_KEY = 'techPulse21Progress';
 
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            var header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+var dayLabels = [
+  'IDE', 'Git', 'Data', 'Bugs', 'Logs', 'API', 'Quiz',
+  'Commit', 'PR', 'Docs', 'Report', 'Email', 'Slack', 'Review',
+  'Standup', 'Code', 'Interview', 'Demo', 'Arch', 'Q&A', 'Final'
+];
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                var target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    var headerHeight = document.getElementById('header').offsetHeight;
-                    var targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+function getProgress() {
+  try {
+    var saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : {};
+  } catch (e) { return {}; }
+}
 
-        // Intersection Observer for fade-in animations
-        var observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -80px 0px'
-        };
+function saveProgress(progress) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+  catch (e) {}
+}
 
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+function renderTracker() {
+  var grid = document.getElementById('trackerGrid');
+  var progress = getProgress();
+  grid.innerHTML = '';
 
-        document.querySelectorAll('.fade-in').forEach(function(el) {
-            observer.observe(el);
-        });
+  for (var i = 1; i <= 21; i++) {
+    var day = document.createElement('div');
+    day.className = 'tracker-day';
+    if (progress[i]) day.classList.add('completed');
+    day.innerHTML = '<div class="tracker-day-num">' + (i < 10 ? '0' : '') + i + '</div>' +
+                    '<div class="tracker-day-label">' + dayLabels[i - 1] + '</div>';
+    day.setAttribute('data-day', i);
+    day.setAttribute('title', 'Day ' + i + ': ' + dayLabels[i - 1]);
 
-        // 21-Day Progress Tracker
-        var STORAGE_KEY = 'techEnglish21Progress';
+    day.addEventListener('click', function() {
+      var num = parseInt(this.getAttribute('data-day'));
+      var prog = getProgress();
+      if (prog[num]) {
+        delete prog[num];
+        this.classList.remove('completed');
+      } else {
+        prog[num] = true;
+        this.classList.add('completed');
+      }
+      saveProgress(prog);
+      updateProgress();
+    });
 
-        function getProgress() {
-            try {
-                var saved = localStorage.getItem(STORAGE_KEY);
-                return saved ? JSON.parse(saved) : {};
-            } catch (e) {
-                return {};
-            }
-        }
+    grid.appendChild(day);
+  }
 
-        function saveProgress(progress) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-            } catch (e) {
-                // localStorage not available
-            }
-        }
+  updateProgress();
+}
 
-        function renderTracker() {
-            var grid = document.getElementById('trackerGrid');
-            var progress = getProgress();
-            grid.innerHTML = '';
+function updateProgress() {
+  var progress = getProgress();
+  var completed = Object.keys(progress).length;
+  var percent = Math.round((completed / 21) * 100);
+  document.getElementById('completedCount').textContent = completed;
+  document.getElementById('progressPercent').textContent = percent + '%';
+  document.getElementById('progressFill').style.width = percent + '%';
+}
 
-            var dayLabels = [
-                'IDE &\nTerms', 'Git\nVocab', 'Data\nTypes', 'Bugs &\nErrors', 'Stack\nTraces', 'API\nTerms', 'Week 1\nReview',
-                'Commit\nMsgs', 'PR\nReview', 'Tech\nDocs', 'Bug\nReports', 'Email\nWrite', 'Slack\nTips', 'Week 2\nReview',
-                'Standup\nPhrases', 'Explain\nCode', 'Interview\nVocab', 'Demo\nPresent', 'Arch.\nDiscuss', 'Q&A\nSkills', 'Final\nDay!'
-            ];
-
-            for (var i = 1; i <= 21; i++) {
-                var day = document.createElement('div');
-                day.className = 'tracker-day';
-                if (progress[i]) {
-                    day.classList.add('completed');
-                }
-                day.innerHTML = '<span>' + i + '</span><small>' + dayLabels[i-1].split('\n')[0] + '</small>';
-                day.setAttribute('data-day', i);
-                day.setAttribute('title', 'Day ' + i + ': ' + dayLabels[i-1].replace('\n', ' '));
-
-                day.addEventListener('click', function() {
-                    var dayNum = parseInt(this.getAttribute('data-day'));
-                    var prog = getProgress();
-                    if (prog[dayNum]) {
-                        delete prog[dayNum];
-                        this.classList.remove('completed');
-                    } else {
-                        prog[dayNum] = true;
-                        this.classList.add('completed');
-                    }
-                    saveProgress(prog);
-                    updateProgress();
-                });
-
-                grid.appendChild(day);
-            }
-
-            updateProgress();
-        }
-
-        function updateProgress() {
-            var progress = getProgress();
-            var completed = Object.keys(progress).length;
-            var percent = Math.round((completed / 21) * 100);
-
-            document.getElementById('completedCount').textContent = completed;
-            document.getElementById('progressPercent').textContent = percent + '%';
-            document.getElementById('progressFill').style.width = percent + '%';
-        }
-
-        // Initialize tracker
-        renderTracker();
-    </script>
+renderTracker();
+</script>
 </body>
 </html>
