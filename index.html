@@ -384,6 +384,149 @@
     color: var(--muted);
   }
 
+  /* Expand / Study Materials Button */
+  .card-expand-btn {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.6rem;
+    background: var(--black);
+    color: var(--cream);
+    border: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .card-expand-btn:hover { background: var(--red); }
+
+  /* Hidden learning section */
+  .card-learn-section {
+    display: none;
+    margin-top: 0.75rem;
+    border-top: 2px solid var(--black);
+    padding-top: 0.75rem;
+  }
+  .card-learn-section.open { display: block; }
+
+  .card-learn-block {
+    margin-bottom: 1rem;
+  }
+  .card-learn-block:last-child { margin-bottom: 0; }
+
+  .card-learn-heading {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .card-learn-item {
+    padding: 0.4rem 0;
+    border-bottom: 1px dashed #ddd;
+  }
+  .card-learn-item:last-child { border-bottom: none; }
+
+  .card-learn-word {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 0.2rem;
+  }
+
+  .card-learn-term {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--red);
+  }
+
+  .cefr-badge-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    height: 16px;
+    border: 1.5px solid currentColor;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+  }
+
+  .card-learn-zh {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .card-learn-def {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .card-learn-ex {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 0.15rem;
+    line-height: 1.5;
+  }
+
+  /* Quiz section */
+  .card-quiz-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #ddd;
+  }
+  .card-quiz-item:last-child { border-bottom: none; }
+
+  .card-quiz-q {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.3rem;
+  }
+
+  .card-quiz-a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--green);
+    font-weight: 600;
+    padding: 0.3rem 0.6rem;
+    background: #eaf5ee;
+    margin-bottom: 0.3rem;
+  }
+
+  .card-quiz-btn {
+    background: none;
+    border: 1.5px solid var(--muted);
+    color: var(--muted);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .card-quiz-btn:hover {
+    background: var(--black);
+    color: var(--cream);
+    border-color: var(--black);
+  }
+
   /* VOCAB */
   .vocab-section {
     border: 3px solid var(--black);
@@ -1204,7 +1347,7 @@
 
   <!-- Last updated -->
   <div style="font-family:'Open Sans',sans-serif; font-size:0.75rem; color:var(--muted); font-style:italic; margin-bottom:1.5rem;">
-    &#128336; Last updated: <!-- UPDATED_TIME -->Never &mdash; run the GitHub Action to populate news<!-- /UPDATED_TIME -->
+    &#128336; Last updated: <!-- UPDATED_TIME -->Mar 13, 2026 (Sample Data &mdash; real news will load after deployment)<!-- /UPDATED_TIME -->
   </div>
 
   <!-- CEFR Legend -->
@@ -1226,9 +1369,397 @@
     </div>
     <div class="news-grid">
       <!-- NEWS_CARDS_START -->
-      <div style="grid-column:1/-1; padding:3rem; text-align:center; font-family:'Open Sans',sans-serif; color:var(--muted); font-style:italic; font-size:0.9rem;">
-        News not yet loaded &mdash; the GitHub Action will populate this automatically every 6 hours.
+
+    <div class="news-card" style="animation-delay:0s">
+      <div class="card-top">
+        <div class="card-tag">AI</div>
+        <div class="cefr-badge cefr-A2" title="CEFR Reading Level: A2">A2</div>
       </div>
+      <div class="card-title">Google Makes a New AI Tool for Students</div>
+      <div class="card-title-zh">&#35895;&#27468;&#28858;&#23416;&#29983;&#35069;&#20316;&#26032;&#30340; AI &#24037;&#20855;</div>
+      <div class="card-summary">Google made a new AI tool. It helps students learn faster. The tool can answer questions and explain hard topics in simple words.</div>
+      <div class="card-summary-zh">&#35895;&#27468;&#35069;&#20316;&#20102;&#19968;&#20491;&#26032;&#30340; AI &#24037;&#20855;&#12290;&#23427;&#24171;&#21161;&#23416;&#29983;&#26356;&#24555;&#23416;&#32722;&#12290;&#36889;&#20491;&#24037;&#20855;&#21487;&#20197;&#22238;&#31572;&#21839;&#38988;&#65292;&#20006;&#29992;&#31777;&#21934;&#30340;&#35422;&#24409;&#35299;&#37323;&#38627;&#25026;&#30340;&#20027;&#38988;&#12290;</div>
+      <div class="card-footer">
+        <span>&#128240; TechCrunch</span>
+        <span>Mar 13, 2026</span>
+      </div>
+      <button class="card-expand-btn" onclick="var el=this.nextElementSibling; el.classList.toggle('open'); this.textContent=el.classList.contains('open')?'&#9650; Hide Study Materials':'&#9660; Study Materials'">&#9660; Study Materials</button>
+      <div class="card-learn-section">
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128214; Key Vocabulary</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">tool</span>
+                  <span class="cefr-badge-sm cefr-A1">A1</span>
+                  <span class="card-learn-zh">&#24037;&#20855;</span>
+                </div>
+                <div class="card-learn-def">Something you use to do a job</div>
+                <div class="card-learn-ex">&ldquo;This AI tool helps you study English.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">explain</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#35299;&#37323;</span>
+                </div>
+                <div class="card-learn-def">To make something clear or easy to understand</div>
+                <div class="card-learn-ex">&ldquo;The teacher explains the lesson very well.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">topic</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#20027;&#38988;</span>
+                </div>
+                <div class="card-learn-def">A subject that people talk or write about</div>
+                <div class="card-learn-ex">&ldquo;Today&#039;s topic is about technology.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128172; Useful Phrases</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">learn faster</span>
+                  <span class="card-learn-zh">&#23416;&#24471;&#26356;&#24555;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;With this app, you can learn faster than before.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">answer questions</span>
+                  <span class="card-learn-zh">&#22238;&#31572;&#21839;&#38988;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;The chatbot can answer questions about science.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#10067; Comprehension Check</div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q1: What did Google make?</div>
+                <div class="card-quiz-a" style="display:none">Google made a new AI tool for students.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q2: What can the tool do?</div>
+                <div class="card-quiz-a" style="display:none">It can answer questions and explain hard topics in simple words.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" style="animation-delay:0.07s">
+      <div class="card-top">
+        <div class="card-tag">HARDWARE</div>
+        <div class="cefr-badge cefr-A1" title="CEFR Reading Level: A1">A1</div>
+      </div>
+      <div class="card-title">Apple Shows a New iPhone</div>
+      <div class="card-title-zh">&#34315;&#26524;&#23637;&#31034;&#26032; iPhone</div>
+      <div class="card-summary">Apple has a new phone. It is very fast. The camera is better too. Many people want to buy it.</div>
+      <div class="card-summary-zh">&#34315;&#26524;&#26377;&#19968;&#25903;&#26032;&#25163;&#27231;&#12290;&#23427;&#38750;&#24120;&#24555;&#12290;&#30456;&#27231;&#20063;&#26356;&#22909;&#12290;&#24456;&#22810;&#20154;&#24819;&#36023;&#23427;&#12290;</div>
+      <div class="card-footer">
+        <span>&#128240; The Verge</span>
+        <span>Mar 12, 2026</span>
+      </div>
+      <button class="card-expand-btn" onclick="var el=this.nextElementSibling; el.classList.toggle('open'); this.textContent=el.classList.contains('open')?'&#9650; Hide Study Materials':'&#9660; Study Materials'">&#9660; Study Materials</button>
+      <div class="card-learn-section">
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128214; Key Vocabulary</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">fast</span>
+                  <span class="cefr-badge-sm cefr-A1">A1</span>
+                  <span class="card-learn-zh">&#24555;&#30340;</span>
+                </div>
+                <div class="card-learn-def">Moving or working quickly</div>
+                <div class="card-learn-ex">&ldquo;The new phone is very fast.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">camera</span>
+                  <span class="cefr-badge-sm cefr-A1">A1</span>
+                  <span class="card-learn-zh">&#30456;&#27231;</span>
+                </div>
+                <div class="card-learn-def">A device for taking photos</div>
+                <div class="card-learn-ex">&ldquo;I use my phone camera every day.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">buy</span>
+                  <span class="cefr-badge-sm cefr-A1">A1</span>
+                  <span class="card-learn-zh">&#36023;</span>
+                </div>
+                <div class="card-learn-def">To get something by paying money</div>
+                <div class="card-learn-ex">&ldquo;I want to buy a new laptop.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128172; Useful Phrases</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">want to</span>
+                  <span class="card-learn-zh">&#24819;&#35201;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;I want to learn more about AI.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">better than</span>
+                  <span class="card-learn-zh">&#27604;&hellip;&#26356;&#22909;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;This camera is better than my old one.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#10067; Comprehension Check</div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q1: Is the new iPhone fast or slow?</div>
+                <div class="card-quiz-a" style="display:none">The new iPhone is very fast.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q2: What is better on the new phone?</div>
+                <div class="card-quiz-a" style="display:none">The camera is better.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" style="animation-delay:0.14s">
+      <div class="card-top">
+        <div class="card-tag">SOFTWARE</div>
+        <div class="cefr-badge cefr-B1" title="CEFR Reading Level: B1">B1</div>
+      </div>
+      <div class="card-title">Microsoft Updates Windows with AI Features</div>
+      <div class="card-title-zh">&#24494;&#36575;&#26356;&#26032; Windows &#21152;&#20837; AI &#21151;&#33021;</div>
+      <div class="card-summary">Microsoft released a big update for Windows. The update includes new AI features that can help users write emails, create presentations, and organize files more efficiently.</div>
+      <div class="card-summary-zh">&#24494;&#36575;&#37323;&#20986;&#20102; Windows &#30340;&#37325;&#22823;&#26356;&#26032;&#12290;&#27492;&#26356;&#26032;&#21253;&#21547;&#26032;&#30340; AI &#21151;&#33021;&#65292;&#21487;&#20197;&#24171;&#21161;&#29992;&#25142;&#23531;&#38651;&#23376;&#37109;&#20214;&#12289;&#24314;&#31435;&#31777;&#22577;&#20197;&#21450;&#26356;&#26377;&#25928;&#29575;&#22320;&#32068;&#32340;&#27284;&#26696;&#12290;</div>
+      <div class="card-footer">
+        <span>&#128240; Ars Technica</span>
+        <span>Mar 13, 2026</span>
+      </div>
+      <button class="card-expand-btn" onclick="var el=this.nextElementSibling; el.classList.toggle('open'); this.textContent=el.classList.contains('open')?'&#9650; Hide Study Materials':'&#9660; Study Materials'">&#9660; Study Materials</button>
+      <div class="card-learn-section">
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128214; Key Vocabulary</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">update</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#26356;&#26032;</span>
+                </div>
+                <div class="card-learn-def">To make something newer or better</div>
+                <div class="card-learn-ex">&ldquo;Please update your software to the latest version.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">feature</span>
+                  <span class="cefr-badge-sm cefr-B1">B1</span>
+                  <span class="card-learn-zh">&#21151;&#33021;</span>
+                </div>
+                <div class="card-learn-def">An important part or characteristic of something</div>
+                <div class="card-learn-ex">&ldquo;The best feature of this app is voice control.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">efficiently</span>
+                  <span class="cefr-badge-sm cefr-B1">B1</span>
+                  <span class="card-learn-zh">&#26377;&#25928;&#29575;&#22320;</span>
+                </div>
+                <div class="card-learn-def">In a way that works well without wasting time</div>
+                <div class="card-learn-ex">&ldquo;AI helps people work more efficiently.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128172; Useful Phrases</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">released an update</span>
+                  <span class="card-learn-zh">&#37323;&#20986;&#26356;&#26032;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;The company released an update for its software yesterday.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">help users</span>
+                  <span class="card-learn-zh">&#24171;&#21161;&#29992;&#25142;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;The new tool can help users save time on daily tasks.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#10067; Comprehension Check</div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q1: What company released the update?</div>
+                <div class="card-quiz-a" style="display:none">Microsoft released the update.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q2: Name two things the AI features can help with.</div>
+                <div class="card-quiz-a" style="display:none">They can help write emails and create presentations.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" style="animation-delay:0.21s">
+      <div class="card-top">
+        <div class="card-tag">CYBERSECURITY</div>
+        <div class="cefr-badge cefr-A2" title="CEFR Reading Level: A2">A2</div>
+      </div>
+      <div class="card-title">Hackers Attack a Big Company</div>
+      <div class="card-title-zh">&#39405;&#23458;&#25915;&#25802;&#19968;&#23478;&#22823;&#20844;&#21496;</div>
+      <div class="card-summary">Hackers attacked a big tech company last week. They stole some user data. The company says it is fixing the problem now.</div>
+      <div class="card-summary-zh">&#39405;&#23458;&#19978;&#36913;&#25915;&#25802;&#20102;&#19968;&#23478;&#22823;&#22411;&#31185;&#25216;&#20844;&#21496;&#12290;&#20182;&#20497;&#31434;&#21462;&#20102;&#19968;&#20123;&#29992;&#25142;&#36039;&#26009;&#12290;&#35442;&#20844;&#21496;&#34920;&#31034;&#27491;&#22312;&#20462;&#24489;&#21839;&#38988;&#12290;</div>
+      <div class="card-footer">
+        <span>&#128240; Reuters</span>
+        <span>Mar 11, 2026</span>
+      </div>
+      <button class="card-expand-btn" onclick="var el=this.nextElementSibling; el.classList.toggle('open'); this.textContent=el.classList.contains('open')?'&#9650; Hide Study Materials':'&#9660; Study Materials'">&#9660; Study Materials</button>
+      <div class="card-learn-section">
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128214; Key Vocabulary</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">hacker</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#39405;&#23458;</span>
+                </div>
+                <div class="card-learn-def">A person who breaks into computer systems</div>
+                <div class="card-learn-ex">&ldquo;The hacker tried to steal passwords.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">data</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#36039;&#26009;</span>
+                </div>
+                <div class="card-learn-def">Information stored on a computer</div>
+                <div class="card-learn-ex">&ldquo;Your personal data should be kept safe.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">attack</span>
+                  <span class="cefr-badge-sm cefr-A2">A2</span>
+                  <span class="card-learn-zh">&#25915;&#25802;</span>
+                </div>
+                <div class="card-learn-def">To try to hurt or damage something</div>
+                <div class="card-learn-ex">&ldquo;Hackers attack websites to steal information.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128172; Useful Phrases</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">fix the problem</span>
+                  <span class="card-learn-zh">&#20462;&#24489;&#21839;&#38988;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;The IT team is working to fix the problem.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">stole data</span>
+                  <span class="card-learn-zh">&#31434;&#21462;&#36039;&#26009;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;The hackers stole data from thousands of users.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#10067; Comprehension Check</div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q1: What did the hackers steal?</div>
+                <div class="card-quiz-a" style="display:none">They stole some user data.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q2: Is the company fixing the problem?</div>
+                <div class="card-quiz-a" style="display:none">Yes, the company says it is fixing the problem now.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-card" style="animation-delay:0.28s">
+      <div class="card-top">
+        <div class="card-tag">AI</div>
+        <div class="cefr-badge cefr-B2" title="CEFR Reading Level: B2">B2</div>
+      </div>
+      <div class="card-title">OpenAI Launches Advanced Reasoning Model for Enterprise Customers</div>
+      <div class="card-title-zh">OpenAI &#28858;&#20225;&#26989;&#23458;&#25142;&#25512;&#20986;&#36914;&#38542;&#25512;&#29702;&#27169;&#22411;</div>
+      <div class="card-summary">OpenAI has unveiled a sophisticated new reasoning model designed specifically for enterprise applications. The model demonstrates remarkable improvements in complex problem-solving, code generation, and data analysis.</div>
+      <div class="card-summary-zh">OpenAI &#25512;&#20986;&#20102;&#19968;&#20491;&#23560;&#28858;&#20225;&#26989;&#25033;&#29992;&#35373;&#35336;&#30340;&#31934;&#23494;&#26032;&#25512;&#29702;&#27169;&#22411;&#12290;&#35442;&#27169;&#22411;&#22312;&#35079;&#38620;&#21839;&#38988;&#35299;&#27770;&#12289;&#31243;&#24335;&#30908;&#29983;&#25104;&#21644;&#25976;&#25818;&#20998;&#26512;&#26041;&#38754;&#34920;&#29694;&#20986;&#39023;&#33879;&#36914;&#27493;&#12290;</div>
+      <div class="card-footer">
+        <span>&#128240; Wired</span>
+        <span>Mar 13, 2026</span>
+      </div>
+      <button class="card-expand-btn" onclick="var el=this.nextElementSibling; el.classList.toggle('open'); this.textContent=el.classList.contains('open')?'&#9650; Hide Study Materials':'&#9660; Study Materials'">&#9660; Study Materials</button>
+      <div class="card-learn-section">
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128214; Key Vocabulary</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">sophisticated</span>
+                  <span class="cefr-badge-sm cefr-B2">B2</span>
+                  <span class="card-learn-zh">&#31934;&#23494;&#30340;</span>
+                </div>
+                <div class="card-learn-def">Complex, advanced, and well-developed</div>
+                <div class="card-learn-ex">&ldquo;This is a very sophisticated piece of software.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">leverage</span>
+                  <span class="cefr-badge-sm cefr-B2">B2</span>
+                  <span class="card-learn-zh">&#21033;&#29992;</span>
+                </div>
+                <div class="card-learn-def">To use something to maximum advantage</div>
+                <div class="card-learn-ex">&ldquo;Companies leverage AI to improve their services.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">enterprise</span>
+                  <span class="cefr-badge-sm cefr-B2">B2</span>
+                  <span class="card-learn-zh">&#20225;&#26989;</span>
+                </div>
+                <div class="card-learn-def">A large business or company</div>
+                <div class="card-learn-ex">&ldquo;The software is designed for enterprise customers.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#128172; Useful Phrases</div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">designed specifically for</span>
+                  <span class="card-learn-zh">&#23560;&#28858;&hellip;&#35373;&#35336;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;This course is designed specifically for beginners.&rdquo;</div>
+              </div>
+              <div class="card-learn-item">
+                <div class="card-learn-word">
+                  <span class="card-learn-term">potentially transforming</span>
+                  <span class="card-learn-zh">&#26377;&#21487;&#33021;&#25913;&#35722;</span>
+                </div>
+                <div class="card-learn-ex">&ldquo;AI is potentially transforming every industry.&rdquo;</div>
+              </div>
+        </div>
+        <div class="card-learn-block">
+          <div class="card-learn-heading">&#10067; Comprehension Check</div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q1: Who is the new model designed for?</div>
+                <div class="card-quiz-a" style="display:none">It is designed specifically for enterprise customers.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+              <div class="card-quiz-item">
+                <div class="card-quiz-q">Q2: What three areas does the model improve in?</div>
+                <div class="card-quiz-a" style="display:none">Complex problem-solving, code generation, and data analysis.</div>
+                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+              </div>
+        </div>
+      </div>
+    </div>
+
       <!-- NEWS_CARDS_END -->
     </div>
 
@@ -1243,6 +1774,56 @@
       </div>
       <div class="vocab-grid">
         <!-- VOCAB_CARDS_START -->
+    <div class="vocab-card" style="animation-delay:0s">
+      <div class="vocab-num">01</div>
+      <div class="vocab-word-line">
+        <span class="vocab-word">tool</span>
+        <span class="vocab-cefr cefr-A1">A1</span>
+      </div>
+      <div class="vocab-zh">&#24037;&#20855;</div>
+      <div class="vocab-def">Something you use to do a job</div>
+      <div class="vocab-example">&ldquo;This AI tool helps you study English.&rdquo;</div>
+    </div>
+    <div class="vocab-card" style="animation-delay:0.07s">
+      <div class="vocab-num">02</div>
+      <div class="vocab-word-line">
+        <span class="vocab-word">update</span>
+        <span class="vocab-cefr cefr-A2">A2</span>
+      </div>
+      <div class="vocab-zh">&#26356;&#26032;</div>
+      <div class="vocab-def">To make something newer or better</div>
+      <div class="vocab-example">&ldquo;Please update your app to get new features.&rdquo;</div>
+    </div>
+    <div class="vocab-card" style="animation-delay:0.14s">
+      <div class="vocab-num">03</div>
+      <div class="vocab-word-line">
+        <span class="vocab-word">data</span>
+        <span class="vocab-cefr cefr-A2">A2</span>
+      </div>
+      <div class="vocab-zh">&#36039;&#26009;</div>
+      <div class="vocab-def">Information stored on a computer</div>
+      <div class="vocab-example">&ldquo;Keep your personal data safe online.&rdquo;</div>
+    </div>
+    <div class="vocab-card" style="animation-delay:0.21s">
+      <div class="vocab-num">04</div>
+      <div class="vocab-word-line">
+        <span class="vocab-word">feature</span>
+        <span class="vocab-cefr cefr-B1">B1</span>
+      </div>
+      <div class="vocab-zh">&#21151;&#33021;</div>
+      <div class="vocab-def">An important part of something</div>
+      <div class="vocab-example">&ldquo;The best feature is the AI assistant.&rdquo;</div>
+    </div>
+    <div class="vocab-card" style="animation-delay:0.28s">
+      <div class="vocab-num">05</div>
+      <div class="vocab-word-line">
+        <span class="vocab-word">leverage</span>
+        <span class="vocab-cefr cefr-B2">B2</span>
+      </div>
+      <div class="vocab-zh">&#21033;&#29992;</div>
+      <div class="vocab-def">To use something to maximum advantage</div>
+      <div class="vocab-example">&ldquo;Companies leverage AI to grow faster.&rdquo;</div>
+    </div>
         <!-- VOCAB_CARDS_END -->
       </div>
     </div>
