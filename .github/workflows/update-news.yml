@@ -2,7 +2,7 @@ name: Update News
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # daily at UTC 06:00 (Taiwan 14:00)
+    - cron: '30 0 * * *'  # daily at UTC 00:30 (Taiwan 08:30)
   workflow_dispatch:         # manual trigger button
 
 jobs:
