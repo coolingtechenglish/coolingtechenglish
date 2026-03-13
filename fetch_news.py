@@ -86,15 +86,23 @@ def fetch_news():
     print("Fetching news from Gemini API with Google Search grounding...")
     client = genai.Client(api_key=API_KEY)
 
+    contents = [
+        types.Content(
+            role="user",
+            parts=[types.Part.from_text(text=PROMPT)],
+        ),
+    ]
+    tools = [
+        types.Tool(google_search=types.GoogleSearch()),
+    ]
+    config = types.GenerateContentConfig(
+        tools=tools,
+    )
+
     response = client.models.generate_content(
         model="gemini-2.0-flash",
-        contents=PROMPT,
-        config=types.GenerateContentConfig(
-            tools=[
-                types.Tool(google_search=types.GoogleSearch())
-            ],
-            temperature=0.7,
-        ),
+        contents=contents,
+        config=config,
     )
 
     full_text = response.text
