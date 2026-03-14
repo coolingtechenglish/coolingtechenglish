@@ -72,15 +72,17 @@
     justify-content: space-between;
   }
 
-  /* Header progress bar — sits right under the header's black border */
+  /* Header progress bar — inside header, below the black border */
   .header-progress {
-    position: sticky;
-    top: calc(18px + 56px); /* ticker + header height approx */
-    z-index: 99;
+    position: absolute;
+    bottom: -9px; /* 3px border + 6px bar */
+    left: 0;
+    right: 0;
     height: 6px;
     background: #e0e0e0;
     overflow: hidden;
     display: none; /* hidden until challenge starts */
+    z-index: 101;
   }
   .header-progress-fill {
     height: 100%;
@@ -1773,10 +1775,10 @@
     </div>
     <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
   </div>
+  <div class="header-progress" id="headerProgress">
+    <div class="header-progress-fill" id="headerProgressFill"></div>
+  </div>
 </header>
-<div class="header-progress" id="headerProgress">
-  <div class="header-progress-fill" id="headerProgressFill"></div>
-</div>
 
 <div class="main">
 
