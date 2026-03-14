@@ -1,102 +1,221 @@
 import os
 import json
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime
+from urllib.request import urlopen, Request
+from urllib.error import URLError
+from html import unescape
 
 from google import genai
 from google.genai import types
 
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
-PROMPT = """You are a tech English teacher. Search for the 5 most important technology news stories from today or the past 2 days.
+# RSS feeds from the 4 target sources
+RSS_FEEDS = {
+    "TechCrunch": "https://techcrunch.com/feed/",
+    "The Verge": "https://www.theverge.com/rss/index.xml",
+    "Wired": "https://www.wired.com/feed/rss",
+    "CNBC Tech": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
+}
 
-Recommended sources: TechCrunch, The Verge, Ars Technica, Wired, Reuters Technology, BBC Technology, CNBC Tech, Engadget.
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (compatible; CoolingTechEnglish/1.0)"
+}
+
+
+def strip_html(text):
+    """Remove HTML tags and decode entities."""
+    if not text:
+        return ""
+    text = re.sub(r"<[^>]+>", "", text)
+    text = unescape(text)
+    return text.strip()
+
+
+def fetch_rss_articles():
+    """Fetch real articles from RSS feeds and return a list of dicts."""
+    all_articles = []
+
+    for source, url in RSS_FEEDS.items():
+        try:
+            print(f"Fetching RSS from {source}...")
+            req = Request(url, headers=HEADERS)
+            with urlopen(req, timeout=15) as resp:
+                xml_bytes = resp.read()
+
+            root = ET.fromstring(xml_bytes)
+
+            # Handle both RSS 2.0 and Atom feeds
+            ns = {"atom": "http://www.w3.org/2005/Atom"}
+            items = root.findall(".//item")  # RSS 2.0
+            if not items:
+                items = root.findall(".//atom:entry", ns)  # Atom
+
+            count = 0
+            for item in items:
+                if count >= 5:  # max 5 per source
+                    break
+
+                # RSS 2.0 fields
+                title = item.findtext("title")
+                link = item.findtext("link")
+                desc = item.findtext("description")
+                pub_date = item.findtext("pubDate")
+
+                # Atom fields (fallback)
+                if not title:
+                    title = item.findtext("atom:title", namespaces=ns)
+                if not link:
+                    link_el = item.find("atom:link", ns)
+                    if link_el is not None:
+                        link = link_el.get("href")
+                if not desc:
+                    desc = item.findtext("atom:summary", namespaces=ns)
+                    if not desc:
+                        desc = item.findtext("atom:content", namespaces=ns)
+                if not pub_date:
+                    pub_date = item.findtext("atom:updated", namespaces=ns)
+
+                if not title or not link:
+                    continue
+
+                # The Verge Atom: link text might be empty, get from href
+                if link and not link.startswith("http"):
+                    continue
+
+                all_articles.append({
+                    "source": source,
+                    "title": strip_html(title).strip(),
+                    "url": link.strip(),
+                    "description": strip_html(desc or "")[:500],
+                    "pub_date": (pub_date or "").strip(),
+                })
+                count += 1
+
+        except (URLError, ET.ParseError, Exception) as e:
+            print(f"Warning: Failed to fetch {source}: {e}")
+            continue
+
+    print(f"Total RSS articles fetched: {len(all_articles)}")
+    return all_articles
+
+
+def build_gemini_prompt(rss_articles):
+    """Build prompt with real article data for Gemini to process."""
+    articles_text = ""
+    for i, a in enumerate(rss_articles, 1):
+        articles_text += f"""
+Article {i}:
+- Source: {a['source']}
+- Title: {a['title']}
+- URL: {a['url']}
+- Description: {a['description']}
+- Published: {a['pub_date']}
+"""
+
+    return f"""You are an English teacher specializing in tech English for Taiwanese learners.
+
+Below are REAL tech news articles fetched from RSS feeds today. Select the 5 most interesting and diverse articles from this list. Use ONLY the URLs provided — do NOT invent or modify any URL.
+
+{articles_text}
+
+For EACH of the 5 selected articles, create English learning materials:
 
 IMPORTANT CEFR difficulty requirements:
 - 4 articles must be simplified to A1-B1 level (use short, simple sentences; common vocabulary)
 - 1 article can be B2 level (more complex sentences allowed)
-- For A1-A2 articles: use only simple present/past tense, short sentences (under 15 words), basic vocabulary
-- For B1 articles: slightly longer sentences OK, but avoid complex grammar
+- For A1-A2: only simple present/past tense, short sentences (under 15 words), basic vocabulary
+- For B1: slightly longer sentences OK, but avoid complex grammar
 
 For EACH article, provide:
-1. The news summary in BOTH English and Traditional Chinese
-2. Exactly 3 key vocabulary words from the article (with CEFR level, Chinese translation, definition, example sentence)
-3. Exactly 2 useful phrases from the article (with Chinese translation and example sentence)
-4. Exactly 2 reading comprehension questions with answers
+1. A 4-6 sentence English summary rewritten at the appropriate CEFR level. Make it substantial — give enough detail for learners to understand the full story.
+2. A 2-3 sentence Traditional Chinese summary of the same content.
+3. Exactly 3 key vocabulary words (with CEFR level, Chinese translation, definition, example sentence)
+4. Exactly 2 useful phrases (with Chinese translation and example sentence)
+5. Exactly 2 reading comprehension questions with answers
 
-Respond with ONLY a raw JSON object — no markdown, no backticks, no explanation. Use this exact structure:
+Respond with ONLY a raw JSON object — no markdown, no backticks, no explanation:
 
-{
+{{
   "articles": [
-    {
+    {{
       "tag": "category like AI/Hardware/Software/Cybersecurity/Startup",
       "cefr": "A2",
-      "title_en": "English title (simplified for the CEFR level)",
-      "title_zh": "Traditional Chinese title",
-      "summary_en": "2-3 sentence English summary written at the specified CEFR level",
-      "summary_zh": "2-3 sentence Traditional Chinese summary",
-      "source": "source name like TechCrunch",
-      "url": "https://full-url-to-the-original-article",
-      "date": "Mar 13, 2026",
+      "title_en": "Simplified English title at the CEFR level",
+      "title_zh": "繁體中文標題",
+      "summary_en": "4-6 sentence English summary written at the specified CEFR level. Make it detailed enough for learners.",
+      "summary_zh": "2-3 sentence 繁體中文摘要",
+      "source": "exact source name from the RSS data",
+      "url": "exact URL from the RSS data — DO NOT change it",
+      "date": "Mar 14, 2026",
       "vocabulary": [
-        {
+        {{
           "word": "English word",
-          "zh": "Traditional Chinese translation",
+          "zh": "繁體中文翻譯",
           "cefr": "A2",
           "definition": "Brief English definition using simple words",
           "example": "Example sentence using the word"
-        }
+        }}
       ],
       "phrases": [
-        {
+        {{
           "phrase": "English phrase",
-          "zh": "Traditional Chinese translation",
+          "zh": "繁體中文翻譯",
           "example": "Example sentence using the phrase"
-        }
+        }}
       ],
       "quiz": [
-        {
+        {{
           "question": "Reading comprehension question in English",
           "answer": "Short answer in English"
-        }
+        }}
       ]
-    }
+    }}
   ],
   "vocabulary": [
-    {
+    {{
       "word": "English word or phrase",
       "cefr": "B1",
-      "zh": "Traditional Chinese translation",
+      "zh": "繁體中文翻譯",
       "definition": "Brief English definition",
       "example": "Example sentence from the news context"
-    }
+    }}
   ]
-}
+}}
 
-Rules:
+CRITICAL RULES:
+- Use ONLY the exact URLs from the RSS data above. NEVER invent a URL.
 - Each article MUST have exactly 3 vocabulary items, 2 phrases, and 2 quiz questions.
-- Each article MUST include the full URL to the original source article (not a search URL).
 - The top-level "vocabulary" array should contain 5 of the most useful words across all articles.
 - 4 articles at A1-B1 level, 1 article at B2 level.
 - All Chinese must be Traditional Chinese (繁體中文).
+- summary_en must be 4-6 sentences, not shorter.
 - Return raw JSON only — nothing else."""
 
 
 def fetch_news():
-    print("Fetching news from Gemini API with Google Search grounding...")
+    # Step 1: Get real articles from RSS
+    rss_articles = fetch_rss_articles()
+    if len(rss_articles) < 5:
+        raise RuntimeError(f"Only got {len(rss_articles)} articles from RSS. Need at least 5.")
+
+    # Step 2: Send to Gemini for processing into learning materials
+    print("Sending articles to Gemini for learning material generation...")
     client = genai.Client(api_key=API_KEY)
+
+    prompt = build_gemini_prompt(rss_articles)
 
     contents = [
         types.Content(
             role="user",
-            parts=[types.Part.from_text(text=PROMPT)],
+            parts=[types.Part.from_text(text=prompt)],
         ),
     ]
-    tools = [
-        types.Tool(google_search=types.GoogleSearch()),
-    ]
+
     config = types.GenerateContentConfig(
-        tools=tools,
+        thinking_config=types.ThinkingConfig(thinking_level="MINIMAL"),
     )
 
     response = client.models.generate_content(
@@ -123,6 +242,20 @@ def fetch_news():
     articles = news_data.get("articles", [])
     vocab = news_data.get("vocabulary", [])
     print(f"Got {len(articles)} articles and {len(vocab)} vocab items.")
+
+    # Verify URLs are from RSS (safety check)
+    rss_urls = {a["url"] for a in rss_articles}
+    for article in articles:
+        if article.get("url") not in rss_urls:
+            print(f"WARNING: URL not from RSS: {article.get('url')}")
+            # Try to find a matching article by title similarity
+            for ra in rss_articles:
+                if ra["title"].lower()[:30] in article.get("title_en", "").lower() or \
+                   article.get("source", "") == ra["source"]:
+                    article["url"] = ra["url"]
+                    print(f"  -> Fixed to: {ra['url']}")
+                    break
+
     return news_data
 
 
