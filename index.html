@@ -740,6 +740,112 @@
   }
 
   /* ============================================
+     REGISTRATION MODAL
+     ============================================ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-box {
+    background: var(--cream);
+    border: 3px solid var(--black);
+    max-width: 420px;
+    width: 90%;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-body label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .modal-body input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .modal-body input:focus {
+    border-color: var(--red);
+  }
+
+  .modal-submit {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--black);
+    color: var(--cream);
+    border: 3px solid var(--black);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .modal-submit:hover {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .modal-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .modal-error {
+    color: var(--red);
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: none;
+  }
+
+  /* ============================================
      21-DAY CHALLENGE SECTION
      ============================================ */
 
@@ -815,95 +921,409 @@
     z-index: 1;
   }
 
-  /* Week cards */
-  .challenge-weeks {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+  /* Start Challenge Button */
+  .challenge-start-box {
     border: 3px solid var(--black);
+    padding: 2.5rem;
+    text-align: center;
     margin-bottom: 2rem;
+    background: var(--cream);
   }
 
-  .week-card {
-    padding: 0;
-    border-right: 2px solid var(--black);
-    background: var(--cream);
+  .challenge-start-box p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .start-challenge-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--red);
+    color: var(--cream);
+    border: 3px solid var(--red);
+    padding: 0.9rem 2.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .start-challenge-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--black);
+  }
+
+  /* Daily Tasks Box */
+  .daily-tasks-box {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
     animation: fadeUp 0.5s ease both;
   }
 
-  .week-card:last-child { border-right: none; }
-
-  .week-card-header {
+  .daily-tasks-header {
+    background: var(--black);
+    color: var(--cream);
     padding: 0.75rem 1.5rem;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
     letter-spacing: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .week-1 .week-card-header { background: var(--black); color: var(--cream); }
-  .week-2 .week-card-header { background: var(--red); color: var(--cream); }
-  .week-3 .week-card-header { background: var(--yellow); color: var(--black); }
-
-  .week-card-header small {
+  .daily-tasks-date {
     font-family: 'Open Sans', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 600;
+    font-size: 0.65rem;
+    font-weight: 400;
     letter-spacing: 1px;
     opacity: 0.7;
+    font-style: italic;
   }
 
-  .week-card-body {
+  .daily-tasks-body {
     padding: 1.2rem 1.5rem;
   }
 
-  .week-card-body h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 2px;
-    margin-bottom: 0.8rem;
+  .daily-task {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s;
+    background: var(--cream);
+  }
+
+  .daily-task.completed {
+    background: var(--black);
+    border-color: var(--black);
+  }
+
+  .daily-task.completed .task-name { color: var(--cream); }
+  .daily-task.completed .task-desc { color: rgba(245,240,232,0.5); }
+  .daily-task.completed .task-points { color: var(--yellow); }
+
+  .task-check {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--black);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+
+  .daily-task.completed .task-check {
+    background: var(--yellow);
+    border-color: var(--yellow);
+  }
+
+  .daily-task.completed .task-check::after {
+    content: '\2713';
+    color: var(--black);
+    font-weight: 700;
+  }
+
+  .task-info { flex: 1; }
+
+  .task-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
     color: var(--black);
   }
 
-  .day-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    padding: 0.55rem 0;
-    border-bottom: 1px dashed #ccc;
-    font-size: 0.82rem;
-    color: var(--ink);
-    line-height: 1.5;
+  .task-desc {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    color: var(--muted);
   }
 
-  .day-item:last-child { border-bottom: none; }
+  .task-points {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
 
-  .day-num {
+  .daily-points-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 2px dashed #ccc;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .daily-points-bar strong { color: var(--red); }
+
+  /* Streak Display */
+  .streak-display {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 26px;
-    height: 26px;
-    border: 2px solid var(--black);
+    flex-direction: column;
+    width: 90px; height: 90px;
+    border: 3px solid var(--cream);
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--cream);
+    transform: rotate(-12deg);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .streak-display.on-fire { background: var(--yellow); border-color: var(--black); }
+  .streak-display.on-fire .streak-number { color: var(--black); }
+  .streak-display.on-fire .streak-label { color: var(--black); }
+
+  .streak-fire { font-size: 1rem; line-height: 1; }
+  .streak-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--cream);
+  }
+  .streak-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.45rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.7);
+  }
+
+  /* Calendar Grid */
+  .challenge-calendar {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .calendar-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .calendar-header small {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .calendar-body { padding: 1.5rem; }
+
+  .calendar-week-label {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 0.85rem;
-    letter-spacing: 1px;
-    flex-shrink: 0;
-    background: var(--cream);
-    color: var(--black);
-  }
-
-  .week-1 .day-num { background: var(--black); color: var(--cream); }
-  .week-2 .day-num { background: var(--red); color: var(--cream); border-color: var(--red); }
-  .week-3 .day-num { background: var(--yellow); color: var(--black); border-color: var(--yellow); }
-
-  .day-item-zh {
-    display: none;
-    font-size: 0.8rem;
+    letter-spacing: 3px;
     color: var(--muted);
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
   }
+  .calendar-week-label:first-child { margin-top: 0; }
+
+  .calendar-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-bottom: 0.5rem;
+  }
+
+  .cal-day {
+    aspect-ratio: 1;
+    border: 2px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--cream);
+    position: relative;
+    transition: all 0.2s;
+  }
+
+  .cal-day.today {
+    border-color: var(--yellow);
+    border-width: 3px;
+    background: #fffbe6;
+    animation: pulseDay 2s ease-in-out infinite;
+  }
+
+  .cal-day.completed {
+    background: var(--black);
+    border-color: var(--black);
+  }
+
+  .cal-day.completed .cal-day-num { color: var(--cream); }
+  .cal-day.completed .cal-day-label { color: rgba(245,240,232,0.5); }
+
+  .cal-day.completed::after {
+    content: '\2713';
+    position: absolute;
+    top: 2px; right: 4px;
+    font-size: 0.6rem;
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .cal-day.missed {
+    background: #fdf0ef;
+    border-color: #e8c4c0;
+  }
+
+  .cal-day.missed::after {
+    content: '\2717';
+    position: absolute;
+    top: 2px; right: 4px;
+    font-size: 0.55rem;
+    color: var(--red);
+    opacity: 0.5;
+  }
+
+  .cal-day.milestone { border-color: var(--yellow); border-width: 3px; }
+  .cal-day.completed.milestone { border-color: var(--yellow); }
+
+  .cal-day.future { opacity: 0.4; }
+
+  .cal-day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .cal-day-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.45rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  @keyframes pulseDay {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,200,66,0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(245,200,66,0); }
+  }
+
+  /* Badges */
+  .badges-box {
+    border: 3px solid var(--black);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .badges-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.75rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+  }
+
+  .badges-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    padding: 0;
+  }
+
+  .badge-card {
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    border-right: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+    transition: all 0.2s;
+  }
+
+  .badge-card:nth-child(5n) { border-right: none; }
+  .badge-card:nth-last-child(-n+5) { border-bottom: none; }
+
+  .badge-card.locked {
+    opacity: 0.25;
+    filter: grayscale(1);
+  }
+
+  .badge-card.unlocked {
+    background: #fffbe6;
+  }
+
+  .badge-icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
+
+  .badge-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--black);
+    line-height: 1.3;
+  }
+
+  /* Toast Notifications */
+  .toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .toast {
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.8rem 1.2rem;
+    border: 2px solid var(--yellow);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    animation: fadeUp 0.3s ease;
+    max-width: 300px;
+  }
+
+  .toast-icon { font-size: 1.3rem; }
+
+  @keyframes celebrate {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    60% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  .celebrating { animation: celebrate 0.5s ease; }
 
   /* Challenge CTA */
   .challenge-cta-box {
@@ -996,109 +1416,12 @@
     font-weight: 600;
   }
 
-  /* ============================================
-     PROGRESS TRACKER
-     ============================================ */
-
-  .tracker-box {
-    border: 3px solid var(--black);
-    margin-bottom: 2rem;
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .tracker-header {
-    background: var(--black);
-    color: var(--cream);
-    padding: 0.75rem 1.5rem;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .tracker-header small {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    opacity: 0.6;
-    font-style: italic;
-  }
-
-  .tracker-body {
-    padding: 1.5rem;
-  }
-
-  .tracker-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-    margin-bottom: 1.5rem;
-  }
-
-  .tracker-day {
-    aspect-ratio: 1;
-    border: 2px solid var(--black);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.15s;
-    background: var(--cream);
-    position: relative;
-  }
-
-  .tracker-day:hover {
-    background: var(--yellow);
-    transform: translate(-1px, -1px);
-    box-shadow: 2px 2px 0 var(--black);
-  }
-
-  .tracker-day.completed {
-    background: var(--black);
-    color: var(--cream);
-  }
-
-  .tracker-day.completed .tracker-day-num { color: var(--cream); }
-  .tracker-day.completed .tracker-day-label { color: rgba(245,240,232,0.5); }
-
-  .tracker-day.completed::after {
-    content: '\2713';
-    position: absolute;
-    top: 3px;
-    right: 5px;
-    font-size: 0.65rem;
-    color: var(--yellow);
-    font-weight: 700;
-  }
-
-  .tracker-day-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    color: var(--black);
-    line-height: 1;
-  }
-
-  .tracker-day-label {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.5rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 2px;
-    text-align: center;
-    line-height: 1.2;
-  }
-
+  /* Progress bar (reused from calendar) */
   .progress-row {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-top: 1.5rem;
   }
 
   .progress-bar-track {
@@ -1273,13 +1596,11 @@
   body.lang-en .zh-only { display: none; }
 
   @media (max-width: 900px) {
-    .challenge-weeks { grid-template-columns: 1fr; }
-    .week-card { border-right: none; border-bottom: 2px solid var(--black); }
-    .week-card:last-child { border-bottom: none; }
     .ig-section { grid-template-columns: 1fr; }
     .ig-feature-card { border-right: none; }
     .challenge-cta-box { flex-direction: column; }
     .challenge-cta-right { width: 100%; border-left: none; border-top: 3px solid var(--black); padding: 1.2rem; }
+    .badges-grid { grid-template-columns: repeat(5, 1fr); }
   }
 
   @media (max-width: 640px) {
@@ -1296,8 +1617,13 @@
     .hero-title { font-size: 4rem; }
     .challenge-banner { padding: 1.5rem; flex-direction: column; align-items: flex-start; }
     .challenge-banner-title { font-size: 2.5rem; }
-    .tracker-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
-    .tracker-day-label { font-size: 0.4rem; }
+    .calendar-row { gap: 3px; }
+    .cal-day-label { font-size: 0.35rem; }
+    .cal-day-num { font-size: 0.9rem; }
+    .badges-grid { grid-template-columns: repeat(2, 1fr); }
+    .badge-card:nth-child(5n) { border-right: 2px solid var(--black); }
+    .badge-card:nth-child(2n) { border-right: none; }
+    .task-points { display: none; }
     .cefr-legend { gap: 0.35rem; }
     .site-footer { flex-direction: column; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -1315,7 +1641,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#news">News</a></li>
       <li><a href="#challenge">21-Day</a></li>
-      <li><a href="#tracker">Progress</a></li>
       <li><a href="#instagram" class="nav-ig">Instagram</a></li>
     </ul>
     <div class="lang-toggle">
@@ -1849,235 +2174,139 @@
   </div>
 
   <!-- ============================================
-       21-DAY CHALLENGE SECTION
+       21-DAY CHALLENGE SECTION (Gamified)
        ============================================ -->
   <div id="challenge">
     <div class="section-label">
       <span class="en-text">21-Day Tech English Challenge</span>
-      <span class="zh-text">21&#22825;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;</span>
+      <span class="zh-text">21天科技英文挑戰</span>
     </div>
 
     <!-- Challenge Banner -->
     <div class="challenge-banner">
       <div class="challenge-banner-text">
         <div class="hero-eyebrow" style="color:var(--yellow);">
-          <span class="en-only">Free Challenge &middot; Follow on Instagram</span>
-          <span class="zh-only">&#20813;&#36027;&#25361;&#25136; &middot; &#36861;&#36452; Instagram</span>
+          <span class="en-only">Free Challenge &middot; Build a Daily Habit</span>
+          <span class="zh-only">免費挑戰 &middot; 養成每日習慣</span>
         </div>
         <div class="challenge-banner-title">
           <span class="en-only">21 DAYS.<br><em>LEVEL UP.</em></span>
-          <span class="zh-only">21&#22825;.<br><em>&#21319;&#32026;.</em></span>
+          <span class="zh-only">21天.<br><em>升級.</em></span>
         </div>
         <p class="challenge-banner-sub">
-          <span class="en-only">Three weeks of daily tech English challenges. From vocabulary to presentations. Follow us on Instagram for daily posts, tips, and community support.</span>
-          <span class="zh-only">&#19977;&#36913;&#27599;&#26085;&#31185;&#25216;&#33521;&#25991;&#25361;&#25136;&#12290;&#24478;&#21934;&#23383;&#21040;&#31777;&#22577;&#12290;&#36861;&#36452;&#25105;&#20497;&#30340; Instagram &#29554;&#21462;&#27599;&#26085;&#36028;&#25991;&#12289;&#25216;&#24039;&#21644;&#31038;&#32676;&#25903;&#25345;&#12290;</span>
+          <span class="en-only">Read tech news, learn vocabulary, answer quizzes. Complete 3 simple tasks each day. Earn points, unlock badges, and build your streak!</span>
+          <span class="zh-only">閱讀科技新聞、學習單字、回答測驗。每天完成3個簡單任務。累積積分、解鎖徽章、維持連續天數！</span>
         </p>
       </div>
-      <div class="challenge-stamp">21<br>DAYS</div>
+      <div class="streak-display" id="streakBadge">
+        <div class="streak-fire">&#128293;</div>
+        <div class="streak-number" id="streakCount">0</div>
+        <div class="streak-label">Streak</div>
+      </div>
     </div>
 
-    <!-- Week Cards -->
-    <div class="challenge-weeks">
-      <!-- WEEK 1 -->
-      <div class="week-card week-1" style="animation-delay:0s">
-        <div class="week-card-header">
-          <span>Week 1</span>
-          <small>Foundation</small>
-        </div>
-        <div class="week-card-body">
-          <h3>
-            <span class="en-only">Core Tech Vocabulary</span>
-            <span class="zh-only">&#26680;&#24515;&#31185;&#25216;&#35422;&#24409;</span>
-          </h3>
-          <div class="day-item">
-            <span class="day-num">01</span>
-            <div>
-              <span class="en-only">Dev environment terms (IDE, compiler, runtime)</span>
-              <span class="zh-only">&#38283;&#30332;&#29872;&#22659;&#34899;&#35486;&#65288;IDE&#12289;&#32232;&#35695;&#22120;&#12289;&#22519;&#34892;&#29872;&#22659;&#65289;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">02</span>
-            <div>
-              <span class="en-only">Git &amp; version control vocabulary</span>
-              <span class="zh-only">Git &#33287;&#29256;&#26412;&#25511;&#21046;&#35422;&#24409;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">03</span>
-            <div>
-              <span class="en-only">Data types &amp; variables in English</span>
-              <span class="zh-only">&#33521;&#25991;&#20013;&#30340;&#36039;&#26009;&#22411;&#24907;&#33287;&#35722;&#25976;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">04</span>
-            <div>
-              <span class="en-only">Describing bugs &amp; errors like a pro</span>
-              <span class="zh-only">&#23560;&#26989;&#22320;&#25551;&#36848;&#37679;&#35492;&#33287;&#33256;&#34802;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">05</span>
-            <div>
-              <span class="en-only">Reading stack traces &amp; logs</span>
-              <span class="zh-only">&#38321;&#35712;&#22534;&#30090;&#36861;&#36452;&#33287;&#26085;&#35468;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">06</span>
-            <div>
-              <span class="en-only">API terminology essentials</span>
-              <span class="zh-only">API &#34899;&#35486;&#22522;&#30990;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">07</span>
-            <div>
-              <span class="en-only">Week 1 review &amp; mini quiz</span>
-              <span class="zh-only">&#31532;&#19968;&#36913;&#35079;&#32722;&#33287;&#23567;&#28204;&#39511;</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Start Challenge (shown when not started) -->
+    <div class="challenge-start-box" id="challengeStart">
+      <p>
+        <span class="en-only">Join the 21-Day Challenge! Read articles, learn vocabulary, and answer quizzes every day. We'll send you a daily reminder email to keep you on track.</span>
+        <span class="zh-only">加入21天挑戰！每天閱讀文章、學習單字、回答測驗。我們會每天寄提醒 email 給你，幫助你持續學習。</span>
+      </p>
+      <button class="start-challenge-btn" onclick="document.getElementById('regModal').classList.add('open')">
+        <span class="en-only">&#127942; START 21-DAY CHALLENGE</span>
+        <span class="zh-only">&#127942; 開始21天挑戰</span>
+      </button>
+    </div>
 
-      <!-- WEEK 2 -->
-      <div class="week-card week-2" style="animation-delay:0.1s">
-        <div class="week-card-header">
-          <span>Week 2</span>
-          <small>Communication</small>
+    <!-- Daily Tasks (shown when active) -->
+    <div class="daily-tasks-box" id="dailyTasks" style="display:none">
+      <div class="daily-tasks-header">
+        <span>
+          <span class="en-only">Today's Challenge</span>
+          <span class="zh-only">今日挑戰</span>
+        </span>
+        <span class="daily-tasks-date" id="dailyTasksDate"></span>
+      </div>
+      <div class="daily-tasks-body">
+        <div class="daily-task" id="taskRead">
+          <div class="task-check"></div>
+          <div class="task-info">
+            <div class="task-name">
+              <span class="en-only">Read 1 Article</span>
+              <span class="zh-only">閱讀1篇文章</span>
+            </div>
+            <div class="task-desc">
+              <span class="en-only">Open Study Materials on any news card</span>
+              <span class="zh-only">展開任一新聞卡片的學習內容</span>
+            </div>
+          </div>
+          <div class="task-points">+10 pts</div>
         </div>
-        <div class="week-card-body">
-          <h3>
-            <span class="en-only">Writing &amp; Reading</span>
-            <span class="zh-only">&#23531;&#20316;&#33287;&#38321;&#35712;</span>
-          </h3>
-          <div class="day-item">
-            <span class="day-num">08</span>
-            <div>
-              <span class="en-only">Writing clear commit messages</span>
-              <span class="zh-only">&#25776;&#23531;&#28165;&#26224;&#30340; commit &#35338;&#24687;</span>
+        <div class="daily-task" id="taskVocab">
+          <div class="task-check"></div>
+          <div class="task-info">
+            <div class="task-name">
+              <span class="en-only">Learn Vocabulary</span>
+              <span class="zh-only">學習單字</span>
+            </div>
+            <div class="task-desc">
+              <span class="en-only">Study materials on 2+ different articles</span>
+              <span class="zh-only">展開2篇以上文章的學習內容</span>
             </div>
           </div>
-          <div class="day-item">
-            <span class="day-num">09</span>
-            <div>
-              <span class="en-only">Pull request descriptions &amp; reviews</span>
-              <span class="zh-only">PR &#25551;&#36848;&#33287;&#23529;&#26597;</span>
+          <div class="task-points">+10 pts</div>
+        </div>
+        <div class="daily-task" id="taskQuiz">
+          <div class="task-check"></div>
+          <div class="task-info">
+            <div class="task-name">
+              <span class="en-only">Answer a Quiz</span>
+              <span class="zh-only">回答測驗</span>
+            </div>
+            <div class="task-desc">
+              <span class="en-only">Click "Show Answer" on any quiz question</span>
+              <span class="zh-only">點擊任一測驗的「Show Answer」</span>
             </div>
           </div>
-          <div class="day-item">
-            <span class="day-num">10</span>
-            <div>
-              <span class="en-only">Reading technical documentation</span>
-              <span class="zh-only">&#38321;&#35712;&#25216;&#34899;&#25991;&#20214;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">11</span>
-            <div>
-              <span class="en-only">Writing bug reports in English</span>
-              <span class="zh-only">&#29992;&#33521;&#25991;&#25776;&#23531; Bug &#22577;&#21578;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">12</span>
-            <div>
-              <span class="en-only">Email templates for tech teams</span>
-              <span class="zh-only">&#31185;&#25216;&#22296;&#38538;&#37109;&#20214;&#27169;&#26495;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">13</span>
-            <div>
-              <span class="en-only">Slack &amp; async communication tips</span>
-              <span class="zh-only">Slack &#33287;&#38750;&#21516;&#27493;&#28317;&#36890;&#25216;&#24039;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">14</span>
-            <div>
-              <span class="en-only">Week 2 review &amp; writing challenge</span>
-              <span class="zh-only">&#31532;&#20108;&#36913;&#35079;&#32722;&#33287;&#23531;&#20316;&#25361;&#25136;</span>
-            </div>
-          </div>
+          <div class="task-points">+10 pts</div>
+        </div>
+        <div class="daily-points-bar">
+          <span><span class="en-only">Today:</span><span class="zh-only">今天:</span> <strong id="todayPoints">0</strong>/30 pts</span>
+          <span><span class="en-only">Total:</span><span class="zh-only">總計:</span> <strong id="totalPoints">0</strong> pts</span>
         </div>
       </div>
+    </div>
 
-      <!-- WEEK 3 -->
-      <div class="week-card week-3" style="animation-delay:0.2s">
-        <div class="week-card-header">
-          <span>Week 3</span>
-          <small>Confidence</small>
-        </div>
-        <div class="week-card-body">
-          <h3>
-            <span class="en-only">Speaking &amp; Presenting</span>
-            <span class="zh-only">&#21475;&#35498;&#33287;&#31777;&#22577;</span>
-          </h3>
-          <div class="day-item">
-            <span class="day-num">15</span>
-            <div>
-              <span class="en-only">Daily standup meeting phrases</span>
-              <span class="zh-only">&#27599;&#26085;&#31449;&#26371;&#29992;&#35486;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">16</span>
-            <div>
-              <span class="en-only">Explaining your code in English</span>
-              <span class="zh-only">&#29992;&#33521;&#25991;&#35299;&#37323;&#20320;&#30340;&#31243;&#24335;&#30908;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">17</span>
-            <div>
-              <span class="en-only">Technical interview vocabulary</span>
-              <span class="zh-only">&#25216;&#34899;&#38754;&#35430;&#35422;&#24409;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">18</span>
-            <div>
-              <span class="en-only">Presenting a demo or feature</span>
-              <span class="zh-only">&#23637;&#31034; Demo &#25110;&#21151;&#33021;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">19</span>
-            <div>
-              <span class="en-only">Discussing architecture decisions</span>
-              <span class="zh-only">&#35342;&#35542;&#26550;&#27083;&#27770;&#31574;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">20</span>
-            <div>
-              <span class="en-only">Handling Q&amp;A in meetings</span>
-              <span class="zh-only">&#34389;&#29702;&#26371;&#35696;&#20013;&#30340;&#21839;&#31572;</span>
-            </div>
-          </div>
-          <div class="day-item">
-            <span class="day-num">21</span>
-            <div>
-              <span class="en-only">Final challenge &amp; celebration!</span>
-              <span class="zh-only">&#26368;&#32066;&#25361;&#25136;&#33287;&#24950;&#31069;&#65281;</span>
-            </div>
-          </div>
-        </div>
+    <!-- 21-Day Calendar -->
+    <div class="challenge-calendar" id="challengeCalendar" style="display:none">
+      <div class="calendar-header">
+        <span>
+          <span class="en-only">Your 21-Day Journey</span>
+          <span class="zh-only">你的21天旅程</span>
+        </span>
+        <small id="calendarProgress"></small>
       </div>
+      <div class="calendar-body" id="calendarBody"></div>
+    </div>
+
+    <!-- Badges -->
+    <div class="badges-box" id="badgesBox" style="display:none">
+      <div class="badges-header">
+        <span class="en-only">Badges &amp; Achievements</span>
+        <span class="zh-only">徽章與成就</span>
+      </div>
+      <div class="badges-grid" id="badgesGrid"></div>
     </div>
 
     <!-- Challenge CTA -->
     <div class="challenge-cta-box">
       <div class="challenge-cta-left">
         <h3>
-          <span class="en-only">READY TO START?</span>
-          <span class="zh-only">&#28310;&#20633;&#22909;&#20102;&#21966;&#65311;</span>
+          <span class="en-only">SHARE YOUR PROGRESS</span>
+          <span class="zh-only">分享你的進度</span>
         </h3>
         <p>
-          <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram to get daily challenge posts, vocabulary cards, and connect with fellow tech professionals leveling up their English.</span>
-          <span class="zh-only">&#22312; Instagram &#19978;&#36861;&#36452; <strong>@CoolingTechEnglish</strong>&#65292;&#29554;&#21462;&#27599;&#26085;&#25361;&#25136;&#36028;&#25991;&#12289;&#21934;&#23383;&#21345;&#65292;&#20006;&#33287;&#20854;&#20182;&#25552;&#21319;&#33521;&#25991;&#30340;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#20132;&#27969;&#12290;</span>
+          <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram for daily tips, vocabulary cards, and community support.</span>
+          <span class="zh-only">在 Instagram 上追蹤 <strong>@CoolingTechEnglish</strong>，獲取每日技巧、單字卡和社群支持。</span>
         </p>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
           &#128247; Follow on Instagram
@@ -2087,42 +2316,42 @@
         <div class="big-hashtag">#TechEnglish21</div>
         <div class="big-hashtag-sub">
           <span class="en-only">Share your progress</span>
-          <span class="zh-only">&#20998;&#20139;&#20320;&#30340;&#36914;&#24230;</span>
+          <span class="zh-only">分享你的進度</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================
-       PROGRESS TRACKER
-       ============================================ -->
-  <div id="tracker">
-    <div class="section-label">
-      <span class="en-text">My Progress</span>
-      <span class="zh-text">&#25105;&#30340;&#36914;&#24230;</span>
-    </div>
-
-    <div class="tracker-box">
-      <div class="tracker-header">
-        <span>21-Day Tracker</span>
-        <small>
-          <span class="en-only">Click to mark days complete</span>
-          <span class="zh-only">&#40670;&#25802;&#27161;&#35352;&#23436;&#25104;</span>
-        </small>
+  <!-- Registration Modal -->
+  <div class="modal-overlay" id="regModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>&#127942; JOIN THE CHALLENGE</span>
+        <button class="modal-close" onclick="document.getElementById('regModal').classList.remove('open')">&times;</button>
       </div>
-      <div class="tracker-body">
-        <div class="tracker-grid" id="trackerGrid"></div>
-        <div class="progress-row">
-          <div class="progress-bar-track">
-            <div class="progress-bar-fill" id="progressFill"></div>
-          </div>
-          <div class="progress-text">
-            <span id="completedCount">0</span>/21 &mdash; <span id="progressPercent">0%</span>
-          </div>
-        </div>
+      <div class="modal-body">
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6;">
+          <span class="en-only">Enter your name and email to start! We'll send you a daily reminder to keep your streak going.</span>
+          <span class="zh-only">輸入你的名字和 Email 開始挑戰！我們會每天寄提醒信幫你維持連續天數。</span>
+        </p>
+        <div class="modal-error" id="regError"></div>
+        <label for="regName">
+          <span class="en-only">Name</span>
+          <span class="zh-only">名字</span>
+        </label>
+        <input type="text" id="regName" placeholder="Your name" required>
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" placeholder="your@email.com" required>
+        <button class="modal-submit" id="regSubmit" onclick="handleRegistration()">
+          <span class="en-only">START CHALLENGE</span>
+          <span class="zh-only">開始挑戰</span>
+        </button>
       </div>
     </div>
   </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
   <!-- ============================================
        INSTAGRAM SECTION
@@ -2188,7 +2417,6 @@
   <ul class="footer-links">
     <li><a href="#news">News</a></li>
     <li><a href="#challenge">Challenge</a></li>
-    <li><a href="#tracker">Progress</a></li>
     <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
   </ul>
 </div>
@@ -2226,72 +2454,397 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
 });
 
 // ============================================
-// 21-Day Progress Tracker
+// 21-Day Gamified Challenge Engine
 // ============================================
-var STORAGE_KEY = 'techPulse21Progress';
+var CHALLENGE_KEY = 'techPulse21';
+var APPS_SCRIPT_URL = ''; // Set your Google Apps Script Web App URL here
 
-var dayLabels = [
+var DAY_LABELS = [
   'IDE', 'Git', 'Data', 'Bugs', 'Logs', 'API', 'Quiz',
   'Commit', 'PR', 'Docs', 'Report', 'Email', 'Slack', 'Review',
   'Standup', 'Code', 'Interview', 'Demo', 'Arch', 'Q&A', 'Final'
 ];
 
-function getProgress() {
+var BADGES = [
+  { id: 'first-step', name: 'First Step', icon: '\uD83D\uDC63', check: function(s) { return countDays(s) >= 1; } },
+  { id: 'three-day', name: '3-Day Streak', icon: '\uD83D\uDD25', check: function(s) { return s.currentStreak >= 3; } },
+  { id: 'week-1', name: 'Week 1 Done', icon: '\uD83C\uDFC5', check: function(s) { return countDays(s) >= 7; } },
+  { id: 'on-fire', name: '7-Day Streak', icon: '\u2B50', check: function(s) { return s.longestStreak >= 7; } },
+  { id: 'week-2', name: 'Week 2 Done', icon: '\uD83C\uDFC6', check: function(s) { return countDays(s) >= 14; } },
+  { id: 'two-week-streak', name: '14-Day Streak', icon: '\uD83D\uDCAA', check: function(s) { return s.longestStreak >= 14; } },
+  { id: 'week-3', name: 'Challenge Done!', icon: '\uD83D\uDE80', check: function(s) { return countDays(s) >= 21; } },
+  { id: 'perfect', name: 'Perfect 21', icon: '\uD83D\uDC8E', check: function(s) { return s.longestStreak >= 21; } },
+  { id: 'point-100', name: '100 Points', icon: '\uD83D\uDCAF', check: function(s) { return s.totalPoints >= 100; } },
+  { id: 'point-500', name: '500 Points', icon: '\uD83C\uDF1F', check: function(s) { return s.totalPoints >= 500; } }
+];
+
+function getTaiwanDate() {
+  var now = new Date();
+  var tw = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Taipei' }));
+  var y = tw.getFullYear();
+  var m = String(tw.getMonth() + 1).padStart(2, '0');
+  var d = String(tw.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+function countDays(state) {
+  return state.days ? Object.keys(state.days).length : 0;
+}
+
+function getChallengeState() {
   try {
-    var saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : {};
-  } catch (e) { return {}; }
+    var saved = localStorage.getItem(CHALLENGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch (e) { return null; }
 }
 
-function saveProgress(progress) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
-  catch (e) {}
+function saveChallengeState(state) {
+  try { localStorage.setItem(CHALLENGE_KEY, JSON.stringify(state)); } catch (e) {}
 }
 
-function renderTracker() {
-  var grid = document.getElementById('trackerGrid');
-  var progress = getProgress();
-  grid.innerHTML = '';
+function getDayNumber(state) {
+  if (!state || !state.startDate) return 0;
+  var start = new Date(state.startDate);
+  var today = new Date(getTaiwanDate());
+  var diff = Math.floor((today - start) / 86400000) + 1;
+  return Math.min(Math.max(diff, 1), 22); // 22 = past day 21
+}
 
-  for (var i = 1; i <= 21; i++) {
-    var day = document.createElement('div');
-    day.className = 'tracker-day';
-    if (progress[i]) day.classList.add('completed');
-    day.innerHTML = '<div class="tracker-day-num">' + (i < 10 ? '0' : '') + i + '</div>' +
-                    '<div class="tracker-day-label">' + dayLabels[i - 1] + '</div>';
-    day.setAttribute('data-day', i);
-    day.setAttribute('title', 'Day ' + i + ': ' + dayLabels[i - 1]);
+function calculateStreak(state) {
+  if (!state || !state.days) return 0;
+  var today = getTaiwanDate();
+  var dates = Object.keys(state.days).sort().reverse();
+  if (dates.length === 0) return 0;
 
-    day.addEventListener('click', function() {
-      var num = parseInt(this.getAttribute('data-day'));
-      var prog = getProgress();
-      if (prog[num]) {
-        delete prog[num];
-        this.classList.remove('completed');
-      } else {
-        prog[num] = true;
-        this.classList.add('completed');
-      }
-      saveProgress(prog);
-      updateProgress();
-    });
+  var streak = 0;
+  var checkDate = new Date(today);
 
-    grid.appendChild(day);
+  // If today not completed, start from yesterday
+  if (!state.days[today]) {
+    checkDate.setDate(checkDate.getDate() - 1);
   }
 
-  updateProgress();
+  while (true) {
+    var dateStr = checkDate.getFullYear() + '-' + String(checkDate.getMonth() + 1).padStart(2, '0') + '-' + String(checkDate.getDate()).padStart(2, '0');
+    if (state.days[dateStr]) {
+      streak++;
+      checkDate.setDate(checkDate.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  return streak;
 }
 
-function updateProgress() {
-  var progress = getProgress();
-  var completed = Object.keys(progress).length;
-  var percent = Math.round((completed / 21) * 100);
-  document.getElementById('completedCount').textContent = completed;
-  document.getElementById('progressPercent').textContent = percent + '%';
-  document.getElementById('progressFill').style.width = percent + '%';
+// Session activity tracking
+var sessionActivity = { expandedCards: [], quizAnswered: false };
+
+function handleRegistration() {
+  var name = document.getElementById('regName').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var errEl = document.getElementById('regError');
+  var btn = document.getElementById('regSubmit');
+
+  if (!name || !email) {
+    errEl.textContent = 'Please fill in both fields.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errEl.textContent = 'Please enter a valid email.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  errEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'STARTING...';
+
+  var today = getTaiwanDate();
+
+  // Send to Google Sheets (if URL configured)
+  if (APPS_SCRIPT_URL) {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, email: email, startDate: today })
+    }).catch(function() {});
+  }
+
+  // Initialize challenge state
+  var state = {
+    startDate: today,
+    userName: name,
+    userEmail: email,
+    days: {},
+    totalPoints: 0,
+    currentStreak: 0,
+    longestStreak: 0,
+    badges: [],
+    version: 2
+  };
+  saveChallengeState(state);
+
+  // Close modal & render
+  document.getElementById('regModal').classList.remove('open');
+  renderChallenge();
+  showToast('\uD83C\uDF89', 'Challenge started! Day 1 begins now.');
 }
 
-renderTracker();
+function completeTask(taskId) {
+  var state = getChallengeState();
+  if (!state) return;
+
+  var today = getTaiwanDate();
+  if (!state.days[today]) {
+    state.days[today] = {
+      dayNumber: getDayNumber(state),
+      tasks: { readArticle: false, learnVocab: false, doQuiz: false },
+      points: 0,
+      completedAt: null
+    };
+  }
+
+  var dayData = state.days[today];
+  if (dayData.tasks[taskId]) return; // already done
+
+  dayData.tasks[taskId] = true;
+  dayData.points += 10;
+  state.totalPoints += 10;
+
+  // Check if all 3 tasks done
+  if (dayData.tasks.readArticle && dayData.tasks.learnVocab && dayData.tasks.doQuiz) {
+    dayData.completedAt = new Date().toISOString();
+  }
+
+  // Recalculate streak
+  state.currentStreak = calculateStreak(state);
+  if (state.currentStreak > state.longestStreak) {
+    state.longestStreak = state.currentStreak;
+  }
+
+  // Check badges
+  var newBadges = [];
+  BADGES.forEach(function(badge) {
+    if (state.badges.indexOf(badge.id) === -1 && badge.check(state)) {
+      state.badges.push(badge.id);
+      newBadges.push(badge);
+    }
+  });
+
+  saveChallengeState(state);
+  renderChallenge();
+
+  // Show badge toasts
+  newBadges.forEach(function(badge) {
+    showToast(badge.icon, 'Badge unlocked: ' + badge.name + '!');
+  });
+}
+
+function showToast(icon, message) {
+  var container = document.getElementById('toastContainer');
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = '<span class="toast-icon">' + icon + '</span>' + message;
+  container.appendChild(toast);
+  setTimeout(function() { toast.remove(); }, 3500);
+}
+
+function renderChallenge() {
+  var state = getChallengeState();
+  var startBox = document.getElementById('challengeStart');
+  var tasksBox = document.getElementById('dailyTasks');
+  var calendarBox = document.getElementById('challengeCalendar');
+  var badgesBox = document.getElementById('badgesBox');
+
+  if (!state || !state.startDate) {
+    startBox.style.display = '';
+    tasksBox.style.display = 'none';
+    calendarBox.style.display = 'none';
+    badgesBox.style.display = 'none';
+    return;
+  }
+
+  startBox.style.display = 'none';
+  tasksBox.style.display = '';
+  calendarBox.style.display = '';
+  badgesBox.style.display = '';
+
+  var today = getTaiwanDate();
+  var dayNum = getDayNumber(state);
+  var todayData = state.days[today] || { tasks: {}, points: 0 };
+
+  // Update streak badge
+  var streakEl = document.getElementById('streakBadge');
+  document.getElementById('streakCount').textContent = state.currentStreak;
+  if (state.currentStreak >= 3) streakEl.classList.add('on-fire');
+  else streakEl.classList.remove('on-fire');
+
+  // Daily tasks header
+  var dateLabel = dayNum <= 21 ? 'Day ' + dayNum + ' of 21' : 'Challenge Complete!';
+  document.getElementById('dailyTasksDate').textContent = dateLabel;
+
+  // Task checkmarks
+  var tasks = ['readArticle', 'learnVocab', 'doQuiz'];
+  var ids = ['taskRead', 'taskVocab', 'taskQuiz'];
+  tasks.forEach(function(t, i) {
+    var el = document.getElementById(ids[i]);
+    if (todayData.tasks && todayData.tasks[t]) el.classList.add('completed');
+    else el.classList.remove('completed');
+  });
+
+  // Points
+  document.getElementById('todayPoints').textContent = todayData.points || 0;
+  document.getElementById('totalPoints').textContent = state.totalPoints || 0;
+
+  // Calendar
+  renderCalendar(state);
+
+  // Badges
+  renderBadges(state);
+}
+
+function renderCalendar(state) {
+  var body = document.getElementById('calendarBody');
+  var today = getTaiwanDate();
+  var completedDays = countDays(state);
+  document.getElementById('calendarProgress').textContent = completedDays + '/21 completed';
+
+  var html = '';
+  var weekNames = ['Week 1: Foundation', 'Week 2: Communication', 'Week 3: Confidence'];
+
+  for (var w = 0; w < 3; w++) {
+    html += '<div class="calendar-week-label">' + weekNames[w] + '</div>';
+    html += '<div class="calendar-row">';
+    for (var d = 0; d < 7; d++) {
+      var dayNum = w * 7 + d + 1;
+      var dayDate = new Date(state.startDate);
+      dayDate.setDate(dayDate.getDate() + dayNum - 1);
+      var dateStr = dayDate.getFullYear() + '-' + String(dayDate.getMonth() + 1).padStart(2, '0') + '-' + String(dayDate.getDate()).padStart(2, '0');
+
+      var classes = 'cal-day';
+      if (dateStr === today) classes += ' today';
+      else if (dateStr < today && state.days[dateStr]) classes += ' completed';
+      else if (dateStr < today && !state.days[dateStr]) classes += ' missed';
+      else classes += ' future';
+
+      if (dayNum === 7 || dayNum === 14 || dayNum === 21) classes += ' milestone';
+
+      html += '<div class="' + classes + '" title="Day ' + dayNum + ': ' + DAY_LABELS[dayNum - 1] + '">';
+      html += '<div class="cal-day-num">' + (dayNum < 10 ? '0' : '') + dayNum + '</div>';
+      html += '<div class="cal-day-label">' + DAY_LABELS[dayNum - 1] + '</div>';
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
+  // Progress bar
+  var pct = Math.round((completedDays / 21) * 100);
+  html += '<div class="progress-row">';
+  html += '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>';
+  html += '<div class="progress-text"><span>' + completedDays + '</span>/21 &mdash; <span>' + pct + '%</span></div>';
+  html += '</div>';
+
+  body.innerHTML = html;
+}
+
+function renderBadges(state) {
+  var grid = document.getElementById('badgesGrid');
+  var html = '';
+  BADGES.forEach(function(badge) {
+    var unlocked = state.badges.indexOf(badge.id) !== -1;
+    html += '<div class="badge-card ' + (unlocked ? 'unlocked' : 'locked') + '">';
+    html += '<div class="badge-icon">' + badge.icon + '</div>';
+    html += '<div class="badge-name">' + badge.name + '</div>';
+    html += '</div>';
+  });
+  grid.innerHTML = html;
+}
+
+// Activity detection via event delegation
+document.addEventListener('click', function(e) {
+  var state = getChallengeState();
+  if (!state || !state.startDate) return;
+
+  // Detect Study Materials expand
+  var expandBtn = e.target.closest('.card-expand-btn');
+  if (expandBtn) {
+    var section = expandBtn.nextElementSibling;
+    // Wait for toggle to happen
+    setTimeout(function() {
+      if (section && section.classList.contains('open')) {
+        var card = expandBtn.closest('.news-card');
+        var cards = Array.from(document.querySelectorAll('.news-card'));
+        var idx = cards.indexOf(card);
+        if (idx !== -1 && sessionActivity.expandedCards.indexOf(idx) === -1) {
+          sessionActivity.expandedCards.push(idx);
+        }
+        // Task 1: Read 1 article
+        if (sessionActivity.expandedCards.length >= 1) {
+          completeTask('readArticle');
+        }
+        // Task 2: Learn vocab on 2+ cards
+        if (sessionActivity.expandedCards.length >= 2) {
+          completeTask('learnVocab');
+        }
+      }
+    }, 50);
+  }
+
+  // Detect Quiz answer reveal
+  var quizBtn = e.target.closest('.card-quiz-btn');
+  if (quizBtn && !sessionActivity.quizAnswered) {
+    sessionActivity.quizAnswered = true;
+    completeTask('doQuiz');
+  }
+});
+
+// Migrate old progress data
+(function migrateOldProgress() {
+  var oldKey = 'techPulse21Progress';
+  try {
+    var oldData = localStorage.getItem(oldKey);
+    var newData = localStorage.getItem(CHALLENGE_KEY);
+    if (oldData && !newData) {
+      var old = JSON.parse(oldData);
+      var completedDays = Object.keys(old);
+      if (completedDays.length > 0) {
+        var today = getTaiwanDate();
+        var state = {
+          startDate: today,
+          userName: '',
+          userEmail: '',
+          days: {},
+          totalPoints: completedDays.length * 30,
+          currentStreak: 0,
+          longestStreak: 0,
+          badges: [],
+          version: 2
+        };
+        // Map old days backwards from today
+        completedDays.forEach(function(dayNum, i) {
+          var d = new Date(today);
+          d.setDate(d.getDate() - (completedDays.length - 1 - i));
+          var dateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+          state.days[dateStr] = {
+            dayNumber: parseInt(dayNum),
+            tasks: { readArticle: true, learnVocab: true, doQuiz: true },
+            points: 30,
+            completedAt: dateStr
+          };
+        });
+        state.currentStreak = calculateStreak(state);
+        state.longestStreak = state.currentStreak;
+        saveChallengeState(state);
+        localStorage.removeItem(oldKey);
+      }
+    }
+  } catch (e) {}
+})();
+
+// Initialize
+renderChallenge();
 </script>
 </body>
 </html>
