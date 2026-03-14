@@ -1325,6 +1325,99 @@
 
   .celebrating { animation: celebrate 0.5s ease; }
 
+  /* Daily Progress Bar */
+  .daily-progress-wrap {
+    padding: 0.6rem 1.2rem 0.8rem;
+    border-top: 2px solid var(--black);
+  }
+  .daily-progress-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .daily-progress-track {
+    height: 16px;
+    background: #eee;
+    border: 2px solid var(--black);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .daily-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--yellow), #FF6584);
+    transition: width 0.5s ease;
+    border-radius: 1px;
+  }
+  .daily-progress-fill.complete {
+    background: linear-gradient(90deg, #4CAF50, #45e88c);
+  }
+
+  /* Celebration Overlay */
+  .celebration-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.75);
+    animation: fadeIn 0.3s ease;
+    cursor: pointer;
+  }
+  .celebration-overlay .celeb-emoji {
+    font-size: 4rem;
+    animation: celebBounce 0.6s ease infinite alternate;
+  }
+  .celebration-overlay .celeb-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 6px;
+    color: var(--yellow);
+    margin-top: 0.5rem;
+  }
+  .celebration-overlay .celeb-sub {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--cream);
+    margin-top: 0.5rem;
+    text-align: center;
+    max-width: 300px;
+  }
+  .celebration-overlay .celeb-dismiss {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(245,240,232,0.5);
+    margin-top: 1.5rem;
+    letter-spacing: 1px;
+  }
+  @keyframes celebBounce {
+    0% { transform: scale(1) rotate(-5deg); }
+    100% { transform: scale(1.15) rotate(5deg); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* Confetti particle */
+  .confetti {
+    position: fixed;
+    z-index: 501;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+  }
+
   /* Challenge CTA */
   .challenge-cta-box {
     border: 3px solid var(--black);
@@ -2274,6 +2367,18 @@
           <span><span class="en-only">Total:</span><span class="zh-only">總計:</span> <strong id="totalPoints">0</strong> pts</span>
         </div>
       </div>
+      <div class="daily-progress-wrap">
+        <div class="daily-progress-label">
+          <span id="progressLabel">
+            <span class="en-only">Progress</span>
+            <span class="zh-only">進度</span>
+          </span>
+          <span id="progressCount">0 / 3</span>
+        </div>
+        <div class="daily-progress-track">
+          <div class="daily-progress-fill" id="dailyProgressFill" style="width:0%"></div>
+        </div>
+      </div>
     </div>
 
     <!-- 21-Day Calendar -->
@@ -2556,6 +2661,26 @@ function handleRegistration() {
     return;
   }
 
+  // Block obviously fake & disposable emails
+  var blocked = ['test.com','example.com','fake.com','temp.com','throwaway.com',
+    'mailinator.com','guerrillamail.com','tempmail.com','yopmail.com','sharklasers.com',
+    'guerrillamailblock.com','grr.la','dispostable.com','trashmail.com','10minutemail.com',
+    'getnada.com','maildrop.cc','fakeinbox.com','tempail.com','mohmal.com','burnermail.io'];
+  var domain = email.split('@')[1].toLowerCase();
+  if (blocked.indexOf(domain) !== -1) {
+    errEl.textContent = 'Please use a real email address (not disposable/test).';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  // Block patterns like user@x.x, user@a.b (domains too short to be real)
+  var domainParts = domain.split('.');
+  if (domainParts[0].length < 2 || domainParts[domainParts.length - 1].length < 2) {
+    errEl.textContent = 'That email domain doesn\'t look right. Please check it.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   errEl.style.display = 'none';
   btn.disabled = true;
   btn.textContent = 'STARTING...';
@@ -2614,7 +2739,9 @@ function completeTask(taskId) {
   state.totalPoints += 10;
 
   // Check if all 3 tasks done
-  if (dayData.tasks.readArticle && dayData.tasks.learnVocab && dayData.tasks.doQuiz) {
+  var allDone = dayData.tasks.readArticle && dayData.tasks.learnVocab && dayData.tasks.doQuiz;
+  var wasAlreadyComplete = !!dayData.completedAt;
+  if (allDone && !wasAlreadyComplete) {
     dayData.completedAt = new Date().toISOString();
   }
 
@@ -2636,10 +2763,21 @@ function completeTask(taskId) {
   saveChallengeState(state);
   renderChallenge();
 
-  // Show badge toasts
-  newBadges.forEach(function(badge) {
-    showToast(badge.icon, 'Badge unlocked: ' + badge.name + '!');
-  });
+  // Show individual task toast
+  var taskNames = { readArticle: 'Article read', learnVocab: 'Vocabulary learned', doQuiz: 'Quiz answered' };
+  showToast('\u2705', taskNames[taskId] + '! +10 pts');
+
+  // Celebrate when all 3 tasks are done!
+  if (allDone && !wasAlreadyComplete) {
+    setTimeout(function() { showCelebration(state); }, 600);
+  }
+
+  // Show badge toasts (after celebration)
+  setTimeout(function() {
+    newBadges.forEach(function(badge) {
+      showToast(badge.icon, 'Badge unlocked: ' + badge.name + '!');
+    });
+  }, allDone && !wasAlreadyComplete ? 1200 : 200);
 }
 
 function showToast(icon, message) {
@@ -2649,6 +2787,66 @@ function showToast(icon, message) {
   toast.innerHTML = '<span class="toast-icon">' + icon + '</span>' + message;
   container.appendChild(toast);
   setTimeout(function() { toast.remove(); }, 3500);
+}
+
+function showCelebration(state) {
+  // Spawn confetti
+  var colors = ['#F5C842', '#FF6584', '#6C63FF', '#4CAF50', '#FF9800', '#E91E63'];
+  for (var i = 0; i < 40; i++) {
+    (function(idx) {
+      setTimeout(function() {
+        var c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = (Math.random() * 100) + 'vw';
+        c.style.top = '-10px';
+        c.style.background = colors[idx % colors.length];
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.width = (6 + Math.random() * 8) + 'px';
+        c.style.height = (6 + Math.random() * 8) + 'px';
+        c.style.animationDuration = (2 + Math.random() * 2) + 's';
+        document.body.appendChild(c);
+        setTimeout(function() { c.remove(); }, 4000);
+      }, idx * 50);
+    })(i);
+  }
+
+  // Celebration overlay
+  var dayNum = getDayNumber(state);
+  var messages = [
+    "You're unstoppable! See you tomorrow!",
+    "Consistency is key, and you've got it!",
+    "Another day conquered! Keep the streak alive!",
+    "Your future self will thank you for this!",
+    "Knowledge compounds. You're investing wisely!"
+  ];
+  var msg = messages[dayNum % messages.length];
+
+  var overlay = document.createElement('div');
+  overlay.className = 'celebration-overlay';
+  overlay.innerHTML =
+    '<div class="celeb-emoji">\uD83C\uDF89</div>' +
+    '<div class="celeb-title">DAY ' + dayNum + ' COMPLETE!</div>' +
+    '<div class="celeb-sub">' + msg + '</div>' +
+    '<div class="celeb-dismiss">tap anywhere to close</div>';
+  overlay.addEventListener('click', function() { overlay.remove(); });
+  document.body.appendChild(overlay);
+
+  // Auto-dismiss after 5 seconds
+  setTimeout(function() { if (overlay.parentNode) overlay.remove(); }, 5000);
+}
+
+function updateDailyProgress(todayData) {
+  var tasks = todayData.tasks || {};
+  var done = (tasks.readArticle ? 1 : 0) + (tasks.learnVocab ? 1 : 0) + (tasks.doQuiz ? 1 : 0);
+  var pct = Math.round((done / 3) * 100);
+  var fill = document.getElementById('dailyProgressFill');
+  var count = document.getElementById('progressCount');
+  if (fill) {
+    fill.style.width = pct + '%';
+    if (done === 3) fill.classList.add('complete');
+    else fill.classList.remove('complete');
+  }
+  if (count) count.textContent = done + ' / 3';
 }
 
 function renderChallenge() {
@@ -2697,6 +2895,9 @@ function renderChallenge() {
   // Points
   document.getElementById('todayPoints').textContent = todayData.points || 0;
   document.getElementById('totalPoints').textContent = state.totalPoints || 0;
+
+  // Daily progress bar
+  updateDailyProgress(todayData);
 
   // Calendar
   renderCalendar(state);
