@@ -72,6 +72,37 @@
     justify-content: space-between;
   }
 
+  /* Header progress bar — sits right under the header's black border */
+  .header-progress {
+    position: sticky;
+    top: calc(18px + 56px); /* ticker + header height approx */
+    z-index: 99;
+    height: 6px;
+    background: #e0e0e0;
+    overflow: hidden;
+    display: none; /* hidden until challenge starts */
+  }
+  .header-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--yellow), #FF6584);
+    transition: width 0.6s ease;
+  }
+  .header-progress-fill.complete {
+    background: linear-gradient(90deg, #4CAF50, #45e88c);
+  }
+  .header-progress-label {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+    color: var(--black);
+    opacity: 0.7;
+  }
+
   .logo {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.4rem;
@@ -1743,6 +1774,9 @@
     <button class="mobile-menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
   </div>
 </header>
+<div class="header-progress" id="headerProgress">
+  <div class="header-progress-fill" id="headerProgressFill"></div>
+</div>
 
 <div class="main">
 
@@ -2681,13 +2715,74 @@ function handleRegistration() {
     return;
   }
 
+  // Check if user already has an active challenge (localStorage)
+  var existingState = getChallengeState();
+  if (existingState && existingState.startDate) {
+    var daysCompleted = countDays(existingState);
+    var dayNum = getDayNumber(existingState);
+    if (dayNum <= 21) {
+      // Still in active challenge — don't allow restart
+      errEl.innerHTML = '\u26A0\uFE0F You already have an active challenge (Day ' + dayNum + '/21, ' +
+        daysCompleted + ' days completed). <br><a href="#" onclick="document.getElementById(\'regModal\').classList.remove(\'open\');return false;" style="color:var(--yellow);text-decoration:underline">Continue your challenge</a>';
+      errEl.style.display = 'block';
+      return;
+    }
+    // Past day 21 — allow re-registration for a new round
+  }
+
   errEl.style.display = 'none';
   btn.disabled = true;
   btn.textContent = 'STARTING...';
 
   var today = getTaiwanDate();
 
-  // Send to Google Sheets (if URL configured)
+  // Check with Google Sheets if email is already registered
+  if (APPS_SCRIPT_URL) {
+    fetch(APPS_SCRIPT_URL + '?check=' + encodeURIComponent(email), {
+      method: 'GET'
+    }).then(function(resp) { return resp.json(); })
+    .then(function(result) {
+      if (result.exists && result.active) {
+        // Already registered on server — restore their challenge
+        errEl.innerHTML = '\u26A0\uFE0F This email is already registered! Your challenge started on ' +
+          result.startDate + '. <br>We\'ve restored your progress.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'START CHALLENGE';
+
+        // Restore state from server data
+        var restored = {
+          startDate: result.startDate,
+          userName: result.name || name,
+          userEmail: email,
+          days: existingState ? existingState.days || {} : {},
+          totalPoints: existingState ? existingState.totalPoints || 0 : 0,
+          currentStreak: 0,
+          longestStreak: 0,
+          badges: existingState ? existingState.badges || [] : [],
+          version: 2
+        };
+        restored.currentStreak = calculateStreak(restored);
+        restored.longestStreak = Math.max(restored.currentStreak, restored.longestStreak);
+        saveChallengeState(restored);
+        document.getElementById('regModal').classList.remove('open');
+        renderChallenge();
+        showToast('\uD83D\uDC4B', 'Welcome back! Your challenge has been restored.');
+        return;
+      }
+      // Not registered — proceed with new registration
+      finishRegistration(name, email, today);
+    }).catch(function() {
+      // Network error — proceed anyway (offline-friendly)
+      finishRegistration(name, email, today);
+    });
+  } else {
+    finishRegistration(name, email, today);
+  }
+}
+
+function finishRegistration(name, email, today) {
+  // Send to Google Sheets
   if (APPS_SCRIPT_URL) {
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
@@ -2839,6 +2934,8 @@ function updateDailyProgress(todayData) {
   var tasks = todayData.tasks || {};
   var done = (tasks.readArticle ? 1 : 0) + (tasks.learnVocab ? 1 : 0) + (tasks.doQuiz ? 1 : 0);
   var pct = Math.round((done / 3) * 100);
+
+  // Task-list progress bar
   var fill = document.getElementById('dailyProgressFill');
   var count = document.getElementById('progressCount');
   if (fill) {
@@ -2847,6 +2944,16 @@ function updateDailyProgress(todayData) {
     else fill.classList.remove('complete');
   }
   if (count) count.textContent = done + ' / 3';
+
+  // Header progress bar (always visible at top)
+  var hBar = document.getElementById('headerProgress');
+  var hFill = document.getElementById('headerProgressFill');
+  if (hBar && hFill) {
+    hBar.style.display = 'block';
+    hFill.style.width = pct + '%';
+    if (done === 3) hFill.classList.add('complete');
+    else hFill.classList.remove('complete');
+  }
 }
 
 function renderChallenge() {
@@ -2856,11 +2963,13 @@ function renderChallenge() {
   var calendarBox = document.getElementById('challengeCalendar');
   var badgesBox = document.getElementById('badgesBox');
 
+  var hBar = document.getElementById('headerProgress');
   if (!state || !state.startDate) {
     startBox.style.display = '';
     tasksBox.style.display = 'none';
     calendarBox.style.display = 'none';
     badgesBox.style.display = 'none';
+    if (hBar) hBar.style.display = 'none';
     return;
   }
 
@@ -2868,6 +2977,7 @@ function renderChallenge() {
   tasksBox.style.display = '';
   calendarBox.style.display = '';
   badgesBox.style.display = '';
+  if (hBar) hBar.style.display = 'block';
 
   var today = getTaiwanDate();
   var dayNum = getDayNumber(state);

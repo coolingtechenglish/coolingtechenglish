@@ -51,6 +51,33 @@ function doPost(e) {
 }
 
 function doGet(e) {
+  // Check if an email is already registered
+  var checkEmail = e && e.parameter && e.parameter.check;
+  if (checkEmail) {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var lastRow = sheet.getLastRow();
+    if (lastRow >= 2) {
+      var data = sheet.getRange(2, 1, lastRow - 1, 4).getValues();
+      for (var i = 0; i < data.length; i++) {
+        if (String(data[i][1]).toLowerCase().trim() === checkEmail.toLowerCase().trim()) {
+          return ContentService.createTextOutput(
+            JSON.stringify({
+              exists: true,
+              name: data[i][0],
+              startDate: data[i][2] instanceof Date
+                ? data[i][2].toISOString().split('T')[0]
+                : String(data[i][2]),
+              active: String(data[i][3]).toUpperCase() === 'TRUE'
+            })
+          ).setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+    }
+    return ContentService.createTextOutput(
+      JSON.stringify({ exists: false })
+    ).setMimeType(ContentService.MimeType.JSON);
+  }
+
   return ContentService.createTextOutput(
     JSON.stringify({ status: 'ok', message: 'TechPulse 21-Day Challenge API' })
   ).setMimeType(ContentService.MimeType.JSON);
