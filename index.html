@@ -1159,6 +1159,125 @@
     .site-footer { flex-direction: column; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; }
   }
+
+  /* ============================================
+     REGISTRATION MODAL
+     ============================================ */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.active {
+    display: flex;
+  }
+
+  .modal {
+    background: var(--cream);
+    border: 4px solid var(--black);
+    max-width: 440px;
+    width: 90%;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-body p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.3rem;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 2px solid var(--black);
+    background: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus {
+    border-color: var(--red);
+  }
+
+  .form-msg {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .form-msg.success { color: var(--green); display: block; }
+  .form-msg.error { color: var(--red); display: block; }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--black);
+    color: var(--cream);
+    padding: 0.8rem 1.8rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 3px solid var(--yellow);
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.4s ease;
+    white-space: nowrap;
+    max-width: 90vw;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 </style>
 </head>
 <body class="lang-en">
@@ -1479,6 +1598,10 @@
           <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram to get daily challenge posts, vocabulary cards, and connect with fellow tech professionals leveling up their English.</span>
           <span class="zh-only">&#22312; Instagram &#19978;&#36861;&#36452; <strong>@CoolingTechEnglish</strong>&#65292;&#29554;&#21462;&#27599;&#26085;&#25361;&#25136;&#36028;&#25991;&#12289;&#21934;&#23383;&#21345;&#65292;&#20006;&#33287;&#20854;&#20182;&#25552;&#21319;&#33521;&#25991;&#30340;&#31185;&#25216;&#23560;&#26989;&#20154;&#22763;&#20132;&#27969;&#12290;</span>
         </p>
+        <button class="cta-btn" onclick="openRegModal()" style="margin-bottom:0.6rem;">
+          <span class="en-only">JOIN CHALLENGE &#9654;</span>
+          <span class="zh-only">&#21152;&#20837;&#25361;&#25136; &#9654;</span>
+        </button>
         <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
           &#128247; Follow on Instagram
         </a>
@@ -1579,6 +1702,48 @@
 
 </div>
 
+<!-- ============================================
+     REGISTRATION MODAL
+     ============================================ -->
+<div class="modal-overlay" id="regModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span>
+        <span class="en-only">JOIN THE 21-DAY CHALLENGE</span>
+        <span class="zh-only">&#21152;&#20837; 21 &#22825;&#25361;&#25136;</span>
+      </span>
+      <button class="modal-close" onclick="closeRegModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>
+        <span class="en-only">Sign up to receive daily email reminders with your personalized challenge link. Your progress syncs across devices!</span>
+        <span class="zh-only">&#35387;&#20874;&#24460;&#27599;&#22825;&#26371;&#25910;&#21040;&#37109;&#20214;&#25552;&#37266;&#65292;&#21253;&#21547;&#20491;&#20154;&#21270;&#25361;&#25136;&#36899;&#32080;&#12290;&#36914;&#24230;&#21487;&#36328;&#35037;&#32622;&#21516;&#27493;&#65281;</span>
+      </p>
+      <form id="regForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>
+            <span class="en-only">NAME</span>
+            <span class="zh-only">&#22995;&#21517;</span>
+          </label>
+          <input type="text" id="regName" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>EMAIL</label>
+          <input type="email" id="regEmail" required placeholder="you@example.com">
+        </div>
+        <div id="regMsg" class="form-msg"></div>
+        <button type="submit" class="cta-btn" style="width:100%;justify-content:center;margin-top:0.5rem;">
+          <span class="en-only">START CHALLENGE &#9654;</span>
+          <span class="zh-only">&#38283;&#22987;&#25361;&#25136; &#9654;</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
 <!-- FOOTER -->
 <div class="site-footer">
   <div class="footer-left">
@@ -1626,9 +1791,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
 });
 
 // ============================================
+// Configuration
+// ============================================
+var APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+var SITE_URL = 'https://coolingtechenglish.github.io/techpulse/';
+
+// ============================================
 // 21-Day Progress Tracker
 // ============================================
 var STORAGE_KEY = 'techPulse21Progress';
+var REG_KEY = 'techPulse21Reg';
 
 var dayLabels = [
   'IDE', 'Git', 'Data', 'Bugs', 'Logs', 'API', 'Quiz',
@@ -1645,6 +1817,18 @@ function getProgress() {
 
 function saveProgress(progress) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+  catch (e) {}
+}
+
+function getRegInfo() {
+  try {
+    var saved = localStorage.getItem(REG_KEY);
+    return saved ? JSON.parse(saved) : null;
+  } catch (e) { return null; }
+}
+
+function saveRegInfo(name, email) {
+  try { localStorage.setItem(REG_KEY, JSON.stringify({ name: name, email: email })); }
   catch (e) {}
 }
 
@@ -1691,7 +1875,147 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = percent + '%';
 }
 
+// ============================================
+// Registration Modal
+// ============================================
+function openRegModal() {
+  var modal = document.getElementById('regModal');
+  var nameInput = document.getElementById('regName');
+  var emailInput = document.getElementById('regEmail');
+  var msgEl = document.getElementById('regMsg');
+
+  // Pre-fill with saved registration info
+  var saved = getRegInfo();
+  if (saved) {
+    nameInput.value = saved.name || '';
+    emailInput.value = saved.email || '';
+  }
+
+  // Clear any previous messages
+  msgEl.className = 'form-msg';
+  msgEl.textContent = '';
+
+  modal.classList.add('active');
+}
+
+function closeRegModal() {
+  document.getElementById('regModal').classList.remove('active');
+}
+
+// Close modal on overlay click
+document.getElementById('regModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRegModal();
+});
+
+function handleRegister(e) {
+  e.preventDefault();
+  var name = document.getElementById('regName').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var msgEl = document.getElementById('regMsg');
+  var btn = e.target.querySelector('button[type="submit"]');
+
+  if (!name || !email) {
+    msgEl.className = 'form-msg error';
+    msgEl.textContent = 'Please fill in both fields.';
+    return;
+  }
+
+  // Save locally
+  saveRegInfo(name, email);
+
+  // Disable button while submitting
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  msgEl.className = 'form-msg';
+  msgEl.textContent = 'Submitting...';
+  msgEl.style.display = 'block';
+  msgEl.style.color = 'var(--muted)';
+
+  // Calculate current day (how many days completed + 1)
+  var progress = getProgress();
+  var currentDay = Object.keys(progress).length + 1;
+  if (currentDay > 21) currentDay = 21;
+
+  // Send to Google Apps Script
+  var url = APPS_SCRIPT_URL + '?action=register&name=' + encodeURIComponent(name) +
+            '&email=' + encodeURIComponent(email) + '&day=' + currentDay;
+
+  fetch(url, { mode: 'no-cors' })
+    .then(function() {
+      msgEl.className = 'form-msg success';
+      msgEl.textContent = 'You\'re in! Daily reminders will arrive soon.';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      setTimeout(function() { closeRegModal(); }, 2000);
+      showToast('Challenge registered! Check your email.');
+    })
+    .catch(function() {
+      // no-cors mode always resolves, but just in case
+      msgEl.className = 'form-msg success';
+      msgEl.textContent = 'Registered! Daily reminders starting soon.';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      setTimeout(function() { closeRegModal(); }, 2000);
+    });
+}
+
+// ============================================
+// Toast Notification
+// ============================================
+function showToast(message, duration) {
+  var toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(function() {
+    toast.classList.remove('show');
+  }, duration || 3500);
+}
+
+// ============================================
+// Restore Progress from URL (email links)
+// ============================================
+function restoreFromURL() {
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name');
+  var email = params.get('email');
+  var day = parseInt(params.get('day'));
+
+  if (!name || !email) return;
+
+  // Save registration info for this device
+  saveRegInfo(name, email);
+
+  // Restore progress up to the specified day
+  if (day && day > 0 && day <= 21) {
+    var progress = getProgress();
+    var restored = false;
+    for (var i = 1; i < day; i++) {
+      if (!progress[i]) {
+        progress[i] = true;
+        restored = true;
+      }
+    }
+    if (restored) {
+      saveProgress(progress);
+      renderTracker();
+    }
+  }
+
+  // Clean URL without reload
+  if (window.history && window.history.replaceState) {
+    var cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+
+  // Show welcome toast
+  showToast('Welcome back, ' + name + '! Progress restored.', 4000);
+}
+
+// ============================================
+// Initialize
+// ============================================
 renderTracker();
+restoreFromURL();
 </script>
 </body>
 </html>
