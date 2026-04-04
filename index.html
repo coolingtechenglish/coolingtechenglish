@@ -812,10 +812,12 @@
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0,0,0,0.6);
     z-index: 300;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 0;
   }
-  .modal-overlay.open { display: flex; }
+  .modal-overlay.open { display: block; }
+  .modal-overlay .modal-box { margin: 0 auto; }
 
   .modal-box {
     background: var(--cream);
@@ -1803,18 +1805,17 @@
     inset: 0;
     background: rgba(0,0,0,0.6);
     z-index: 350;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;          /* overlay scrolls, not the inner box */
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 0;
   }
-  .mgmt-modal-overlay.open { display: flex; }
+  .mgmt-modal-overlay.open { display: block; }
   .mgmt-modal {
     background: var(--cream);
     border: 3px solid var(--black);
     width: 90%;
     max-width: 460px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;            /* centered inside the scrollable overlay */
     animation: fadeUp 0.3s ease;
   }
   .mgmt-modal-header {
@@ -1827,9 +1828,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
+    position: sticky;          /* header stays visible while body scrolls */
+    top: 0;
+    z-index: 1;
   }
-  .mgmt-modal-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+  .mgmt-modal-body { padding: 1.5rem; }
   .mgmt-stat-row {
     display: flex;
     justify-content: space-between;
@@ -1970,18 +1973,17 @@
     inset: 0;
     background: rgba(0,0,0,0.6);
     z-index: 350;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 0;
   }
-  .review-modal-overlay.open { display: flex; }
+  .review-modal-overlay.open { display: block; }
   .review-modal {
     background: var(--cream);
     border: 3px solid var(--black);
     width: 90%;
     max-width: 500px;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
     animation: fadeUp 0.3s ease;
   }
   .review-modal-header {
@@ -1994,12 +1996,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
   .review-modal-body {
-    overflow-y: auto;
     padding: 1.2rem 1.5rem;
-    flex: 1;
   }
   .review-card {
     border: 2px solid var(--black);
@@ -2098,18 +2100,17 @@
     inset: 0;
     background: rgba(0,0,0,0.6);
     z-index: 350;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 24px 0;
   }
-  .mywords-modal-overlay.open { display: flex; }
+  .mywords-modal-overlay.open { display: block; }
   .mywords-modal {
     background: var(--cream);
     border: 3px solid var(--black);
     width: 90%;
     max-width: 560px;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
     animation: fadeUp 0.3s ease;
   }
   .mywords-modal-header {
@@ -2122,12 +2123,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
   .mywords-modal-body {
-    overflow-y: auto;
     padding: 1.2rem 1.5rem;
-    flex: 1;
   }
   .myword-row {
     display: flex;
