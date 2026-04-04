@@ -1984,6 +1984,104 @@
     border-radius: 10px;
   }
 
+  /* ── Bookmark / My Words ── */
+  .bookmark-btn {
+    background: none;
+    border: 1.5px solid #bbb;
+    color: #bbb;
+    font-size: 0.8rem;
+    padding: 0 4px;
+    height: 18px;
+    cursor: pointer;
+    border-radius: 2px;
+    line-height: 1;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .bookmark-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+  .bookmark-btn.saved { color: var(--yellow); border-color: var(--black); background: var(--black); }
+  /* My Words modal */
+  .mywords-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 350;
+    align-items: center;
+    justify-content: center;
+  }
+  .mywords-modal-overlay.open { display: flex; }
+  .mywords-modal {
+    background: var(--cream);
+    border: 3px solid var(--black);
+    width: 90%;
+    max-width: 560px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 0.3s ease;
+  }
+  .mywords-modal-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .mywords-modal-body {
+    overflow-y: auto;
+    padding: 1.2rem 1.5rem;
+    flex: 1;
+  }
+  .myword-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed #ccc;
+  }
+  .myword-row:last-child { border-bottom: none; }
+  .myword-term { font-weight: 700; color: var(--red); font-size: 0.9rem; flex: 0 0 110px; }
+  .myword-zh { font-size: 0.8rem; font-weight: 600; color: var(--black); flex: 0 0 80px; }
+  .myword-def { font-size: 0.75rem; color: var(--muted); flex: 1; line-height: 1.5; }
+  .myword-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1rem; padding: 0 4px; flex-shrink: 0; }
+  .myword-remove:hover { color: var(--red); }
+  /* Floating My Words button */
+  .mywords-fab {
+    position: fixed;
+    bottom: 28px;
+    left: 170px;
+    background: var(--black);
+    color: var(--cream);
+    border: 3px solid var(--yellow);
+    padding: 0.6rem 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    animation: fadeUp 0.3s ease;
+    transition: background 0.15s;
+  }
+  .mywords-fab:hover { background: var(--yellow); color: var(--black); }
+  .mywords-fab .mywords-fab-count {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
   /* ── Audio pronunciation button ── */
   .speak-btn {
     background: none;
@@ -2714,6 +2812,22 @@
 <!-- Floating Review button -->
 <button class="review-fab" id="reviewFab" onclick="openReview()">
   &#128218; Review <span class="review-fab-count" id="reviewFabCount">0</span>
+</button>
+
+<!-- MY WORDS MODAL -->
+<div class="mywords-modal-overlay" id="myWordsModal">
+  <div class="mywords-modal">
+    <div class="mywords-modal-header">
+      <span>&#9733; My Words</span>
+      <button class="modal-close" onclick="document.getElementById('myWordsModal').classList.remove('open')">&times;</button>
+    </div>
+    <div class="mywords-modal-body" id="myWordsBody"></div>
+  </div>
+</div>
+
+<!-- Floating My Words button -->
+<button class="mywords-fab" id="myWordsFab" onclick="openMyWords()">
+  &#9733; Saved <span class="mywords-fab-count" id="myWordsFabCount">0</span>
 </button>
 
 <!-- FOOTER -->
@@ -3457,6 +3571,96 @@ document.addEventListener('click', function(e) {
 });
 
 // ============================================
+// My Words — Bookmark / Save vocabulary
+// ============================================
+var MW_KEY = 'techPulseMyWords';
+
+function getMyWords() {
+  try { return JSON.parse(localStorage.getItem(MW_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveMyWords(d) { try { localStorage.setItem(MW_KEY, JSON.stringify(d)); } catch(e) {} }
+
+function toggleBookmark(word, zh, def, ex, cefr, btn) {
+  var data = getMyWords();
+  var key = word.toLowerCase();
+  if (data[key]) {
+    delete data[key];
+    btn.classList.remove('saved');
+    btn.title = 'Save to My Words';
+    btn.textContent = '☆';
+    showToast('☆', '"' + word + '" removed from My Words.');
+  } else {
+    data[key] = { word: word, zh: zh, def: def, ex: ex, cefr: cefr };
+    btn.classList.add('saved');
+    btn.title = 'Saved!';
+    btn.innerHTML = '&#9733;';
+    showToast('⭐', '"' + word + '" saved to My Words!');
+  }
+  saveMyWords(data);
+  updateMyWordsFab();
+}
+
+function updateMyWordsFab() {
+  var data = getMyWords();
+  var keys = Object.keys(data);
+  var fab = document.getElementById('myWordsFab');
+  var cnt = document.getElementById('myWordsFabCount');
+  if (keys.length > 0) {
+    fab.style.display = 'flex';
+    cnt.textContent = keys.length;
+  } else {
+    fab.style.display = 'none';
+  }
+  // Sync bookmark button states on page
+  document.querySelectorAll('.bookmark-btn').forEach(function(btn) {
+    var termEl = btn.closest('.card-learn-item, .vocab-card');
+    if (!termEl) return;
+    var termSpan = termEl.querySelector('.card-learn-term, .vocab-word');
+    if (!termSpan) return;
+    var w = termSpan.textContent.trim().toLowerCase();
+    if (data[w]) {
+      btn.classList.add('saved');
+      btn.innerHTML = '&#9733;';
+    } else {
+      btn.classList.remove('saved');
+      btn.innerHTML = '&#9734;';
+    }
+  });
+}
+
+function openMyWords() {
+  var data = getMyWords();
+  var body = document.getElementById('myWordsBody');
+  var keys = Object.keys(data);
+  if (keys.length === 0) {
+    body.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;font-style:italic;">No saved words yet.<br>Click ☆ on any word to save it here.</div>';
+  } else {
+    var html = '';
+    keys.forEach(function(k) {
+      var w = data[k];
+      html += '<div class="myword-row">' +
+        '<span class="myword-term">' + w.word +
+          ' <button class="speak-btn" onclick="speakWord(\'' + w.word.replace(/'/g,"\\'") + '\',this)" title="Listen">&#128266;</button>' +
+        '</span>' +
+        '<span class="myword-zh">' + (w.zh||'') + '</span>' +
+        '<span class="myword-def">' + (w.def||'') + '</span>' +
+        '<button class="myword-remove" onclick="removeMyWord(\'' + k + '\')" title="Remove">&#10005;</button>' +
+      '</div>';
+    });
+    body.innerHTML = html;
+  }
+  document.getElementById('myWordsModal').classList.add('open');
+}
+
+function removeMyWord(key) {
+  var data = getMyWords();
+  delete data[key];
+  saveMyWords(data);
+  updateMyWordsFab();
+  openMyWords(); // re-render
+}
+
+// ============================================
 // Spaced Repetition System (Leitner-style)
 // ============================================
 var SR_KEY = 'techPulseSR';
@@ -3719,6 +3923,7 @@ function renderFreezeUI(state) {
 // Initialize
 renderChallenge();
 updateReviewFab();
+updateMyWordsFab();
 initCefrFilter();
 </script>
 </body>
