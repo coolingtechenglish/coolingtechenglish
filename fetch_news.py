@@ -130,8 +130,8 @@ IMPORTANT CEFR difficulty requirements:
 - For B1: slightly longer sentences OK, but avoid complex grammar
 
 For EACH article, provide:
-1. A 4-6 sentence English summary rewritten at the appropriate CEFR level. Make it substantial — give enough detail for learners to understand the full story.
-2. A 2-3 sentence Traditional Chinese summary of the same content.
+1. An 8-12 sentence English summary (around 120-150 words) rewritten at the appropriate CEFR level. Cover the full story: what happened, why it matters, who is involved, and what comes next.
+2. A 4-6 sentence Traditional Chinese summary of the same content.
 3. Exactly 3 key vocabulary words (with CEFR level, Chinese translation, definition, example sentence)
 4. Exactly 2 useful phrases (with Chinese translation and example sentence)
 5. Exactly 2 reading comprehension questions with answers
@@ -145,8 +145,8 @@ Respond with ONLY a raw JSON object — no markdown, no backticks, no explanatio
       "cefr": "A2",
       "title_en": "Simplified English title at the CEFR level",
       "title_zh": "繁體中文標題",
-      "summary_en": "4-6 sentence English summary written at the specified CEFR level. Make it detailed enough for learners.",
-      "summary_zh": "2-3 sentence 繁體中文摘要",
+      "summary_en": "8-12 sentence English summary (120-150 words) written at the specified CEFR level. Cover what happened, why it matters, who is involved, and what comes next.",
+      "summary_zh": "4-6 sentence 繁體中文摘要",
       "source": "exact source name from the RSS data",
       "url": "exact URL from the RSS data — DO NOT change it",
       "date": "Mar 14, 2026",
@@ -191,7 +191,7 @@ CRITICAL RULES:
 - The top-level "vocabulary" array should contain 5 of the most useful words across all articles.
 - 4 articles at A1-B1 level, 1 article at B2 level.
 - All Chinese must be Traditional Chinese (繁體中文).
-- summary_en must be 4-6 sentences, not shorter.
+- summary_en must be 8-12 sentences (120-150 words), not shorter.
 - Return raw JSON only — nothing else."""
 
 
