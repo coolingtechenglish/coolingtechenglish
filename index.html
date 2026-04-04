@@ -1796,6 +1796,78 @@
   body.lang-zh .zh-only { display: inline; }
   body.lang-en .zh-only { display: none; }
 
+  /* ── Challenge Management Modal ── */
+  .mgmt-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 350;
+    align-items: center;
+    justify-content: center;
+  }
+  .mgmt-modal-overlay.open { display: flex; }
+  .mgmt-modal {
+    background: var(--cream);
+    border: 3px solid var(--black);
+    width: 90%;
+    max-width: 460px;
+    animation: fadeUp 0.3s ease;
+  }
+  .mgmt-modal-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mgmt-modal-body { padding: 1.5rem; }
+  .mgmt-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #ccc;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .mgmt-stat-row:last-of-type { border-bottom: none; }
+  .mgmt-stat-val { font-weight: 700; color: var(--black); }
+  .mgmt-divider { border: none; border-top: 2px solid var(--black); margin: 1rem 0; }
+  .mgmt-reset-btn {
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    background: none;
+    color: var(--red);
+    border: 2px solid var(--red);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-top: 0.5rem;
+  }
+  .mgmt-reset-btn:hover { background: var(--red); color: var(--cream); }
+  .mgmt-gear-btn {
+    background: none;
+    border: 1.5px solid #ccc;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 0.15rem 0.4rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+  }
+  .mgmt-gear-btn:hover { background: var(--black); color: var(--cream); border-color: var(--black); }
+
   /* ── Streak Freeze ── */
   .streak-freeze-row {
     display: flex;
@@ -2610,6 +2682,7 @@
           <span class="zh-only">今日挑戰</span>
         </span>
         <span class="daily-tasks-date" id="dailyTasksDate"></span>
+        <button class="mgmt-gear-btn" onclick="openChallengeManager()" title="Manage challenge">&#9881;</button>
       </div>
       <div class="daily-tasks-body">
         <div class="daily-task" id="taskRead">
@@ -2811,6 +2884,17 @@
     </div>
   </div>
 
+</div>
+
+<!-- CHALLENGE MANAGEMENT MODAL -->
+<div class="mgmt-modal-overlay" id="mgmtModal">
+  <div class="mgmt-modal">
+    <div class="mgmt-modal-header">
+      <span>&#9881; Challenge Status</span>
+      <button class="modal-close" onclick="document.getElementById('mgmtModal').classList.remove('open')">&times;</button>
+    </div>
+    <div class="mgmt-modal-body" id="mgmtModalBody"></div>
+  </div>
 </div>
 
 <!-- REVIEW MODAL (Spaced Repetition) -->
@@ -3586,6 +3670,58 @@ document.addEventListener('click', function(e) {
 });
 
 // ============================================
+// Challenge Management
+// ============================================
+function openChallengeManager() {
+  var state = getChallengeState();
+  var body = document.getElementById('mgmtModalBody');
+  if (!state || !state.startDate) {
+    body.innerHTML = '<p style="font-family:\'Open Sans\',sans-serif;font-size:0.85rem;color:var(--muted);padding:1rem 0;">No active challenge found.</p>';
+    document.getElementById('mgmtModal').classList.add('open');
+    return;
+  }
+  var completedDays = countDays(state);
+  var dayNum = getDayNumber(state);
+  var currentTier = getCurrentTier(completedDays);
+  var nextTier = getNextTier(completedDays);
+  var tierLabel = currentTier ? currentTier.icon + ' ' + currentTier.name : 'None yet';
+  var nextLabel = nextTier ? nextTier.icon + ' ' + nextTier.name + ' (in ' + (nextTier.days - completedDays) + ' days)' : '🏆 Platinum — fully achieved!';
+  var frozenCount = Object.values(state.days).filter(function(d) { return d.frozen; }).length;
+  var source = (state.userName || state.userEmail) ? 'Registered (' + (state.userName || '') + ')' : 'Migrated from old version';
+
+  body.innerHTML =
+    '<div class="mgmt-stat-row"><span>Name</span><span class="mgmt-stat-val">' + (state.userName || '—') + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Email</span><span class="mgmt-stat-val">' + (state.userEmail || '—') + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Source</span><span class="mgmt-stat-val">' + source + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Start date</span><span class="mgmt-stat-val">' + state.startDate + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Calendar day</span><span class="mgmt-stat-val">Day ' + dayNum + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Days completed</span><span class="mgmt-stat-val">' + completedDays + ' (' + frozenCount + ' frozen)</span></div>' +
+    '<div class="mgmt-stat-row"><span>Current streak</span><span class="mgmt-stat-val">🔥 ' + state.currentStreak + ' days</span></div>' +
+    '<div class="mgmt-stat-row"><span>Longest streak</span><span class="mgmt-stat-val">⭐ ' + state.longestStreak + ' days</span></div>' +
+    '<div class="mgmt-stat-row"><span>Total points</span><span class="mgmt-stat-val">' + (state.totalPoints || 0) + ' pts</span></div>' +
+    '<div class="mgmt-stat-row"><span>Current tier</span><span class="mgmt-stat-val">' + tierLabel + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Next tier</span><span class="mgmt-stat-val">' + nextLabel + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Badges earned</span><span class="mgmt-stat-val">' + (state.badges ? state.badges.length : 0) + ' / ' + BADGES.length + '</span></div>' +
+    '<div class="mgmt-stat-row"><span>Freeze tokens</span><span class="mgmt-stat-val">❄ ' + (state.freezeTokens || 0) + '</span></div>' +
+    '<hr class="mgmt-divider">' +
+    '<p style="font-family:\'Open Sans\',sans-serif;font-size:0.72rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.6;">' +
+      'Showing Day 22? Your progress was <strong>automatically restored</strong> from the previous version of this site (old localStorage format). This is your real data.' +
+    '</p>' +
+    '<button class="mgmt-reset-btn" onclick="confirmReset()">&#128465; Reset Challenge &amp; Start Fresh</button>';
+
+  document.getElementById('mgmtModal').classList.add('open');
+}
+
+function confirmReset() {
+  if (!confirm('Reset your challenge? This will permanently delete all your progress, streaks, and badges. This cannot be undone.')) return;
+  localStorage.removeItem(CHALLENGE_KEY);
+  localStorage.removeItem('techPulse21Progress');
+  document.getElementById('mgmtModal').classList.remove('open');
+  renderChallenge();
+  showToast('&#128465;', 'Challenge reset. Start fresh whenever you\'re ready!');
+}
+
+// ============================================
 // My Words — Bookmark / Save vocabulary
 // ============================================
 var MW_KEY = 'techPulseMyWords';
@@ -3935,11 +4071,135 @@ function renderFreezeUI(state) {
   } catch (e) {}
 })();
 
+// Retroactively inject speak + bookmark buttons into any content
+// generated before these features existed (so they always show up)
+function injectButtons() {
+  // Speak buttons on article vocab terms
+  document.querySelectorAll('.card-learn-term').forEach(function(term) {
+    var row = term.closest('.card-learn-word');
+    if (!row || row.querySelector('.speak-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'speak-btn';
+    btn.title = 'Listen to pronunciation';
+    btn.innerHTML = '&#128266;';
+    var word = term.textContent.trim();
+    btn.onclick = function() { speakWord(word, this); };
+    term.insertAdjacentElement('afterend', btn);
+  });
+  // Speak buttons on global vocab cards
+  document.querySelectorAll('.vocab-word').forEach(function(wordEl) {
+    var line = wordEl.closest('.vocab-word-line');
+    if (!line || line.querySelector('.speak-btn')) return;
+    var btn = document.createElement('button');
+    btn.className = 'speak-btn';
+    btn.title = 'Listen to pronunciation';
+    btn.innerHTML = '&#128266;';
+    var word = wordEl.textContent.trim();
+    btn.onclick = function() { speakWord(word, this); };
+    wordEl.insertAdjacentElement('afterend', btn);
+  });
+  // Bookmark buttons on article vocab terms (if missing)
+  document.querySelectorAll('.card-learn-item').forEach(function(item) {
+    var row = item.querySelector('.card-learn-word');
+    if (!row || row.querySelector('.bookmark-btn')) return;
+    var termEl = row.querySelector('.card-learn-term');
+    var zhEl = row.querySelector('.card-learn-zh');
+    var defEl = item.querySelector('.card-learn-def');
+    var exEl = item.querySelector('.card-learn-ex');
+    var cefrEl = row.querySelector('.cefr-badge-sm');
+    if (!termEl) return;
+    var word = termEl.textContent.trim();
+    var zh = zhEl ? zhEl.textContent.trim() : '';
+    var def = defEl ? defEl.textContent.trim() : '';
+    var ex = exEl ? exEl.textContent.replace(/[""]/g,'').trim() : '';
+    var cefr = cefrEl ? cefrEl.textContent.trim() : 'B1';
+    var btn = document.createElement('button');
+    btn.className = 'bookmark-btn';
+    btn.title = 'Save to My Words';
+    btn.innerHTML = '&#9734;';
+    btn.onclick = function() { toggleBookmark(word, zh, def, ex, cefr, this); };
+    var speakBtn = row.querySelector('.speak-btn');
+    if (speakBtn) speakBtn.insertAdjacentElement('afterend', btn);
+    else termEl.insertAdjacentElement('afterend', btn);
+  });
+  // Bookmark buttons on global vocab cards (if missing)
+  document.querySelectorAll('.vocab-card').forEach(function(card) {
+    var line = card.querySelector('.vocab-word-line');
+    if (!line || line.querySelector('.bookmark-btn')) return;
+    var wordEl = line.querySelector('.vocab-word');
+    var cefrEl = line.querySelector('.vocab-cefr');
+    var zhEl = card.querySelector('.vocab-zh');
+    var defEl = card.querySelector('.vocab-def');
+    var exEl = card.querySelector('.vocab-example');
+    if (!wordEl) return;
+    var word = wordEl.textContent.trim();
+    var zh = zhEl ? zhEl.textContent.trim() : '';
+    var def = defEl ? defEl.textContent.trim() : '';
+    var ex = exEl ? exEl.textContent.replace(/[""]/g,'').trim() : '';
+    var cefr = cefrEl ? cefrEl.textContent.trim() : 'B1';
+    var btn = document.createElement('button');
+    btn.className = 'bookmark-btn';
+    btn.title = 'Save to My Words';
+    btn.innerHTML = '&#9734;';
+    btn.onclick = function() { toggleBookmark(word, zh, def, ex, cefr, this); };
+    var speakBtn = line.querySelector('.speak-btn');
+    if (speakBtn) speakBtn.insertAdjacentElement('afterend', btn);
+    else wordEl.insertAdjacentElement('afterend', btn);
+  });
+  // SR buttons on article vocab (if missing)
+  document.querySelectorAll('.card-learn-item').forEach(function(item) {
+    if (item.querySelector('.vocab-sr-row')) return;
+    var termEl = item.querySelector('.card-learn-term');
+    var zhEl = item.querySelector('.card-learn-zh');
+    var defEl = item.querySelector('.card-learn-def');
+    var exEl = item.querySelector('.card-learn-ex');
+    var cefrEl = item.querySelector('.cefr-badge-sm');
+    if (!termEl) return;
+    var word = termEl.textContent.trim();
+    var zh = zhEl ? zhEl.textContent.trim() : '';
+    var def = defEl ? defEl.textContent.trim() : '';
+    var ex = exEl ? exEl.textContent.replace(/[""]/g,'').trim() : '';
+    var cefr = cefrEl ? cefrEl.textContent.trim() : 'B1';
+    var row = document.createElement('div');
+    row.className = 'vocab-sr-row';
+    row.innerHTML =
+      '<button class="sr-btn sr-know" onclick="srMark(\'' + word.replace(/'/g,"\\'") + '\',\'' + zh.replace(/'/g,"\\'") + '\',\'' + def.replace(/'/g,"\\'") + '\',\'' + ex.replace(/'/g,"\\'") + '\',\'' + cefr + '\',1,this)">&#10003; Know it</button>' +
+      '<button class="sr-btn sr-learn" onclick="srMark(\'' + word.replace(/'/g,"\\'") + '\',\'' + zh.replace(/'/g,"\\'") + '\',\'' + def.replace(/'/g,"\\'") + '\',\'' + ex.replace(/'/g,"\\'") + '\',\'' + cefr + '\',0,this)">&#8635; Still learning</button>';
+    item.appendChild(row);
+  });
+  // SR buttons on global vocab cards (if missing)
+  document.querySelectorAll('.vocab-card').forEach(function(card) {
+    if (card.querySelector('.vocab-sr-row')) return;
+    var wordEl = card.querySelector('.vocab-word');
+    var cefrEl = card.querySelector('.vocab-cefr');
+    var zhEl = card.querySelector('.vocab-zh');
+    var defEl = card.querySelector('.vocab-def');
+    var exEl = card.querySelector('.vocab-example');
+    if (!wordEl) return;
+    var word = wordEl.textContent.trim();
+    var zh = zhEl ? zhEl.textContent.trim() : '';
+    var def = defEl ? defEl.textContent.trim() : '';
+    var ex = exEl ? exEl.textContent.replace(/[""]/g,'').trim() : '';
+    var cefr = cefrEl ? cefrEl.textContent.trim() : 'B1';
+    var row = document.createElement('div');
+    row.className = 'vocab-sr-row';
+    row.style.marginTop = '0.5rem';
+    row.innerHTML =
+      '<button class="sr-btn sr-know" onclick="srMark(\'' + word.replace(/'/g,"\\'") + '\',\'' + zh.replace(/'/g,"\\'") + '\',\'' + def.replace(/'/g,"\\'") + '\',\'' + ex.replace(/'/g,"\\'") + '\',\'' + cefr + '\',1,this)">&#10003; Know it</button>' +
+      '<button class="sr-btn sr-learn" onclick="srMark(\'' + word.replace(/'/g,"\\'") + '\',\'' + zh.replace(/'/g,"\\'") + '\',\'' + def.replace(/'/g,"\\'") + '\',\'' + ex.replace(/'/g,"\\'") + '\',\'' + cefr + '\',0,this)">&#8635; Still learning</button>';
+    card.appendChild(row);
+  });
+  // Sync button states after injection
+  updateMyWordsFab();
+  updateReviewFab();
+}
+
 // Initialize
 renderChallenge();
 updateReviewFab();
 updateMyWordsFab();
 initCefrFilter();
+injectButtons();
 </script>
 </body>
 </html>
