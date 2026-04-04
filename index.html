@@ -1771,6 +1771,142 @@
   body.lang-zh .zh-only { display: inline; }
   body.lang-en .zh-only { display: none; }
 
+  /* ── Spaced repetition buttons ── */
+  .vocab-sr-row {
+    display: flex;
+    gap: 5px;
+    margin-top: 0.4rem;
+  }
+  .sr-btn {
+    flex: 1;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.25rem 0.4rem;
+    border: 1.5px solid #ccc;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 2px;
+  }
+  .sr-know  { background: #eaf5ee; color: var(--green); border-color: #a8d5b5; }
+  .sr-learn { background: #fff3cd; color: #856404; border-color: #ffd666; }
+  .sr-know:hover  { background: var(--green); color: #fff; border-color: var(--green); }
+  .sr-learn:hover { background: var(--yellow); color: var(--black); border-color: var(--black); }
+  .sr-btn.active-know  { background: var(--green); color: #fff; border-color: var(--green); }
+  .sr-btn.active-learn { background: var(--yellow); color: var(--black); border-color: var(--black); }
+  /* Review modal */
+  .review-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 350;
+    align-items: center;
+    justify-content: center;
+  }
+  .review-modal-overlay.open { display: flex; }
+  .review-modal {
+    background: var(--cream);
+    border: 3px solid var(--black);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    animation: fadeUp 0.3s ease;
+  }
+  .review-modal-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .review-modal-body {
+    overflow-y: auto;
+    padding: 1.2rem 1.5rem;
+    flex: 1;
+  }
+  .review-card {
+    border: 2px solid var(--black);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: var(--cream2);
+    animation: fadeUp 0.3s ease;
+  }
+  .review-card-front {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.3rem;
+  }
+  .review-card-zh { font-size: 0.9rem; font-weight: 700; color: var(--black); margin-bottom: 0.3rem; }
+  .review-card-def { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .review-card-ex { font-size: 0.72rem; font-style: italic; color: var(--muted); }
+  .review-card-actions { display: flex; gap: 8px; margin-top: 0.75rem; }
+  .review-next-btn {
+    display: block;
+    width: 100%;
+    padding: 0.7rem;
+    background: var(--black);
+    color: var(--cream);
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.15s;
+  }
+  .review-next-btn:hover { background: var(--green); }
+  .review-empty {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+  /* Floating review button */
+  .review-fab {
+    position: fixed;
+    bottom: 28px;
+    left: 20px;
+    background: var(--black);
+    color: var(--cream);
+    border: 3px solid var(--yellow);
+    padding: 0.6rem 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 200;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    animation: fadeUp 0.3s ease;
+    transition: background 0.15s;
+  }
+  .review-fab:hover { background: var(--yellow); color: var(--black); }
+  .review-fab .review-fab-count {
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
   /* ── Audio pronunciation button ── */
   .speak-btn {
     background: none;
@@ -2466,6 +2602,22 @@
   </div>
 
 </div>
+
+<!-- REVIEW MODAL (Spaced Repetition) -->
+<div class="review-modal-overlay" id="reviewModal">
+  <div class="review-modal">
+    <div class="review-modal-header">
+      <span>&#128218; My Word Review</span>
+      <button class="modal-close" onclick="document.getElementById('reviewModal').classList.remove('open')">&times;</button>
+    </div>
+    <div class="review-modal-body" id="reviewModalBody"></div>
+  </div>
+</div>
+
+<!-- Floating Review button -->
+<button class="review-fab" id="reviewFab" onclick="openReview()">
+  &#128218; Review <span class="review-fab-count" id="reviewFabCount">0</span>
+</button>
 
 <!-- FOOTER -->
 <div class="site-footer">
@@ -3172,6 +3324,148 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// ============================================
+// Spaced Repetition System (Leitner-style)
+// ============================================
+var SR_KEY = 'techPulseSR';
+// box: 0 = still learning, 1-5 = know it (higher = review less often)
+// Interval (days) per box: [1, 1, 3, 7, 14, 30]
+var SR_INTERVALS = [1, 1, 3, 7, 14, 30];
+
+function getSRData() {
+  try { return JSON.parse(localStorage.getItem(SR_KEY) || '{}'); } catch(e) { return {}; }
+}
+function saveSRData(d) { try { localStorage.setItem(SR_KEY, JSON.stringify(d)); } catch(e) {} }
+
+function srMark(word, zh, def, ex, cefr, knew, btn) {
+  var data = getSRData();
+  var key = word.toLowerCase();
+  var today = getTaiwanDate();
+  var entry = data[key] || { word: word, zh: zh, def: def, ex: ex, cefr: cefr, box: 0, nextReview: today };
+  if (knew) {
+    entry.box = Math.min(entry.box + 1, SR_INTERVALS.length - 1);
+  } else {
+    entry.box = 0; // reset to start
+  }
+  var interval = SR_INTERVALS[entry.box];
+  var next = new Date(today);
+  next.setDate(next.getDate() + interval);
+  entry.nextReview = next.getFullYear() + '-' + String(next.getMonth()+1).padStart(2,'0') + '-' + String(next.getDate()).padStart(2,'0');
+  entry.word = word; entry.zh = zh; entry.def = def; entry.ex = ex; entry.cefr = cefr;
+  data[key] = entry;
+  saveSRData(data);
+  updateReviewFab();
+  // Update button states
+  var row = btn.closest('.vocab-sr-row');
+  if (row) {
+    row.querySelectorAll('.sr-btn').forEach(function(b) { b.classList.remove('active-know','active-learn'); });
+    btn.classList.add(knew ? 'active-know' : 'active-learn');
+  }
+  showToast(knew ? '&#10003;' : '&#8635;', knew ? '"' + word + '" — see you in ' + interval + ' day(s)!' : '"' + word + '" — added to daily review!');
+}
+
+function getDueWords() {
+  var data = getSRData();
+  var today = getTaiwanDate();
+  return Object.values(data).filter(function(w) { return w.nextReview <= today; });
+}
+
+function updateReviewFab() {
+  var due = getDueWords();
+  var fab = document.getElementById('reviewFab');
+  var cnt = document.getElementById('reviewFabCount');
+  if (due.length > 0) {
+    fab.style.display = 'flex';
+    cnt.textContent = due.length;
+  } else {
+    fab.style.display = 'none';
+  }
+  // Highlight already-saved buttons on page
+  var data = getSRData();
+  var today = getTaiwanDate();
+  document.querySelectorAll('.sr-btn').forEach(function(btn) {
+    var row = btn.closest('.vocab-sr-row, .review-card-actions');
+    if (!row) return;
+    // find word from sibling term span
+    var termEl = btn.closest('.card-learn-item, .vocab-card, .review-card');
+    if (!termEl) return;
+    var termSpan = termEl.querySelector('.card-learn-term, .vocab-word, .review-card-front');
+    if (!termSpan) return;
+    var w = termSpan.textContent.trim().toLowerCase();
+    var entry = data[w];
+    if (!entry) return;
+    btn.classList.remove('active-know','active-learn');
+    if (entry.box === 0) {
+      if (btn.classList.contains('sr-learn')) btn.classList.add('active-learn');
+    } else {
+      if (btn.classList.contains('sr-know')) btn.classList.add('active-know');
+    }
+  });
+}
+
+var srReviewQueue = [];
+var srReviewIdx = 0;
+
+function openReview() {
+  srReviewQueue = getDueWords();
+  srReviewIdx = 0;
+  document.getElementById('reviewModal').classList.add('open');
+  renderReviewCard();
+}
+
+function renderReviewCard() {
+  var body = document.getElementById('reviewModalBody');
+  if (srReviewQueue.length === 0) {
+    body.innerHTML = '<div class="review-empty">&#127881; No words due for review today!<br>Come back tomorrow.</div>';
+    return;
+  }
+  if (srReviewIdx >= srReviewQueue.length) {
+    body.innerHTML = '<div class="review-empty">&#127881; All done for today! Great work.<br>' + srReviewQueue.length + ' word(s) reviewed.</div>';
+    updateReviewFab();
+    return;
+  }
+  var w = srReviewQueue[srReviewIdx];
+  var cefrClass = 'cefr-' + (w.cefr || 'B1');
+  body.innerHTML =
+    '<div style="font-size:0.7rem;color:var(--muted);margin-bottom:0.8rem;font-family:\'Open Sans\',sans-serif;">' +
+      (srReviewIdx+1) + ' / ' + srReviewQueue.length + ' words</div>' +
+    '<div class="review-card">' +
+      '<div class="review-card-front">' +
+        '<span>' + w.word + '</span>' +
+        '<button class="speak-btn" onclick="speakWord(\'' + w.word + '\',this)" title="Listen">&#128266;</button>' +
+        '<span class="cefr-badge-sm ' + cefrClass + '">' + (w.cefr||'') + '</span>' +
+      '</div>' +
+      '<div class="review-card-zh">' + (w.zh||'') + '</div>' +
+      '<div class="review-card-def">' + (w.def||'') + '</div>' +
+      '<div class="review-card-ex">&ldquo;' + (w.ex||'') + '&rdquo;</div>' +
+      '<div class="review-card-actions vocab-sr-row">' +
+        '<button class="sr-btn sr-know" onclick="srMarkReview(\'' + w.word.replace(/'/g,"\\'") + '\',1)">&#10003; Know it</button>' +
+        '<button class="sr-btn sr-learn" onclick="srMarkReview(\'' + w.word.replace(/'/g,"\\'") + '\',0)">&#8635; Still learning</button>' +
+      '</div>' +
+    '</div>';
+}
+
+function srMarkReview(word, knew) {
+  var data = getSRData();
+  var key = word.toLowerCase();
+  var entry = data[key];
+  if (!entry) return;
+  var today = getTaiwanDate();
+  if (knew) {
+    entry.box = Math.min(entry.box + 1, SR_INTERVALS.length - 1);
+  } else {
+    entry.box = 0;
+  }
+  var interval = SR_INTERVALS[entry.box];
+  var next = new Date(today);
+  next.setDate(next.getDate() + interval);
+  entry.nextReview = next.getFullYear() + '-' + String(next.getMonth()+1).padStart(2,'0') + '-' + String(next.getDate()).padStart(2,'0');
+  data[key] = entry;
+  saveSRData(data);
+  srReviewIdx++;
+  renderReviewCard();
+}
+
 // Migrate old progress data
 (function migrateOldProgress() {
   var oldKey = 'techPulse21Progress';
@@ -3217,6 +3511,7 @@ document.addEventListener('click', function(e) {
 
 // Initialize
 renderChallenge();
+updateReviewFab();
 </script>
 </body>
 </html>

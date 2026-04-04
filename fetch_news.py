@@ -304,6 +304,10 @@ def build_news_html(articles):
                 </div>
                 <div class="card-learn-def">{escape_html(v.get('definition',''))}</div>
                 <div class="card-learn-ex">&ldquo;{escape_html(v.get('example',''))}&rdquo;</div>
+                <div class="vocab-sr-row">
+                  <button class="sr-btn sr-know" onclick="srMark('{escape_html(v.get('word',''))}','{escape_html(v.get('zh',''))}','{escape_html(v.get('definition',''))}','{escape_html(v.get('example',''))}','{v_cefr}',1,this)">&#10003; Know it</button>
+                  <button class="sr-btn sr-learn" onclick="srMark('{escape_html(v.get('word',''))}','{escape_html(v.get('zh',''))}','{escape_html(v.get('definition',''))}','{escape_html(v.get('example',''))}','{v_cefr}',0,this)">&#8635; Still learning</button>
+                </div>
               </div>"""
 
         # Build phrases HTML
@@ -385,6 +389,10 @@ def build_vocab_html(vocabulary):
       <div class="vocab-zh">{escape_html(v.get('zh',''))}</div>
       <div class="vocab-def">{escape_html(v.get('definition',''))}</div>
       <div class="vocab-example">&ldquo;{escape_html(v.get('example',''))}&rdquo;</div>
+      <div class="vocab-sr-row">
+        <button class="sr-btn sr-know" onclick="srMark('{escape_html(v.get('word',''))}','{escape_html(v.get('zh',''))}','{escape_html(v.get('definition',''))}','{escape_html(v.get('example',''))}','{cefr}',1,this)">&#10003; Know it</button>
+        <button class="sr-btn sr-learn" onclick="srMark('{escape_html(v.get('word',''))}','{escape_html(v.get('zh',''))}','{escape_html(v.get('definition',''))}','{escape_html(v.get('example',''))}','{cefr}',0,this)">&#8635; Still learning</button>
+      </div>
     </div>"""
         cards.append(card)
     return "\n".join(cards)
