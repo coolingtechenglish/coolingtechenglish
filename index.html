@@ -1238,6 +1238,16 @@
     font-weight: 700;
   }
 
+  .cal-day.frozen {
+    background: #e8f4ff;
+    border-color: #6cb4e4;
+  }
+  .cal-day.frozen::after {
+    content: '❄';
+    position: absolute;
+    top: 2px; right: 2px;
+    font-size: 0.45rem;
+  }
   .cal-day.missed {
     background: #fdf0ef;
     border-color: #e8c4c0;
@@ -1770,6 +1780,35 @@
   body.lang-zh .en-only { display: none; }
   body.lang-zh .zh-only { display: inline; }
   body.lang-en .zh-only { display: none; }
+
+  /* ── Streak Freeze ── */
+  .streak-freeze-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px dashed #ccc;
+    margin-top: 0.5rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .freeze-btn {
+    background: #e8f4ff;
+    border: 2px solid #6cb4e4;
+    color: #1a5276;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .freeze-btn:hover { background: #6cb4e4; color: #fff; }
+  .freeze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .freeze-token { font-size: 1.1rem; }
+  .freeze-used { opacity: 0.25; }
 
   /* ── CEFR Level Filter Bar ── */
   .cefr-filter-bar {
@@ -2519,6 +2558,14 @@
           <div class="daily-progress-fill" id="dailyProgressFill" style="width:0%"></div>
         </div>
       </div>
+      <!-- Streak Freeze -->
+      <div class="streak-freeze-row" id="freezeRow">
+        <span id="freezeTokens"></span>
+        <button class="freeze-btn" id="freezeBtn" onclick="useStreakFreeze()">
+          &#10052; Use Freeze
+        </button>
+        <span style="font-size:0.68rem;" id="freezeNote"></span>
+      </div>
     </div>
 
     <!-- 21-Day Calendar -->
@@ -3260,6 +3307,9 @@ function renderChallenge() {
   // Daily progress bar
   updateDailyProgress(todayData);
 
+  // Streak freeze UI
+  renderFreezeUI(state);
+
   // Calendar
   renderCalendar(state);
 
@@ -3312,9 +3362,11 @@ function renderCalendar(state) {
       var dateStr = dayDate.getFullYear() + '-' + String(dayDate.getMonth() + 1).padStart(2, '0') + '-' + String(dayDate.getDate()).padStart(2, '0');
 
       var classes = 'cal-day';
+      var dayEntry = state.days[dateStr];
       if (dateStr === today) classes += ' today';
-      else if (dateStr < today && state.days[dateStr]) classes += ' completed';
-      else if (dateStr < today && !state.days[dateStr]) classes += ' missed';
+      else if (dateStr < today && dayEntry && dayEntry.frozen) classes += ' frozen';
+      else if (dateStr < today && dayEntry) classes += ' completed';
+      else if (dateStr < today && !dayEntry) classes += ' missed';
       else classes += ' future';
 
       // Weekly milestones (every 7 days)
@@ -3544,6 +3596,81 @@ function srMarkReview(word, knew) {
   saveSRData(data);
   srReviewIdx++;
   renderReviewCard();
+}
+
+// ============================================
+// Streak Freeze System
+// ============================================
+// 1 freeze awarded per week automatically; max 2 held at once.
+function getWeekNumber(dateStr) {
+  var d = new Date(dateStr);
+  var jan1 = new Date(d.getFullYear(), 0, 1);
+  return Math.ceil(((d - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+}
+
+function awardWeeklyFreeze(state) {
+  var today = getTaiwanDate();
+  var weekKey = new Date(today).getFullYear() + '-W' + String(getWeekNumber(today)).padStart(2,'0');
+  if (!state.freezeAwardedWeek || state.freezeAwardedWeek !== weekKey) {
+    state.freezeAwardedWeek = weekKey;
+    state.freezeTokens = Math.min((state.freezeTokens || 0) + 1, 2);
+  }
+  return state;
+}
+
+function useStreakFreeze() {
+  var state = getChallengeState();
+  if (!state) return;
+  var today = getTaiwanDate();
+  // Already frozen or completed today
+  if (state.days[today]) {
+    showToast('&#10052;', 'Today is already logged — no freeze needed!');
+    return;
+  }
+  if ((state.freezeTokens || 0) < 1) {
+    showToast('&#128683;', 'No freeze tokens left. Earn one next week!');
+    return;
+  }
+  state.freezeTokens = (state.freezeTokens || 0) - 1;
+  // Mark today as a "frozen" day so streak calculation includes it
+  state.days[today] = {
+    dayNumber: getDayNumber(state),
+    tasks: { readArticle: true, learnVocab: true, doQuiz: true },
+    points: 0,
+    completedAt: today,
+    frozen: true
+  };
+  state.currentStreak = calculateStreak(state);
+  if (state.currentStreak > state.longestStreak) state.longestStreak = state.currentStreak;
+  saveChallengeState(state);
+  renderChallenge();
+  showToast('&#10052;', 'Streak saved! ' + (state.freezeTokens) + ' freeze(s) remaining.');
+}
+
+function renderFreezeUI(state) {
+  var row = document.getElementById('freezeRow');
+  var btn = document.getElementById('freezeBtn');
+  var tokensEl = document.getElementById('freezeTokens');
+  var noteEl = document.getElementById('freezeNote');
+  if (!state || !row) return;
+  state = awardWeeklyFreeze(state);
+  saveChallengeState(state);
+  var tokens = state.freezeTokens || 0;
+  var today = getTaiwanDate();
+  var todayDone = !!(state.days[today]);
+  // Build token display
+  var tokenHtml = '';
+  for (var i = 0; i < 2; i++) {
+    tokenHtml += '<span class="freeze-token' + (i >= tokens ? ' freeze-used' : '') + '">&#10052;</span>';
+  }
+  tokensEl.innerHTML = tokenHtml + ' <strong>' + tokens + '</strong> freeze' + (tokens !== 1 ? 's' : '');
+  if (todayDone) {
+    btn.disabled = true;
+    noteEl.textContent = '';
+  } else {
+    btn.disabled = tokens < 1;
+    noteEl.textContent = tokens < 1 ? 'Next freeze available next week' : 'Protect your streak for today';
+  }
 }
 
 // Migrate old progress data
