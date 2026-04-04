@@ -1239,6 +1239,40 @@
   .cal-day.milestone { border-color: var(--yellow); border-width: 3px; }
   .cal-day.completed.milestone { border-color: var(--yellow); }
 
+  /* Tier milestone markers */
+  .cal-day.tier-milestone { border-color: var(--yellow); border-width: 3px; }
+  .cal-day.tier-milestone.tier-bronze { border-color: #cd7f32; }
+  .cal-day.tier-milestone.tier-silver { border-color: #a0a0a0; }
+  .cal-day.tier-milestone.tier-gold { border-color: #ffd700; }
+  .cal-day.tier-milestone.tier-platinum { border-color: #7b68ee; }
+
+  /* Tier banner */
+  .tier-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border: 3px solid var(--black);
+    margin-bottom: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 3px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .tier-banner .tier-icon { font-size: 1.6rem; }
+  .tier-banner .tier-next {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+  }
+  .tier-banner.tier-bronze { background: linear-gradient(135deg, #fdf4e8, #f5e0c0); border-color: #cd7f32; }
+  .tier-banner.tier-silver { background: linear-gradient(135deg, #f5f5f5, #e0e0e0); border-color: #a0a0a0; }
+  .tier-banner.tier-gold { background: linear-gradient(135deg, #fffbe6, #fff0b3); border-color: #ffd700; }
+  .tier-banner.tier-platinum { background: linear-gradient(135deg, #f0ecff, #dbd3ff); border-color: #7b68ee; }
+
   .cal-day.future { opacity: 0.4; }
 
   .cal-day-num {
@@ -1284,7 +1318,7 @@
 
   .badges-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     gap: 0;
     padding: 0;
   }
@@ -1297,8 +1331,8 @@
     transition: all 0.2s;
   }
 
-  .badge-card:nth-child(5n) { border-right: none; }
-  .badge-card:nth-last-child(-n+5) { border-bottom: none; }
+  .badge-card:nth-child(7n) { border-right: none; }
+  .badge-card:nth-last-child(-n+7) { border-bottom: none; }
 
   .badge-card.locked {
     opacity: 0.25;
@@ -1747,7 +1781,7 @@
     .cal-day-label { font-size: 0.35rem; }
     .cal-day-num { font-size: 0.9rem; }
     .badges-grid { grid-template-columns: repeat(2, 1fr); }
-    .badge-card:nth-child(5n) { border-right: 2px solid var(--black); }
+    .badge-card:nth-child(7n) { border-right: 2px solid var(--black); }
     .badge-card:nth-child(2n) { border-right: none; }
     .task-points { display: none; }
     .cefr-legend { gap: 0.35rem; }
@@ -2193,6 +2227,9 @@
       </button>
     </div>
 
+    <!-- Tier Banner (shown after earning first tier) -->
+    <div class="tier-banner" id="tierBanner" style="display:none"></div>
+
     <!-- Daily Tasks (shown when active) -->
     <div class="daily-tasks-box" id="dailyTasks" style="display:none">
       <div class="daily-tasks-header">
@@ -2268,8 +2305,8 @@
     <div class="challenge-calendar" id="challengeCalendar" style="display:none">
       <div class="calendar-header">
         <span>
-          <span class="en-only">Your 21-Day Journey</span>
-          <span class="zh-only">你的21天旅程</span>
+          <span class="en-only">Your Learning Journey</span>
+          <span class="zh-only">&#20320;&#30340;&#23416;&#32722;&#26053;&#31243;</span>
         </span>
         <small id="calendarProgress"></small>
       </div>
@@ -2296,7 +2333,7 @@
           <span class="en-only">Follow <strong>@CoolingTechEnglish</strong> on Instagram for daily tips, vocabulary cards, and community support.</span>
           <span class="zh-only">在 Instagram 上追蹤 <strong>@CoolingTechEnglish</strong>，獲取每日技巧、單字卡和社群支持。</span>
         </p>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
+        <a href="https://www.instagram.com/cooling_tech_english/" target="_blank" rel="noopener noreferrer" class="cta-btn ig-btn">
           &#128247; Follow on Instagram
         </a>
       </div>
@@ -2356,7 +2393,7 @@
           <span class="en-only">&#128247; @CoolingTechEnglish</span>
           <span class="zh-only">&#128247; @CoolingTechEnglish</span>
         </h3>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Follow</a>
+        <a href="https://www.instagram.com/cooling_tech_english/" target="_blank" rel="noopener noreferrer">Follow</a>
       </div>
       <div class="ig-feature-card">
         <div class="ig-feature-icon">&#128218;</div>
@@ -2405,7 +2442,7 @@
   <ul class="footer-links">
     <li><a href="#news">News</a></li>
     <li><a href="#challenge">Challenge</a></li>
-    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="https://www.instagram.com/cooling_tech_english/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
   </ul>
 </div>
 
@@ -2447,11 +2484,38 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
 var CHALLENGE_KEY = 'techPulse21';
 var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzZ0bDdfReQw7lVraHXIXS88GNHA6tWogKcJivFDttILENd5jDM3N1KyaK10aPkPCTF/exec';
 
-var DAY_LABELS = [
+var DAY_LABELS_BASE = [
   'IDE', 'Git', 'Data', 'Bugs', 'Logs', 'API', 'Quiz',
   'Commit', 'PR', 'Docs', 'Report', 'Email', 'Slack', 'Review',
   'Standup', 'Code', 'Interview', 'Demo', 'Arch', 'Q&A', 'Final'
 ];
+
+function getDayLabel(dayNum) {
+  return DAY_LABELS_BASE[(dayNum - 1) % DAY_LABELS_BASE.length];
+}
+
+// Tier definitions
+var TIERS = [
+  { id: 'bronze',   name: 'Bronze',   icon: '\uD83E\uDD49', days: 21, nameZh: '\u9285\u724C' },
+  { id: 'silver',   name: 'Silver',   icon: '\uD83E\uDD48', days: 42, nameZh: '\u9280\u724C' },
+  { id: 'gold',     name: 'Gold',     icon: '\uD83E\uDD47', days: 63, nameZh: '\u91D1\u724C' },
+  { id: 'platinum', name: 'Platinum', icon: '\uD83D\uDC8E', days: 100, nameZh: '\u767D\u91D1' }
+];
+
+function getCurrentTier(completedDays) {
+  var tier = null;
+  for (var i = TIERS.length - 1; i >= 0; i--) {
+    if (completedDays >= TIERS[i].days) { tier = TIERS[i]; break; }
+  }
+  return tier;
+}
+
+function getNextTier(completedDays) {
+  for (var i = 0; i < TIERS.length; i++) {
+    if (completedDays < TIERS[i].days) return TIERS[i];
+  }
+  return null;
+}
 
 var BADGES = [
   { id: 'first-step', name: 'First Step', icon: '\uD83D\uDC63', check: function(s) { return countDays(s) >= 1; } },
@@ -2460,10 +2524,14 @@ var BADGES = [
   { id: 'on-fire', name: '7-Day Streak', icon: '\u2B50', check: function(s) { return s.longestStreak >= 7; } },
   { id: 'week-2', name: 'Week 2 Done', icon: '\uD83C\uDFC6', check: function(s) { return countDays(s) >= 14; } },
   { id: 'two-week-streak', name: '14-Day Streak', icon: '\uD83D\uDCAA', check: function(s) { return s.longestStreak >= 14; } },
-  { id: 'week-3', name: 'Challenge Done!', icon: '\uD83D\uDE80', check: function(s) { return countDays(s) >= 21; } },
-  { id: 'perfect', name: 'Perfect 21', icon: '\uD83D\uDC8E', check: function(s) { return s.longestStreak >= 21; } },
+  { id: 'tier-bronze', name: 'Bronze Tier', icon: '\uD83E\uDD49', check: function(s) { return countDays(s) >= 21; } },
+  { id: 'perfect-21', name: 'Perfect 21', icon: '\uD83D\uDE80', check: function(s) { return s.longestStreak >= 21; } },
+  { id: 'tier-silver', name: 'Silver Tier', icon: '\uD83E\uDD48', check: function(s) { return countDays(s) >= 42; } },
+  { id: 'tier-gold', name: 'Gold Tier', icon: '\uD83E\uDD47', check: function(s) { return countDays(s) >= 63; } },
+  { id: 'tier-platinum', name: 'Platinum Tier', icon: '\uD83D\uDC8E', check: function(s) { return countDays(s) >= 100; } },
   { id: 'point-100', name: '100 Points', icon: '\uD83D\uDCAF', check: function(s) { return s.totalPoints >= 100; } },
-  { id: 'point-500', name: '500 Points', icon: '\uD83C\uDF1F', check: function(s) { return s.totalPoints >= 500; } }
+  { id: 'point-500', name: '500 Points', icon: '\uD83C\uDF1F', check: function(s) { return s.totalPoints >= 500; } },
+  { id: 'point-1000', name: '1000 Points', icon: '\uD83C\uDF08', check: function(s) { return s.totalPoints >= 1000; } }
 ];
 
 function getTaiwanDate() {
@@ -2495,7 +2563,7 @@ function getDayNumber(state) {
   var start = new Date(state.startDate);
   var today = new Date(getTaiwanDate());
   var diff = Math.floor((today - start) / 86400000) + 1;
-  return Math.min(Math.max(diff, 1), 22); // 22 = past day 21
+  return Math.max(diff, 1);
 }
 
 function calculateStreak(state) {
@@ -2569,14 +2637,14 @@ function handleRegistration() {
   if (existingState && existingState.startDate) {
     var daysCompleted = countDays(existingState);
     var dayNum = getDayNumber(existingState);
-    if (dayNum <= 21) {
-      // Still in active challenge — don't allow restart
-      errEl.innerHTML = '\u26A0\uFE0F You already have an active challenge (Day ' + dayNum + '/21, ' +
-        daysCompleted + ' days completed). <br><a href="#" onclick="document.getElementById(\'regModal\').classList.remove(\'open\');return false;" style="color:var(--yellow);text-decoration:underline">Continue your challenge</a>';
-      errEl.style.display = 'block';
-      return;
-    }
-    // Past day 21 — allow re-registration for a new round
+    var currentTier = getCurrentTier(daysCompleted);
+    var tierLabel = currentTier ? currentTier.icon + ' ' + currentTier.name : '';
+    // User already has an active challenge — don't allow restart, just continue
+    errEl.innerHTML = '\u26A0\uFE0F You already have an active challenge (Day ' + dayNum + ', ' +
+      daysCompleted + ' days completed' + (tierLabel ? ' \u2014 ' + tierLabel : '') +
+      '). <br><a href="#" onclick="document.getElementById(\'regModal\').classList.remove(\'open\');return false;" style="color:var(--yellow);text-decoration:underline">Continue your challenge</a>';
+    errEl.style.display = 'block';
+    return;
   }
 
   errEl.style.display = 'none';
@@ -2756,6 +2824,7 @@ function showCelebration(state) {
 
   // Celebration overlay
   var dayNum = getDayNumber(state);
+  var cd = countDays(state);
   var messages = [
     "You're unstoppable! See you tomorrow!",
     "Consistency is key, and you've got it!",
@@ -2765,11 +2834,21 @@ function showCelebration(state) {
   ];
   var msg = messages[dayNum % messages.length];
 
+  // Check if user just unlocked a new tier
+  var tierMsg = '';
+  for (var ti = 0; ti < TIERS.length; ti++) {
+    if (cd === TIERS[ti].days) {
+      tierMsg = '<div style="font-size:2rem;margin-top:0.5rem">' + TIERS[ti].icon + ' ' + TIERS[ti].name.toUpperCase() + ' TIER UNLOCKED!</div>';
+      break;
+    }
+  }
+
   var overlay = document.createElement('div');
   overlay.className = 'celebration-overlay';
   overlay.innerHTML =
     '<div class="celeb-emoji">\uD83C\uDF89</div>' +
     '<div class="celeb-title">DAY ' + dayNum + ' COMPLETE!</div>' +
+    tierMsg +
     '<div class="celeb-sub">' + msg + '</div>' +
     '<div class="celeb-dismiss">tap anywhere to close</div>';
   overlay.addEventListener('click', function() { overlay.remove(); });
@@ -2813,11 +2892,13 @@ function renderChallenge() {
   var badgesBox = document.getElementById('badgesBox');
 
   var hBar = document.getElementById('headerProgress');
+  var tierBannerEl = document.getElementById('tierBanner');
   if (!state || !state.startDate) {
     startBox.style.display = '';
     tasksBox.style.display = 'none';
     calendarBox.style.display = 'none';
     badgesBox.style.display = 'none';
+    tierBannerEl.style.display = 'none';
     if (hBar) hBar.style.display = 'none';
     return;
   }
@@ -2838,9 +2919,32 @@ function renderChallenge() {
   if (state.currentStreak >= 3) streakEl.classList.add('on-fire');
   else streakEl.classList.remove('on-fire');
 
-  // Daily tasks header
-  var dateLabel = dayNum <= 21 ? 'Day ' + dayNum + ' of 21' : 'Challenge Complete!';
+  // Daily tasks header — show day number + tier target
+  var completedDays = countDays(state);
+  var nextTier = getNextTier(completedDays);
+  var currentTier = getCurrentTier(completedDays);
+  var dateLabel = 'Day ' + dayNum;
+  if (nextTier) {
+    dateLabel += ' \u2014 ' + (nextTier.days - completedDays) + ' to ' + nextTier.icon + ' ' + nextTier.name;
+  } else {
+    dateLabel += ' \u2014 \uD83D\uDC8E Platinum achieved!';
+  }
   document.getElementById('dailyTasksDate').textContent = dateLabel;
+
+  // Tier banner
+  var tierBannerEl = document.getElementById('tierBanner');
+  if (currentTier) {
+    tierBannerEl.className = 'tier-banner tier-' + currentTier.id;
+    var bannerHtml = '<span class="tier-icon">' + currentTier.icon + '</span> ' +
+      currentTier.name + ' TIER \u2014 ' + completedDays + ' DAYS';
+    if (nextTier) {
+      bannerHtml += ' <span class="tier-next">(' + (nextTier.days - completedDays) + ' more for ' + nextTier.name + ')</span>';
+    }
+    tierBannerEl.innerHTML = bannerHtml;
+    tierBannerEl.style.display = '';
+  } else {
+    tierBannerEl.style.display = 'none';
+  }
 
   // Task checkmarks
   var tasks = ['readArticle', 'learnVocab', 'doQuiz'];
@@ -2869,18 +2973,44 @@ function renderCalendar(state) {
   var body = document.getElementById('calendarBody');
   var today = getTaiwanDate();
   var completedDays = countDays(state);
-  document.getElementById('calendarProgress').textContent = completedDays + '/21 completed';
+  var dayNum = getDayNumber(state);
+  var nextTier = getNextTier(completedDays);
+  var targetDays = nextTier ? nextTier.days : completedDays;
+
+  // Show progress toward next tier (or total if platinum)
+  var progressLabel = completedDays + ' days completed';
+  if (nextTier) {
+    progressLabel += ' \u2014 ' + (nextTier.days - completedDays) + ' to ' + nextTier.icon + ' ' + nextTier.name;
+  }
+  document.getElementById('calendarProgress').textContent = progressLabel;
+
+  // Calculate total days to show: at least up to today, and up to next tier target
+  var totalDaysToShow = Math.max(dayNum, targetDays);
+  // Round up to full weeks
+  var totalWeeks = Math.ceil(totalDaysToShow / 7);
+
+  var weekNames = ['Week 1: Foundation', 'Week 2: Communication', 'Week 3: Confidence'];
+  // Generate week names beyond 3
+  for (var wn = weekNames.length; wn < totalWeeks; wn++) {
+    weekNames.push('Week ' + (wn + 1));
+  }
+
+  // Tier milestone days for highlighting
+  var tierDays = {};
+  TIERS.forEach(function(t) { tierDays[t.days] = t.id; });
 
   var html = '';
-  var weekNames = ['Week 1: Foundation', 'Week 2: Communication', 'Week 3: Confidence'];
-
-  for (var w = 0; w < 3; w++) {
+  for (var w = 0; w < totalWeeks; w++) {
     html += '<div class="calendar-week-label">' + weekNames[w] + '</div>';
     html += '<div class="calendar-row">';
     for (var d = 0; d < 7; d++) {
-      var dayNum = w * 7 + d + 1;
+      var dn = w * 7 + d + 1;
+      if (dn > totalDaysToShow) {
+        html += '<div class="cal-day future" style="opacity:0.15"></div>';
+        continue;
+      }
       var dayDate = new Date(state.startDate);
-      dayDate.setDate(dayDate.getDate() + dayNum - 1);
+      dayDate.setDate(dayDate.getDate() + dn - 1);
       var dateStr = dayDate.getFullYear() + '-' + String(dayDate.getMonth() + 1).padStart(2, '0') + '-' + String(dayDate.getDate()).padStart(2, '0');
 
       var classes = 'cal-day';
@@ -2889,22 +3019,38 @@ function renderCalendar(state) {
       else if (dateStr < today && !state.days[dateStr]) classes += ' missed';
       else classes += ' future';
 
-      if (dayNum === 7 || dayNum === 14 || dayNum === 21) classes += ' milestone';
+      // Weekly milestones (every 7 days)
+      if (dn % 7 === 0) classes += ' milestone';
+      // Tier milestones
+      if (tierDays[dn]) classes += ' tier-milestone tier-' + tierDays[dn];
 
-      html += '<div class="' + classes + '" title="Day ' + dayNum + ': ' + DAY_LABELS[dayNum - 1] + '">';
-      html += '<div class="cal-day-num">' + (dayNum < 10 ? '0' : '') + dayNum + '</div>';
-      html += '<div class="cal-day-label">' + DAY_LABELS[dayNum - 1] + '</div>';
+      html += '<div class="' + classes + '" title="Day ' + dn + ': ' + getDayLabel(dn) + '">';
+      html += '<div class="cal-day-num">' + (dn < 10 ? '0' : '') + dn + '</div>';
+      html += '<div class="cal-day-label">' + getDayLabel(dn) + '</div>';
       html += '</div>';
     }
     html += '</div>';
   }
 
-  // Progress bar
-  var pct = Math.round((completedDays / 21) * 100);
-  html += '<div class="progress-row">';
-  html += '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>';
-  html += '<div class="progress-text"><span>' + completedDays + '</span>/21 &mdash; <span>' + pct + '%</span></div>';
-  html += '</div>';
+  // Progress bar toward next tier
+  var pct;
+  if (nextTier) {
+    var prevTierDays = 0;
+    for (var ti = 0; ti < TIERS.length; ti++) {
+      if (TIERS[ti].id === nextTier.id) break;
+      prevTierDays = TIERS[ti].days;
+    }
+    pct = Math.round(((completedDays - prevTierDays) / (nextTier.days - prevTierDays)) * 100);
+    html += '<div class="progress-row">';
+    html += '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>';
+    html += '<div class="progress-text"><span>' + completedDays + '</span>/' + nextTier.days + ' &mdash; ' + nextTier.icon + ' ' + nextTier.name + ' (' + pct + '%)</div>';
+    html += '</div>';
+  } else {
+    html += '<div class="progress-row">';
+    html += '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:100%"></div></div>';
+    html += '<div class="progress-text">\uD83D\uDC8E Platinum achieved! ' + completedDays + ' days and counting</div>';
+    html += '</div>';
+  }
 
   body.innerHTML = html;
 }
