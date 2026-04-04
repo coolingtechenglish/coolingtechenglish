@@ -134,7 +134,7 @@ For EACH article, provide:
 2. A 4-6 sentence Traditional Chinese summary of the same content.
 3. Exactly 3 key vocabulary words (with CEFR level, Chinese translation, definition, example sentence)
 4. Exactly 2 useful phrases (with Chinese translation and example sentence)
-5. Exactly 2 reading comprehension questions with answers
+5. Exactly 2 reading comprehension questions, each with the correct answer AND 2 plausible but wrong distractors (total 3 options). Shuffle the 3 options so the correct one is not always first.
 
 Respond with ONLY a raw JSON object — no markdown, no backticks, no explanation:
 
@@ -169,7 +169,8 @@ Respond with ONLY a raw JSON object — no markdown, no backticks, no explanatio
       "quiz": [
         {{
           "question": "Reading comprehension question in English",
-          "answer": "Short answer in English"
+          "answer": "The correct answer (must match one of the options exactly)",
+          "options": ["Option A", "Option B (correct one goes here at a random position)", "Option C"]
         }}
       ]
     }}
@@ -187,7 +188,7 @@ Respond with ONLY a raw JSON object — no markdown, no backticks, no explanatio
 
 CRITICAL RULES:
 - Use ONLY the exact URLs from the RSS data above. NEVER invent a URL.
-- Each article MUST have exactly 3 vocabulary items, 2 phrases, and 2 quiz questions.
+- Each article MUST have exactly 3 vocabulary items, 2 phrases, and 2 quiz questions. Each quiz question MUST have an "options" array of exactly 3 strings (1 correct + 2 wrong distractors, shuffled).
 - The top-level "vocabulary" array should contain 5 of the most useful words across all articles.
 - 4 articles at A1-B1 level, 1 article at B2 level.
 - All Chinese must be Traditional Chinese (繁體中文).
@@ -318,15 +319,21 @@ def build_news_html(articles):
                 <div class="card-learn-ex">&ldquo;{escape_html(p.get('example',''))}&rdquo;</div>
               </div>"""
 
-        # Build quiz HTML
+        # Build quiz HTML (multiple-choice)
         quiz = a.get("quiz", [])
         quiz_html = ""
         for qi, q in enumerate(quiz):
+            correct = escape_html(q.get('answer', ''))
+            options = q.get('options', [q.get('answer', '')])
+            options_html = ""
+            for opt in options:
+                is_correct = "1" if opt == q.get('answer', '') else "0"
+                options_html += f"""<button class="quiz-option" data-correct="{is_correct}" onclick="checkQuizAnswer(this)">{escape_html(opt)}</button>"""
             quiz_html += f"""
               <div class="card-quiz-item">
                 <div class="card-quiz-q">Q{qi+1}: {escape_html(q.get('question',''))}</div>
-                <div class="card-quiz-a" style="display:none">{escape_html(q.get('answer',''))}</div>
-                <button class="card-quiz-btn" onclick="this.previousElementSibling.style.display=this.previousElementSibling.style.display==='none'?'block':'none'; this.textContent=this.previousElementSibling.style.display==='none'?'Show Answer':'Hide Answer'">Show Answer</button>
+                <div class="card-quiz-options">{options_html}</div>
+                <div class="card-quiz-result"></div>
               </div>"""
 
         card = f"""
