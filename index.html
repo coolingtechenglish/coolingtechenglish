@@ -1812,6 +1812,9 @@
     border: 3px solid var(--black);
     width: 90%;
     max-width: 460px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
     animation: fadeUp 0.3s ease;
   }
   .mgmt-modal-header {
@@ -1824,8 +1827,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
   }
-  .mgmt-modal-body { padding: 1.5rem; }
+  .mgmt-modal-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
   .mgmt-stat-row {
     display: flex;
     justify-content: space-between;
@@ -2665,7 +2669,7 @@
         <span class="en-only">Join the 21-Day Challenge! Read articles, learn vocabulary, and answer quizzes every day. We'll send you a daily reminder email to keep you on track.</span>
         <span class="zh-only">加入21天挑戰！每天閱讀文章、學習單字、回答測驗。我們會每天寄提醒 email 給你，幫助你持續學習。</span>
       </p>
-      <button class="start-challenge-btn" onclick="document.getElementById('regModal').classList.add('open')">
+      <button class="start-challenge-btn" onclick="openModal('regModal')">
         <span class="en-only">&#127942; START 21-DAY CHALLENGE</span>
         <span class="zh-only">&#127942; 開始21天挑戰</span>
       </button>
@@ -2805,7 +2809,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <span>&#127942; JOIN THE CHALLENGE</span>
-        <button class="modal-close" onclick="document.getElementById('regModal').classList.remove('open')">&times;</button>
+        <button class="modal-close" onclick="closeModal('regModal')">&times;</button>
       </div>
       <div class="modal-body">
         <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6;">
@@ -2891,7 +2895,7 @@
   <div class="mgmt-modal">
     <div class="mgmt-modal-header">
       <span>&#9881; Challenge Status</span>
-      <button class="modal-close" onclick="document.getElementById('mgmtModal').classList.remove('open')">&times;</button>
+      <button class="modal-close" onclick="closeModal('mgmtModal')">&times;</button>
     </div>
     <div class="mgmt-modal-body" id="mgmtModalBody"></div>
   </div>
@@ -2902,7 +2906,7 @@
   <div class="review-modal">
     <div class="review-modal-header">
       <span>&#128218; My Word Review</span>
-      <button class="modal-close" onclick="document.getElementById('reviewModal').classList.remove('open')">&times;</button>
+      <button class="modal-close" onclick="closeModal('reviewModal')">&times;</button>
     </div>
     <div class="review-modal-body" id="reviewModalBody"></div>
   </div>
@@ -2918,7 +2922,7 @@
   <div class="mywords-modal">
     <div class="mywords-modal-header">
       <span>&#9733; My Words</span>
-      <button class="modal-close" onclick="document.getElementById('myWordsModal').classList.remove('open')">&times;</button>
+      <button class="modal-close" onclick="closeModal('myWordsModal')">&times;</button>
     </div>
     <div class="mywords-modal-body" id="myWordsBody"></div>
   </div>
@@ -2949,6 +2953,22 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
   document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
 }
+
+// Modal scroll lock — prevents background page scrolling when a modal is open
+function lockScroll()   { document.body.style.overflow = 'hidden'; }
+function unlockScroll() { document.body.style.overflow = ''; }
+function openModal(id)  { document.getElementById(id).classList.add('open');    lockScroll(); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); unlockScroll(); }
+
+// Click outside modal box → close
+['mgmtModal','reviewModal','myWordsModal','regModal'].forEach(function(id) {
+  document.addEventListener('click', function(e) {
+    var overlay = document.getElementById(id);
+    if (overlay && overlay.classList.contains('open') && e.target === overlay) {
+      closeModal(id);
+    }
+  });
+});
 
 // CEFR Level Filter
 var CEFR_ORDER = ['A1','A2','B1','B2','C1','C2'];
@@ -3240,7 +3260,7 @@ function handleRegistration() {
         restored.currentStreak = calculateStreak(restored);
         restored.longestStreak = Math.max(restored.currentStreak, restored.longestStreak);
         saveChallengeState(restored);
-        document.getElementById('regModal').classList.remove('open');
+        closeModal('regModal');
         renderChallenge();
         showToast('\uD83D\uDC4B', 'Welcome back! Your challenge has been restored.');
         return;
@@ -3282,7 +3302,7 @@ function finishRegistration(name, email, today) {
   saveChallengeState(state);
 
   // Close modal & render
-  document.getElementById('regModal').classList.remove('open');
+  closeModal('regModal');
   renderChallenge();
   showToast('\uD83C\uDF89', 'Challenge started! Day 1 begins now.');
 }
@@ -3677,7 +3697,7 @@ function openChallengeManager() {
   var body = document.getElementById('mgmtModalBody');
   if (!state || !state.startDate) {
     body.innerHTML = '<p style="font-family:\'Open Sans\',sans-serif;font-size:0.85rem;color:var(--muted);padding:1rem 0;">No active challenge found.</p>';
-    document.getElementById('mgmtModal').classList.add('open');
+    openModal('mgmtModal');
     return;
   }
   var completedDays = countDays(state);
@@ -3707,16 +3727,32 @@ function openChallengeManager() {
     '<p style="font-family:\'Open Sans\',sans-serif;font-size:0.72rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.6;">' +
       'Showing Day 22? Your progress was <strong>automatically restored</strong> from the previous version of this site (old localStorage format). This is your real data.' +
     '</p>' +
+    '<button class="mgmt-reset-btn" style="background:none;color:#1a5276;border-color:#6cb4e4;margin-bottom:0.5rem;" onclick="switchAccount()">&#128100; Switch Account (keep my progress)</button>' +
     '<button class="mgmt-reset-btn" onclick="confirmReset()">&#128465; Reset Challenge &amp; Start Fresh</button>';
 
-  document.getElementById('mgmtModal').classList.add('open');
+  openModal('mgmtModal');
+}
+
+function switchAccount() {
+  // Keep all progress but clear the registered name/email so the user can re-register
+  var state = getChallengeState();
+  if (!state) return;
+  if (!confirm('This will clear the account name and email linked to this challenge so you can register with your own account. Your streak, points, and badges will be kept. Continue?')) return;
+  state.userName = '';
+  state.userEmail = '';
+  saveChallengeState(state);
+  closeModal('mgmtModal');
+  renderChallenge();
+  // Open registration modal
+  openModal('regModal');
+  showToast('&#128100;', 'Enter your details to link your account.');
 }
 
 function confirmReset() {
   if (!confirm('Reset your challenge? This will permanently delete all your progress, streaks, and badges. This cannot be undone.')) return;
   localStorage.removeItem(CHALLENGE_KEY);
   localStorage.removeItem('techPulse21Progress');
-  document.getElementById('mgmtModal').classList.remove('open');
+  closeModal('mgmtModal');
   renderChallenge();
   showToast('&#128465;', 'Challenge reset. Start fresh whenever you\'re ready!');
 }
@@ -3800,7 +3836,7 @@ function openMyWords() {
     });
     body.innerHTML = html;
   }
-  document.getElementById('myWordsModal').classList.add('open');
+  openModal('myWordsModal');
 }
 
 function removeMyWord(key) {
@@ -3896,7 +3932,7 @@ var srReviewIdx = 0;
 function openReview() {
   srReviewQueue = getDueWords();
   srReviewIdx = 0;
-  document.getElementById('reviewModal').classList.add('open');
+  openModal('reviewModal');
   renderReviewCard();
 }
 
