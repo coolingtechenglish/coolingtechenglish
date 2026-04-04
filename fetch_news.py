@@ -297,6 +297,7 @@ def build_news_html(articles):
               <div class="card-learn-item">
                 <div class="card-learn-word">
                   <span class="card-learn-term">{escape_html(v.get('word',''))}</span>
+                  <button class="speak-btn" onclick="speakWord('{escape_html(v.get('word',''))}',this)" title="Listen to pronunciation">&#128266;</button>
                   <span class="cefr-badge-sm {get_cefr_class(v_cefr)}">{escape_html(v_cefr)}</span>
                   <span class="card-learn-zh">{escape_html(v.get('zh',''))}</span>
                 </div>
@@ -371,6 +372,7 @@ def build_vocab_html(vocabulary):
       <div class="vocab-num">0{i+1}</div>
       <div class="vocab-word-line">
         <span class="vocab-word">{escape_html(v.get('word',''))}</span>
+        <button class="speak-btn" onclick="speakWord('{escape_html(v.get('word',''))}',this)" title="Listen to pronunciation">&#128266;</button>
         <span class="vocab-cefr {get_cefr_class(cefr)}">{escape_html(cefr)}</span>
       </div>
       <div class="vocab-zh">{escape_html(v.get('zh',''))}</div>
