@@ -1771,6 +1771,44 @@
   body.lang-zh .zh-only { display: inline; }
   body.lang-en .zh-only { display: none; }
 
+  /* ── CEFR Level Filter Bar ── */
+  .cefr-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--black);
+    background: var(--cream2);
+  }
+  .cefr-filter-label {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 0.25rem;
+  }
+  .cefr-filter-btn {
+    background: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 2px;
+    transition: all 0.15s;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .cefr-filter-btn:hover { border-color: var(--black); background: var(--yellow); color: var(--black); }
+  .cefr-filter-btn.active { border-color: var(--black); background: var(--black); color: var(--cream); }
+  .cefr-filter-btn.active .cefr-badge { filter: invert(1) brightness(2); }
+  .news-card.cefr-dimmed { opacity: 0.3; pointer-events: none; }
+
   /* ── Spaced repetition buttons ── */
   .vocab-sr-row {
     display: flex;
@@ -2025,6 +2063,18 @@
       <span class="en-text">Top Stories</span>
       <span class="zh-text">&#38957;&#26781;&#26032;&#32862;</span>
     </div>
+    <!-- CEFR Filter Bar -->
+    <div class="cefr-filter-bar" id="cefrFilterBar">
+      <span class="cefr-filter-label en-only">My Level:</span>
+      <span class="cefr-filter-label zh-only">我的程度：</span>
+      <button class="cefr-filter-btn active" data-level="ALL" onclick="setCefrFilter('ALL',this)">All</button>
+      <button class="cefr-filter-btn" data-level="A1" onclick="setCefrFilter('A1',this)"><span class="cefr-badge cefr-A1">A1</span></button>
+      <button class="cefr-filter-btn" data-level="A2" onclick="setCefrFilter('A2',this)"><span class="cefr-badge cefr-A2">A2</span></button>
+      <button class="cefr-filter-btn" data-level="B1" onclick="setCefrFilter('B1',this)"><span class="cefr-badge cefr-B1">B1</span></button>
+      <button class="cefr-filter-btn" data-level="B2" onclick="setCefrFilter('B2',this)"><span class="cefr-badge cefr-B2">B2</span></button>
+      <button class="cefr-filter-btn" data-level="C1" onclick="setCefrFilter('C1',this)"><span class="cefr-badge cefr-C1">C1</span></button>
+    </div>
+
     <div class="news-grid">
       <!-- NEWS_CARDS_START -->
 
@@ -2638,6 +2688,36 @@ function setLang(lang) {
   document.body.className = 'lang-' + lang;
   document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
   document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
+
+// CEFR Level Filter
+var CEFR_ORDER = ['A1','A2','B1','B2','C1','C2'];
+function setCefrFilter(level, btn) {
+  // Update active button
+  document.querySelectorAll('.cefr-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  // Save preference
+  try { localStorage.setItem('cefrFilter', level); } catch(e) {}
+  // Show/dim cards
+  var levelIdx = CEFR_ORDER.indexOf(level);
+  document.querySelectorAll('.news-card').forEach(function(card) {
+    if (level === 'ALL') {
+      card.classList.remove('cefr-dimmed');
+    } else {
+      var cardCefr = (card.dataset.cefr || 'B1').toUpperCase();
+      var cardIdx = CEFR_ORDER.indexOf(cardCefr);
+      // Show cards at the selected level ±1 step
+      var inRange = Math.abs(cardIdx - levelIdx) <= 1;
+      card.classList.toggle('cefr-dimmed', !inRange);
+    }
+  });
+}
+
+function initCefrFilter() {
+  var saved = 'ALL';
+  try { saved = localStorage.getItem('cefrFilter') || 'ALL'; } catch(e) {}
+  var btn = document.querySelector('.cefr-filter-btn[data-level="' + saved + '"]');
+  setCefrFilter(saved, btn);
 }
 
 // Multiple-choice quiz handler
@@ -3512,6 +3592,7 @@ function srMarkReview(word, knew) {
 // Initialize
 renderChallenge();
 updateReviewFab();
+initCefrFilter();
 </script>
 </body>
 </html>

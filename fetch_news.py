@@ -341,7 +341,7 @@ def build_news_html(articles):
               </div>"""
 
         card = f"""
-    <div class="news-card" style="animation-delay:{i * 0.07}s">
+    <div class="news-card" data-cefr="{cefr}" style="animation-delay:{i * 0.07}s">
       <div class="card-top">
         <div class="card-tag">{escape_html(a.get('tag',''))}</div>
         <div class="cefr-badge {get_cefr_class(cefr)}" title="CEFR Reading Level: {escape_html(cefr)}">{escape_html(cefr)}</div>
